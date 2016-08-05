@@ -7,9 +7,9 @@ import java.util.List;
 public class GsonEntries {
 
     @SerializedName("modified_timestamp")
-    String modifiedTimestamp;
+    public String modifiedTimestamp;
 
     @SerializedName("entries")
-    List<GsonEntry> entries;
+    public List<GsonEntry> entries;
 
 }

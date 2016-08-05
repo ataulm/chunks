@@ -2,6 +2,8 @@ package com.ataulm.basic;
 
 import com.google.auto.value.AutoValue;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Entry {
 
@@ -11,6 +13,10 @@ public abstract class Entry {
 
     public static Entry createFrom(Id id, String value, Day day) {
         return new AutoValue_Entry(id, value, day, Optional.<String>absent());
+    }
+
+    public static Entry createFrom(Id id, String value, Day day, @Nullable String completedTimestamp) {
+        return new AutoValue_Entry(id, value, day, Optional.fromNullable(completedTimestamp));
     }
 
     public static Entry completed(Entry entry, String completedTimestamp) {

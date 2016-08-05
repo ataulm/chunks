@@ -7,9 +7,17 @@ import java.util.List;
 @AutoValue
 public abstract class Entries {
 
+    public static Entries create(String modifiedTimestamp, List<Entry> entries) {
+        return new AutoValue_Entries(modifiedTimestamp, entries);
+    }
+
+    public abstract String modifiedTimestamp();
+
     public abstract List<Entry> list();
 
-    public abstract String value();
+    protected Entries() {
+        // use static factory
+    }
 
 }
 

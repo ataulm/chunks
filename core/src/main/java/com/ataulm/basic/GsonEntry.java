@@ -5,15 +5,15 @@ import com.google.gson.annotations.SerializedName;
 public class GsonEntry {
 
     @SerializedName("id")
-    String id;
+    public String id;
 
     @SerializedName("value")
-    String value;
+    public String value;
 
     @SerializedName("day")
-    String day;
+    public String day;
 
     @SerializedName("completed_timestamp")
-    String completedTimestamp;
+    public String completedTimestamp;
 
 }
