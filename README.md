@@ -1,3 +1,1 @@
-android-basic
-=============
-Can be used as a skeleton for new Android projects.
+chunks offers **short-lived** to-do lists to gsd.
