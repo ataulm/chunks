@@ -89,13 +89,13 @@ public class MyActivity extends AppCompatActivity {
     private void updateViews(Chunks chunks) {
         entryInputView.setEnabled(true);
 
-        EntriesPagerAdapter entriesPagerAdapter;
+        ChunksPagerAdapter chunksPagerAdapter;
         if (viewPager.getAdapter() == null) {
-            entriesPagerAdapter = EntriesPagerAdapter.newInstance(chunks);
-            viewPager.setAdapter(entriesPagerAdapter);
+            chunksPagerAdapter = ChunksPagerAdapter.newInstance(chunks);
+            viewPager.setAdapter(chunksPagerAdapter);
         } else {
-            entriesPagerAdapter = (EntriesPagerAdapter) viewPager.getAdapter();
-            entriesPagerAdapter.update(chunks);
+            chunksPagerAdapter = (ChunksPagerAdapter) viewPager.getAdapter();
+            chunksPagerAdapter.update(chunks);
         }
     }
 

@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 
 import com.novoda.viewpageradapter.ViewPagerAdapter;
 
-final class EntriesPagerAdapter extends ViewPagerAdapter<RecyclerView> {
+final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
     private Chunks chunks;
 
-    public static EntriesPagerAdapter newInstance(Chunks chunks) {
-        return new EntriesPagerAdapter(chunks);
+    public static ChunksPagerAdapter newInstance(Chunks chunks) {
+        return new ChunksPagerAdapter(chunks);
     }
 
-    private EntriesPagerAdapter(Chunks chunks) {
+    private ChunksPagerAdapter(Chunks chunks) {
         this.chunks = chunks;
     }
 
@@ -34,17 +34,17 @@ final class EntriesPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
     @Override
     protected void bindView(RecyclerView view, int position) {
-        Chunk entries = getEntriesForPosition(position);
+        Chunk chunk = getChunkForPosition(position);
 
         RecyclerView.Adapter adapter = view.getAdapter();
         if (adapter == null) {
-            view.setAdapter(new ChunkRecyclerViewAdapter(entries));
+            view.setAdapter(new ChunkRecyclerViewAdapter(chunk));
         } else {
-            ((ChunkRecyclerViewAdapter) adapter).update(entries);
+            ((ChunkRecyclerViewAdapter) adapter).update(chunk);
         }
     }
 
-    private Chunk getEntriesForPosition(int position) {
+    private Chunk getChunkForPosition(int position) {
         if (position == 0) {
             return chunks.yesterday();
         }
@@ -62,7 +62,23 @@ final class EntriesPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
     @Override
     public int getCount() {
-        return 1;
+        return 3;
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        if (position == 0) {
+            return "Yesterday";
+        }
+
+        if (position == 1) {
+            return "Today";
+        }
+
+        if (position == 2) {
+            return "Tomorrow";
+        }
+
+        throw new IllegalArgumentException("no idea what to do for position " + position);
+    }
 }
