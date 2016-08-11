@@ -5,6 +5,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.code.findbugs:annotations:3.0.0'
+    compile 'io.reactivex:rxjava:1.1.1'
 
     javapt 'com.google.auto.value:auto-value:1.1'
 

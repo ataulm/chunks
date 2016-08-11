@@ -1,0 +1,81 @@
+package com.ataulm.basic;
+
+import com.google.auto.value.AutoValue;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+@AutoValue
+public abstract class Chunk implements Iterable<Entry> {
+
+    public static Chunk create(List<Entry> entries) {
+        return new AutoValue_Chunk(Collections.unmodifiableList(entries));
+    }
+
+    public static Chunk empty() {
+        return create(Collections.<Entry>emptyList());
+    }
+
+    abstract List<Entry> values();
+
+    protected Chunk() {
+        // use static factory
+    }
+
+    public boolean isEmpty() {
+        return values().isEmpty();
+    }
+
+    public Entry get(int position) {
+        return values().get(position);
+    }
+
+    public boolean contains(Entry entry) {
+        return values().contains(entry);
+    }
+
+    public int size() {
+        return values().size();
+    }
+
+    public Chunk add(Entry entry) {
+        List<Entry> values = new ArrayList<>(size() + 1);
+        values.addAll(values());
+        values.add(entry);
+        return create(values);
+    }
+
+    public Chunk remove(Entry entry) {
+        if (!contains(entry)) {
+            throw new IllegalArgumentException("Chunk doesn't contain Entry: " + entry);
+        }
+
+        List<Entry> values = new ArrayList<>(size() - 1);
+        for (Entry value : values()) {
+            if (!value.equals(entry)) {
+                values.add(value);
+            }
+        }
+        return create(values);
+    }
+
+    public Chunk update(Entry entry) {
+        List<Entry> values = new ArrayList<>(size() - 1);
+        for (Entry value : values()) {
+            if (value.id().equals(entry.id())) {
+                values.add(entry);
+            } else {
+                values.add(value);
+            }
+        }
+        return create(values);
+    }
+
+    @Override
+    public Iterator<Entry> iterator() {
+        return values().iterator();
+    }
+}
+

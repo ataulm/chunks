@@ -1,4 +1,4 @@
-package com.ataulm.basic;
+package com.ataulm.basic.repository;
 
 import com.google.gson.annotations.SerializedName;
 

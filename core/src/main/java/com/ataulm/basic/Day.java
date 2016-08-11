@@ -18,7 +18,7 @@ public enum Day {
 
     public static Day fromId(String id) {
         for (Day day : values()) {
-            if (String.valueOf(day.id) == id) {
+            if (String.valueOf(day.id).equals(id)) {
                 return day;
             }
         }

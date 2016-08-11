@@ -1,6 +1,5 @@
 package com.ataulm.basic.repository;
 
-import com.ataulm.basic.GsonEntries;
 import com.google.gson.Gson;
 
 public class JsonEntriesConverter {

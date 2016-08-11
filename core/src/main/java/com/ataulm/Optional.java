@@ -1,4 +1,4 @@
-package com.ataulm.basic;
+package com.ataulm;
 
 import com.google.auto.value.AutoValue;
 
@@ -48,6 +48,14 @@ public abstract class Optional<T> {
 
     public boolean isPresent() {
         return data() != null;
+    }
+
+    public T or(T empty) {
+        if (isPresent()) {
+            return get();
+        } else {
+            return empty;
+        }
     }
 
 }

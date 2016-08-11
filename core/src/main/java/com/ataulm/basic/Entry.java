@@ -1,5 +1,6 @@
 package com.ataulm.basic;
 
+import com.ataulm.Optional;
 import com.google.auto.value.AutoValue;
 
 import javax.annotation.Nullable;
