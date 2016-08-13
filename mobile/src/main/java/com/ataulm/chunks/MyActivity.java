@@ -14,7 +14,9 @@ import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
+
+import static com.ataulm.chunks.DayToPagePositionMapper.getDayFor;
+import static com.ataulm.chunks.DayToPagePositionMapper.getPageFor;
 
 public class MyActivity extends AppCompatActivity {
 
@@ -28,7 +30,7 @@ public class MyActivity extends AppCompatActivity {
     EntryInputView entryInputView;
 
     private ChunksService chunksService;
-    private CompositeSubscription subscriptions;
+    private Subscription subscription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,36 +45,26 @@ public class MyActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        subscriptions = new CompositeSubscription();
+        entryInputView.bind(
+                new EntryInputView.Listener() {
 
-        entryInputView.bind(new EntryInputView.Listener() {
-            @Override
-            public void onClickAddEntry(String value) {
-                Entry entry = Entry.createNew(value, getVisibleDay());
-                entryInputView.setEnabled(false);
-                chunksService.createEntry(entry);
-            }
+                    @Override
+                    public void onClickAddEntry(String value) {
+                        int currentItem = viewPager.getCurrentItem();
+                        Entry entry = Entry.createNew(value, getDayFor(currentItem));
+                        entryInputView.setEnabled(false);
+                        chunksService.createEntry(entry);
+                    }
 
-            private Day getVisibleDay() {
-                int currentItem = viewPager.getCurrentItem();
-                switch (currentItem) {
-                    case 0:
-                        return Day.YESTERDAY;
-                    case 1:
-                        return Day.TODAY;
-                    case 2:
-                        return Day.TOMORROW;
-                    default:
-                        throw new IllegalStateException("unexpected page: " + currentItem);
                 }
-            }
-        });
+        );
 
-        Subscription entriesSubscription = chunksService.fetchEntries()
+        subscription = chunksService.fetchEntries()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         new LoggingObserver<Event<Chunks>>(new AndroidLog()) {
+
                             @Override
                             public void onNext(Event<Chunks> event) {
                                 // TODO: handle loading/errors (checkable from event)
@@ -83,10 +75,9 @@ public class MyActivity extends AppCompatActivity {
                                     // TODO: show empty screen
                                 }
                             }
+
                         }
                 );
-
-        subscriptions.add(entriesSubscription);
     }
 
     private void updateViews(Chunks chunks) {
@@ -100,50 +91,39 @@ public class MyActivity extends AppCompatActivity {
             chunksPagerAdapter = (ChunksPagerAdapter) viewPager.getAdapter();
             chunksPagerAdapter.update(chunks);
         }
-        dayTabsWidget.bind(new DayTabsWidget.Listener() {
-            @Override
-            public void onClick(Day day) {
-                switch (day) {
-                    case YESTERDAY:
-                        viewPager.setCurrentItem(0);
-                        break;
-                    case TODAY:
-                        viewPager.setCurrentItem(1);
-                        break;
-                    case TOMORROW:
-                        viewPager.setCurrentItem(2);
-                        break;
-                    default:
-                        throw new IllegalStateException("unexpected day: " + day);
-                }
-            }
-        });
 
-        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                switch (position) {
-                    case 0:
-                        dayTabsWidget.onDisplay(Day.YESTERDAY);
-                        break;
-                    case 1:
-                        dayTabsWidget.onDisplay(Day.TODAY);
-                        break;
-                    case 2:
-                        dayTabsWidget.onDisplay(Day.TOMORROW);
-                        break;
-                    default:
-                        throw new IllegalStateException("unexpected page: " + position);
+        dayTabsWidget.bind(
+                new DayTabsWidget.Listener() {
+
+                    @Override
+                    public void onClick(Day day) {
+                        int page = DayToPagePositionMapper.getPageFor(day);
+                        viewPager.setCurrentItem(page);
+                    }
+
                 }
-            }
-        });
-        viewPager.setCurrentItem(1);
+        );
+
+        viewPager.addOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                        Day day = getDayFor(position);
+                        dayTabsWidget.onDisplay(day);
+                    }
+
+                }
+        );
+        viewPager.setCurrentItem(getPageFor(Day.TODAY));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        subscriptions.clear();
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
         chunksService.persist();
     }
 
