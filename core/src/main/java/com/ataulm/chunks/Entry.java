@@ -1,4 +1,4 @@
-package com.ataulm.basic;
+package com.ataulm.chunks;
 
 import com.ataulm.Optional;
 import com.google.auto.value.AutoValue;
@@ -8,15 +8,15 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class Entry {
 
-    public static Entry createNew(String value, Day day) {
-        return new AutoValue_Entry(Id.create(), value, day, Optional.<String>absent());
+    public static Entry createNew(String value, com.ataulm.chunks.Day day) {
+        return new AutoValue_Entry(com.ataulm.chunks.Id.create(), value, day, Optional.<String>absent());
     }
 
-    public static Entry createFrom(Id id, String value, Day day) {
+    public static Entry createFrom(com.ataulm.chunks.Id id, String value, com.ataulm.chunks.Day day) {
         return new AutoValue_Entry(id, value, day, Optional.<String>absent());
     }
 
-    public static Entry createFrom(Id id, String value, Day day, @Nullable String completedTimestamp) {
+    public static Entry createFrom(com.ataulm.chunks.Id id, String value, com.ataulm.chunks.Day day, @Nullable String completedTimestamp) {
         return new AutoValue_Entry(id, value, day, Optional.fromNullable(completedTimestamp));
     }
 
@@ -28,15 +28,15 @@ public abstract class Entry {
         return new AutoValue_Entry(entry.id(), value, entry.day(), entry.completedTimestamp());
     }
 
-    public static Entry transitioned(Entry entry, Day day) {
+    public static Entry transitioned(Entry entry, com.ataulm.chunks.Day day) {
         return new AutoValue_Entry(entry.id(), entry.value(), day, entry.completedTimestamp());
     }
 
-    public abstract Id id();
+    public abstract com.ataulm.chunks.Id id();
 
     public abstract String value();
 
-    public abstract Day day();
+    public abstract com.ataulm.chunks.Day day();
 
     public abstract Optional<String> completedTimestamp();
 

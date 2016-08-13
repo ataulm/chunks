@@ -1,9 +1,9 @@
-package com.ataulm.basic.repository;
+package com.ataulm.chunks.repository;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ataulm.basic.Chunks;
+import com.ataulm.chunks.Chunks;
 
 public final class SharedPreferencesChunksRepository implements ChunksRepository {
 

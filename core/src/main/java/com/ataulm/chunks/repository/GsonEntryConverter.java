@@ -1,12 +1,11 @@
-package com.ataulm.basic.repository;
+package com.ataulm.chunks.repository;
 
-import com.ataulm.basic.Day;
-import com.ataulm.basic.Entry;
-import com.ataulm.basic.Id;
+import com.ataulm.chunks.Day;
+import com.ataulm.chunks.Id;
 
 public class GsonEntryConverter {
 
-    public GsonEntry convert(Entry entry) {
+    public GsonEntry convert(com.ataulm.chunks.Entry entry) {
         GsonEntry gsonEntry = new GsonEntry();
         gsonEntry.id = String.valueOf(entry.id().value());
         gsonEntry.value = entry.value();
@@ -15,8 +14,8 @@ public class GsonEntryConverter {
         return gsonEntry;
     }
 
-    public Entry convert(GsonEntry gsonEntry) {
-        return Entry.createFrom(
+    public com.ataulm.chunks.Entry convert(GsonEntry gsonEntry) {
+        return com.ataulm.chunks.Entry.createFrom(
                 Id.createFrom(gsonEntry.id),
                 gsonEntry.value,
                 Day.fromId(gsonEntry.day),

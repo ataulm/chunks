@@ -1,10 +1,10 @@
-package com.ataulm.basic;
+package com.ataulm.chunks;
 
 import com.ataulm.Event;
 import com.ataulm.EventProxyObserver;
 import com.ataulm.EventRxFunctions;
 import com.ataulm.Log;
-import com.ataulm.basic.repository.ChunksRepository;
+import com.ataulm.chunks.repository.ChunksRepository;
 
 import java.util.concurrent.Callable;
 
@@ -16,17 +16,17 @@ public class ChunksService {
 
     private final ChunksRepository chunksRepository;
     private final Log log;
-    private final BehaviorSubject<Event<Chunks>> eventsSubject;
+    private final BehaviorSubject<Event<com.ataulm.chunks.Chunks>> eventsSubject;
 
     private boolean currentlyFetching;
 
     public ChunksService(ChunksRepository chunksRepository, Log log) {
         this.chunksRepository = chunksRepository;
         this.log = log;
-        this.eventsSubject = BehaviorSubject.create(Event.<Chunks>idle());
+        this.eventsSubject = BehaviorSubject.create(Event.<com.ataulm.chunks.Chunks>idle());
     }
 
-    public Observable<Event<Chunks>> fetchEntries() {
+    public Observable<Event<com.ataulm.chunks.Chunks>> fetchEntries() {
         return eventsSubject.doOnSubscribe(loadEventsIntoSubject());
     }
 
@@ -38,7 +38,7 @@ public class ChunksService {
                     return;
                 }
                 createFetchEntriesObservable()
-                        .compose(EventRxFunctions.<Chunks>asEvents())
+                        .compose(EventRxFunctions.<com.ataulm.chunks.Chunks>asEvents())
                         .doOnSubscribe(setCurrentlyLoadingFlag(true))
                         .doOnTerminate(setCurrentlyLoadingFlag(false))
                         .subscribe(new EventProxyObserver<>(eventsSubject, log));
@@ -59,11 +59,11 @@ public class ChunksService {
         return currentlyFetching || eventsSubject.getValue().getData().isPresent();
     }
 
-    private Observable<Chunks> createFetchEntriesObservable() {
+    private Observable<com.ataulm.chunks.Chunks> createFetchEntriesObservable() {
         return Observable.fromCallable(
-                new Callable<Chunks>() {
+                new Callable<com.ataulm.chunks.Chunks>() {
                     @Override
-                    public Chunks call() throws Exception {
+                    public com.ataulm.chunks.Chunks call() throws Exception {
                         return chunksRepository.getChunks();
                     }
                 }
@@ -71,30 +71,30 @@ public class ChunksService {
     }
 
     public void createEntry(Entry entry) {
-        Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunks.add(entry);
+        com.ataulm.chunks.Chunks chunks = getInMemoryChunksOrEmpty();
+        com.ataulm.chunks.Chunks updatedChunks = chunks.add(entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void updateEntry(Entry entry) {
-        Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunks.update(entry);
+        com.ataulm.chunks.Chunks chunks = getInMemoryChunksOrEmpty();
+        com.ataulm.chunks.Chunks updatedChunks = chunks.update(entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void removeEntry(Entry entry) {
-        Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunks.remove(entry);
+        com.ataulm.chunks.Chunks chunks = getInMemoryChunksOrEmpty();
+        com.ataulm.chunks.Chunks updatedChunks = chunks.remove(entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
-    private Chunks getInMemoryChunksOrEmpty() {
-        Event<Chunks> event = eventsSubject.getValue();
-        return event.getData().or(Chunks.empty());
+    private com.ataulm.chunks.Chunks getInMemoryChunksOrEmpty() {
+        Event<com.ataulm.chunks.Chunks> event = eventsSubject.getValue();
+        return event.getData().or(com.ataulm.chunks.Chunks.empty());
     }
 
     public void persist() {
-        Chunks chunks = getInMemoryChunksOrEmpty();
+        com.ataulm.chunks.Chunks chunks = getInMemoryChunksOrEmpty();
         chunksRepository.persist(chunks);
     }
 

@@ -1,13 +1,13 @@
-package com.ataulm.basic;
+package com.ataulm.chunks;
 
 import android.app.Application;
 
 import com.ataulm.AndroidLog;
-import com.ataulm.basic.repository.GsonEntriesConverter;
-import com.ataulm.basic.repository.GsonEntryConverter;
-import com.ataulm.basic.repository.JsonEntriesConverter;
-import com.ataulm.basic.repository.ChunksRepository;
-import com.ataulm.basic.repository.SharedPreferencesChunksRepository;
+import com.ataulm.chunks.repository.GsonEntriesConverter;
+import com.ataulm.chunks.repository.GsonEntryConverter;
+import com.ataulm.chunks.repository.JsonEntriesConverter;
+import com.ataulm.chunks.repository.ChunksRepository;
+import com.ataulm.chunks.repository.SharedPreferencesChunksRepository;
 import com.google.gson.Gson;
 
 public class ChunksApplication extends Application {

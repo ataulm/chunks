@@ -1,4 +1,4 @@
-package com.ataulm.basic;
+package com.ataulm.chunks;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -17,6 +17,9 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 public class MyActivity extends AppCompatActivity {
+
+    @BindView(R.id.tabs)
+    DayTabsWidget dayTabsWidget;
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -97,6 +100,24 @@ public class MyActivity extends AppCompatActivity {
             chunksPagerAdapter = (ChunksPagerAdapter) viewPager.getAdapter();
             chunksPagerAdapter.update(chunks);
         }
+        dayTabsWidget.bind(new DayTabsWidget.Listener() {
+            @Override
+            public void onClick(Day day) {
+                switch (day) {
+                    case YESTERDAY:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case TODAY:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case TOMORROW:
+                        viewPager.setCurrentItem(2);
+                        break;
+                    default:
+                        throw new IllegalStateException("unexpected day: " + day);
+                }
+            }
+        });
     }
 
     @Override

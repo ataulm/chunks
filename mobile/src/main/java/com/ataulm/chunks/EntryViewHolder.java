@@ -1,4 +1,4 @@
-package com.ataulm.basic;
+package com.ataulm.chunks;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

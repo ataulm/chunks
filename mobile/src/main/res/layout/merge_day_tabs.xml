@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <TextView
+    android:id="@+id/day_tabs_yesterday"
+    style="@style/DayTabs.Tab"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="33"
+    android:text="@string/days_tabs_yesterday"
+    android:minHeight="@dimen/day_tabs_tab_min_height" />
+
+  <TextView
+    android:id="@+id/day_tabs_today"
+    style="@style/DayTabs.Tab"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="33"
+    android:text="@string/days_tabs_today"
+    android:minHeight="@dimen/day_tabs_tab_min_height" />
+
+  <TextView
+    android:id="@+id/day_tabs_tomorrow"
+    style="@style/DayTabs.Tab"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="33"
+    android:text="@string/days_tabs_tomorrow"
+    android:minHeight="@dimen/day_tabs_tab_min_height" />
+
+</merge>

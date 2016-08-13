@@ -1,4 +1,4 @@
-package com.ataulm.basic.repository;
+package com.ataulm.chunks.repository;
 
 import com.google.gson.Gson;
 

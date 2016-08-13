@@ -1,4 +1,4 @@
-package com.ataulm.basic;
+package com.ataulm.chunks;
 
 import com.google.auto.value.AutoValue;
 
