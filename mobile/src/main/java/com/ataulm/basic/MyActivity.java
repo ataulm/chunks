@@ -103,6 +103,7 @@ public class MyActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         subscriptions.clear();
+        chunksService.persist();
     }
 
 }

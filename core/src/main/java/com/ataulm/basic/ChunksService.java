@@ -34,7 +34,7 @@ public class ChunksService {
         return new Action0() {
             @Override
             public void call() {
-                if (eventsHaveBeenLoadedOrAreBeingLoading()) {
+                if (eventsAreBeingOrHaveAlreadyBeenLoaded()) {
                     return;
                 }
                 createFetchEntriesObservable()
@@ -55,8 +55,8 @@ public class ChunksService {
         };
     }
 
-    private boolean eventsHaveBeenLoadedOrAreBeingLoading() {
-        return eventsSubject.hasValue() || currentlyFetching;
+    private boolean eventsAreBeingOrHaveAlreadyBeenLoaded() {
+        return currentlyFetching || eventsSubject.getValue().getData().isPresent();
     }
 
     private Observable<Chunks> createFetchEntriesObservable() {
@@ -71,24 +71,31 @@ public class ChunksService {
     }
 
     public void createEntry(Entry entry) {
-        Event<Chunks> event = eventsSubject.getValue();
-        Chunks chunks = event.getData().or(Chunks.empty());
+        Chunks chunks = getInMemoryChunksOrEmpty();
         Chunks updatedChunks = chunks.add(entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void updateEntry(Entry entry) {
-        Event<Chunks> event = eventsSubject.getValue();
-        Chunks chunks = event.getData().or(Chunks.empty());
+        Chunks chunks = getInMemoryChunksOrEmpty();
         Chunks updatedChunks = chunks.update(entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void removeEntry(Entry entry) {
-        Event<Chunks> event = eventsSubject.getValue();
-        Chunks chunks = event.getData().or(Chunks.empty());
+        Chunks chunks = getInMemoryChunksOrEmpty();
         Chunks updatedChunks = chunks.remove(entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
+    }
+
+    private Chunks getInMemoryChunksOrEmpty() {
+        Event<Chunks> event = eventsSubject.getValue();
+        return event.getData().or(Chunks.empty());
+    }
+
+    public void persist() {
+        Chunks chunks = getInMemoryChunksOrEmpty();
+        chunksRepository.persist(chunks);
     }
 
 }
