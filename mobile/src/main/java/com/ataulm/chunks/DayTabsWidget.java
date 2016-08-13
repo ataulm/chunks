@@ -37,6 +37,28 @@ public class DayTabsWidget extends LinearLayout {
         tomorrowView.setOnClickListener(createListenerFor(Day.TOMORROW, listener));
     }
 
+    public void onDisplay(Day day) {
+        switch (day) {
+            case YESTERDAY:
+                activate(yesterdayView);
+                break;
+            case TODAY:
+                activate(todayView);
+                break;
+            case TOMORROW:
+                activate(tomorrowView);
+                break;
+            default:
+                throw new IllegalArgumentException("unsupported day: " + day);
+        }
+    }
+
+    private void activate(View view) {
+        yesterdayView.setActivated(yesterdayView.equals(view));
+        todayView.setActivated(todayView.equals(view));
+        tomorrowView.setActivated(tomorrowView.equals(view));
+    }
+
     private OnClickListener createListenerFor(final Day day, final Listener listener) {
         return new OnClickListener() {
 

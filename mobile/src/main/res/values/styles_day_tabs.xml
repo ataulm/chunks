@@ -5,6 +5,7 @@
 
   <style name="DayTabs.Tab">
     <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/day_tabs_tab_text</item>
   </style>
 
 </resources>

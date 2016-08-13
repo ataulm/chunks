@@ -118,6 +118,26 @@ public class MyActivity extends AppCompatActivity {
                 }
             }
         });
+
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                switch (position) {
+                    case 0:
+                        dayTabsWidget.onDisplay(Day.YESTERDAY);
+                        break;
+                    case 1:
+                        dayTabsWidget.onDisplay(Day.TODAY);
+                        break;
+                    case 2:
+                        dayTabsWidget.onDisplay(Day.TOMORROW);
+                        break;
+                    default:
+                        throw new IllegalStateException("unexpected page: " + position);
+                }
+            }
+        });
+        viewPager.setCurrentItem(1);
     }
 
     @Override
