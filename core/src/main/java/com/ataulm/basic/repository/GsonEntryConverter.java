@@ -10,6 +10,7 @@ public class GsonEntryConverter {
         GsonEntry gsonEntry = new GsonEntry();
         gsonEntry.id = String.valueOf(entry.id().value());
         gsonEntry.value = entry.value();
+        gsonEntry.day = entry.day().getId();
         gsonEntry.completedTimestamp = entry.completedTimestamp().isPresent() ? entry.completedTimestamp().get() : null;
         return gsonEntry;
     }
