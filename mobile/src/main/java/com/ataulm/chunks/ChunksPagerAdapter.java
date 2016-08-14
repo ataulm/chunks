@@ -9,13 +9,11 @@ import com.novoda.viewpageradapter.ViewPagerAdapter;
 
 final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
+    private final EntryView.UserInteractions userInteractions;
     private Chunks chunks;
 
-    public static ChunksPagerAdapter newInstance(Chunks chunks) {
-        return new ChunksPagerAdapter(chunks);
-    }
-
-    private ChunksPagerAdapter(Chunks chunks) {
+    ChunksPagerAdapter(EntryView.UserInteractions userInteractions, Chunks chunks) {
+        this.userInteractions = userInteractions;
         this.chunks = chunks;
     }
 
@@ -38,7 +36,7 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
         RecyclerView.Adapter adapter = view.getAdapter();
         if (adapter == null) {
-            view.setAdapter(new ChunkRecyclerViewAdapter(chunk));
+            view.setAdapter(new ChunkRecyclerViewAdapter(userInteractions, chunk));
         } else {
             ((ChunkRecyclerViewAdapter) adapter).update(chunk);
         }

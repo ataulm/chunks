@@ -4,6 +4,7 @@ import com.ataulm.Optional;
 import com.google.auto.value.AutoValue;
 
 import javax.annotation.Nullable;
+import javax.sound.midi.SysexMessage;
 
 @AutoValue
 public abstract class Entry {
@@ -20,8 +21,13 @@ public abstract class Entry {
         return new AutoValue_Entry(id, value, day, Optional.fromNullable(completedTimestamp));
     }
 
-    public static Entry completed(Entry entry, String completedTimestamp) {
+    public static Entry completed(Entry entry) {
+        String completedTimestamp = String.valueOf(System.currentTimeMillis());
         return new AutoValue_Entry(entry.id(), entry.value(), entry.day(), Optional.of(completedTimestamp));
+    }
+
+    public static Entry notCompleted(Entry entry) {
+        return new AutoValue_Entry(entry.id(), entry.value(), entry.day(), Optional.<String>absent());
     }
 
     public static Entry edited(Entry entry, String value) {

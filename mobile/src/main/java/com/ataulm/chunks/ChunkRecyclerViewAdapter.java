@@ -5,9 +5,12 @@ import android.view.ViewGroup;
 
 public class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHolder> {
 
+    private final EntryView.UserInteractions userInteractions;
+
     private Chunk chunk;
 
-    public ChunkRecyclerViewAdapter(Chunk chunk) {
+    public ChunkRecyclerViewAdapter(EntryView.UserInteractions userInteractions, Chunk chunk) {
+        this.userInteractions = userInteractions;
         this.chunk = chunk;
     }
 
@@ -24,7 +27,7 @@ public class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHold
     @Override
     public void onBindViewHolder(EntryViewHolder holder, int position) {
         Entry entry = chunk.get(position);
-        holder.entryView.bind(entry);
+        holder.entryView.bind(entry, userInteractions);
     }
 
     @Override

@@ -8,11 +8,11 @@
     android:name="com.ataulm.chunks.ChunksApplication"
     android:theme="@style/AppTheme">
 
-    <activity android:name="com.ataulm.chunks.MyActivity" />
+    <activity android:name=".ChunksActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"
-      android:targetActivity="com.ataulm.chunks.MyActivity">
+      android:targetActivity=".ChunksActivity">
 
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
