@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <com.ataulm.chunks.TabsPagerNavigationWidget
+    android:id="@+id/chunks_screen_pager_navigation_widget"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+  <android.support.v4.view.ViewPager
+    android:id="@+id/chunks_screen_view_pager"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="100" />
+
+  <com.ataulm.chunks.EntryInputWidget
+    android:id="@+id/chunks_screen_empty_input_widget"
+    style="@style/Chunks.EntryInputWidget"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+</merge>

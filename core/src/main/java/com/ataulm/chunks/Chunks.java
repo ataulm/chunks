@@ -21,7 +21,7 @@ public abstract class Chunks {
         // use static factory
     }
 
-    public abstract String modifiedTimestamp();
+    public abstract String lastShuffledTimestamp();
 
     public abstract Chunk yesterday();
 
@@ -29,8 +29,8 @@ public abstract class Chunks {
 
     public abstract Chunk tomorrow();
 
-    public Chunks add(Entry entry) {
-        switch (entry.day()) {
+    public Chunks add(Entry entry, Day day) {
+        switch (day) {
             case YESTERDAY:
                 return create(generateModifiedTimestamp(), yesterday().add(entry), today(), tomorrow());
             case TODAY:
@@ -38,7 +38,7 @@ public abstract class Chunks {
             case TOMORROW:
                 return create(generateModifiedTimestamp(), yesterday(), today(), tomorrow().add(entry));
             default:
-                throw new IllegalArgumentException("unsupported day: " + entry.day());
+                throw new IllegalArgumentException("unsupported day: " + day);
         }
     }
 

@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EntryInputView extends LinearLayout {
+public class EntryInputWidget extends LinearLayout {
 
     @BindView(R.id.entry_input_edit_text)
     EditText inputEditText;
@@ -18,7 +18,7 @@ public class EntryInputView extends LinearLayout {
     @BindView(R.id.entry_input_button_add)
     Button addButton;
 
-    public EntryInputView(Context context, AttributeSet attrs) {
+    public EntryInputWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
     }
@@ -30,22 +30,19 @@ public class EntryInputView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(final Listener listener) {
-        addButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String s = inputEditText.getText().toString();
-                if (s.length() > 0) {
-                    listener.onClickAddEntry(s);
+    public void bind(final EntryInputUserInteractions entryInputUserInteractions, final Day day) {
+        addButton.setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String entry = inputEditText.getText().toString();
+                        if (entry.length() > 0) {
+                            entryInputUserInteractions.onUserAddEntry(entry, day);
+                            inputEditText.setText(null);
+                        }
+                    }
                 }
-            }
-        });
-    }
-
-    public interface Listener {
-
-        void onClickAddEntry(String entry);
-
+        );
     }
 
 }

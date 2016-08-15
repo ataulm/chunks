@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DayTabsWidget extends LinearLayout {
+public class TabsPagerNavigationWidget extends LinearLayout {
 
     @BindView(R.id.day_tabs_yesterday)
     View yesterdayView;
@@ -19,7 +19,7 @@ public class DayTabsWidget extends LinearLayout {
     @BindView(R.id.day_tabs_tomorrow)
     View tomorrowView;
 
-    public DayTabsWidget(Context context, AttributeSet attrs) {
+    public TabsPagerNavigationWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
     }
@@ -31,13 +31,13 @@ public class DayTabsWidget extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(final Listener listener) {
+    public void bind(Listener listener) {
         yesterdayView.setOnClickListener(createListenerFor(Day.YESTERDAY, listener));
         todayView.setOnClickListener(createListenerFor(Day.TODAY, listener));
         tomorrowView.setOnClickListener(createListenerFor(Day.TOMORROW, listener));
     }
 
-    public void onDisplay(Day day) {
+    public void display(Day day) {
         switch (day) {
             case YESTERDAY:
                 activate(yesterdayView);

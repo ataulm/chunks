@@ -1,10 +1,10 @@
 package com.ataulm.chunks;
 
-class AndroidEntryViewUserInteractions implements EntryView.UserInteractions {
+class AndroidChunkEntryUserInteractions implements ChunkEntryUserInteractions {
 
     private final ChunksService chunksService;
 
-    AndroidEntryViewUserInteractions(ChunksService chunksService) {
+    AndroidChunkEntryUserInteractions(ChunksService chunksService) {
         this.chunksService = chunksService;
     }
 
@@ -22,8 +22,8 @@ class AndroidEntryViewUserInteractions implements EntryView.UserInteractions {
 
     @Override
     public void onUserMoveToTomorrow(Entry entry) {
-        Entry updatedEntry = Entry.transitioned(entry, Day.TOMORROW);
-        chunksService.updateEntry(updatedEntry);
+        chunksService.removeEntry(entry);
+        chunksService.createEntry(entry, Day.TOMORROW);
     }
 
     @Override

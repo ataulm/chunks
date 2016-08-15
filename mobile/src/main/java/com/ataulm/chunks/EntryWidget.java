@@ -11,7 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EntryView extends LinearLayout {
+public class EntryWidget extends LinearLayout {
 
     @BindView(R.id.entry_text_view)
     TextView entryTextView;
@@ -19,7 +19,7 @@ public class EntryView extends LinearLayout {
     @BindView(R.id.entry_button_see_all_actions)
     TextView seeAllActionsButton;
 
-    public EntryView(Context context, AttributeSet attrs) {
+    public EntryWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
     }
@@ -31,7 +31,7 @@ public class EntryView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(Entry entry, UserInteractions userInteractions) {
+    public void bind(Entry entry, ChunkEntryUserInteractions userInteractions) {
         entryTextView.setText(entry.value());
 
         final PopupMenu popupMenu = setupPopupMenuListener(entry, userInteractions);
@@ -47,19 +47,7 @@ public class EntryView extends LinearLayout {
         );
     }
 
-    interface UserInteractions {
-
-        void onUserMarkComplete(Entry entry);
-
-        void onUserMarkNotComplete(Entry entry);
-
-        void onUserMoveToTomorrow(Entry entry);
-
-        void onUserRemove(Entry entry);
-
-    }
-
-    private PopupMenu setupPopupMenuListener(Entry entry, UserInteractions userInteractions) {
+    private PopupMenu setupPopupMenuListener(Entry entry, ChunkEntryUserInteractions userInteractions) {
         PopupMenu popupMenu = new PopupMenu(getContext(), seeAllActionsButton);
         popupMenu.inflate(R.menu.menu_entry);
         popupMenu.setOnMenuItemClickListener(new MenuClickListener(entry, userInteractions));
@@ -69,10 +57,10 @@ public class EntryView extends LinearLayout {
     private static class MenuClickListener implements PopupMenu.OnMenuItemClickListener {
 
         private final Entry entry;
-        private final UserInteractions userInteractions;
+        private final ChunkEntryUserInteractions userInteractions;
 
 
-        MenuClickListener(Entry entry, UserInteractions userInteractions) {
+        MenuClickListener(Entry entry, ChunkEntryUserInteractions userInteractions) {
             this.entry = entry;
             this.userInteractions = userInteractions;
         }

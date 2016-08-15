@@ -16,17 +16,17 @@ public class ChunksService {
 
     private final ChunksRepository chunksRepository;
     private final Log log;
-    private final BehaviorSubject<Event<com.ataulm.chunks.Chunks>> eventsSubject;
+    private final BehaviorSubject<Event<Chunks>> eventsSubject;
 
     private boolean currentlyFetching;
 
     public ChunksService(ChunksRepository chunksRepository, Log log) {
         this.chunksRepository = chunksRepository;
         this.log = log;
-        this.eventsSubject = BehaviorSubject.create(Event.<com.ataulm.chunks.Chunks>idle());
+        this.eventsSubject = BehaviorSubject.create(Event.<Chunks>idle());
     }
 
-    public Observable<Event<com.ataulm.chunks.Chunks>> fetchEntries() {
+    public Observable<Event<Chunks>> fetchEntries() {
         return eventsSubject.doOnSubscribe(loadEventsIntoSubject());
     }
 
@@ -38,7 +38,7 @@ public class ChunksService {
                     return;
                 }
                 createFetchEntriesObservable()
-                        .compose(EventRxFunctions.<com.ataulm.chunks.Chunks>asEvents())
+                        .compose(EventRxFunctions.<Chunks>asEvents())
                         .doOnSubscribe(setCurrentlyLoadingFlag(true))
                         .doOnTerminate(setCurrentlyLoadingFlag(false))
                         .subscribe(new EventProxyObserver<>(eventsSubject, log));
@@ -59,42 +59,42 @@ public class ChunksService {
         return currentlyFetching || eventsSubject.getValue().getData().isPresent();
     }
 
-    private Observable<com.ataulm.chunks.Chunks> createFetchEntriesObservable() {
+    private Observable<Chunks> createFetchEntriesObservable() {
         return Observable.fromCallable(
-                new Callable<com.ataulm.chunks.Chunks>() {
+                new Callable<Chunks>() {
                     @Override
-                    public com.ataulm.chunks.Chunks call() throws Exception {
+                    public Chunks call() throws Exception {
                         return chunksRepository.getChunks();
                     }
                 }
         );
     }
 
-    public void createEntry(Entry entry) {
-        com.ataulm.chunks.Chunks chunks = getInMemoryChunksOrEmpty();
-        com.ataulm.chunks.Chunks updatedChunks = chunks.add(entry);
+    public void createEntry(Entry entry, Day day) {
+        Chunks chunks = getInMemoryChunksOrEmpty();
+        Chunks updatedChunks = chunks.add(entry, day);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void updateEntry(Entry entry) {
-        com.ataulm.chunks.Chunks chunks = getInMemoryChunksOrEmpty();
-        com.ataulm.chunks.Chunks updatedChunks = chunks.update(entry);
+        Chunks chunks = getInMemoryChunksOrEmpty();
+        Chunks updatedChunks = chunks.update(entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void removeEntry(Entry entry) {
-        com.ataulm.chunks.Chunks chunks = getInMemoryChunksOrEmpty();
-        com.ataulm.chunks.Chunks updatedChunks = chunks.remove(entry);
+        Chunks chunks = getInMemoryChunksOrEmpty();
+        Chunks updatedChunks = chunks.remove(entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
-    private com.ataulm.chunks.Chunks getInMemoryChunksOrEmpty() {
-        Event<com.ataulm.chunks.Chunks> event = eventsSubject.getValue();
-        return event.getData().or(com.ataulm.chunks.Chunks.empty());
+    private Chunks getInMemoryChunksOrEmpty() {
+        Event<Chunks> event = eventsSubject.getValue();
+        return event.getData().or(Chunks.empty());
     }
 
     public void persist() {
-        com.ataulm.chunks.Chunks chunks = getInMemoryChunksOrEmpty();
+        Chunks chunks = getInMemoryChunksOrEmpty();
         chunksRepository.persist(chunks);
     }
 

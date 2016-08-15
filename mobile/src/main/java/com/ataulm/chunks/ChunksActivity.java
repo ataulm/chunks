@@ -12,19 +12,10 @@ public class ChunksActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_chunks);
-        ButterKnife.bind(this);
 
         ChunksService chunksService = ((ChunksApplication) getApplication()).getChunksService();
-
-        ViewPager viewPager = ButterKnife.findById(this, R.id.view_pager);
-        DayTabsWidget dayTabsWidget = ButterKnife.findById(this, R.id.tabs);
-        EntryInputView entryInputView = ButterKnife.findById(this, R.id.entry_input_view);
-
-        EntryView.UserInteractions entryViewUserInteractions = new AndroidEntryViewUserInteractions(chunksService);
-        ChunksView chunksView = new AndroidChunksView(viewPager, entryViewUserInteractions);
-
+        ChunksView chunksView = ButterKnife.findById(this, R.id.chunks_screen);
         chunksPresenter = new AndroidChunksPresenter(chunksService, chunksView);
     }
 

@@ -11,18 +11,18 @@ public final class SharedPreferencesChunksRepository implements ChunksRepository
     private static final String ALL_ENTRIES = "all_entries";
 
     private final SharedPreferences sharedPreferences;
-    private final GsonEntriesConverter gsonEntriesConverter;
-    private final JsonEntriesConverter jsonEntriesConverter;
+    private final GsonChunksConverter gsonChunksConverter;
+    private final JsonChunksConverter jsonChunksConverter;
 
-    public static SharedPreferencesChunksRepository create(Context context, GsonEntriesConverter gsonEntriesConverter, JsonEntriesConverter jsonEntriesConverter) {
+    public static SharedPreferencesChunksRepository create(Context context, GsonChunksConverter gsonChunksConverter, JsonChunksConverter jsonChunksConverter) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        return new SharedPreferencesChunksRepository(sharedPreferences, gsonEntriesConverter, jsonEntriesConverter);
+        return new SharedPreferencesChunksRepository(sharedPreferences, gsonChunksConverter, jsonChunksConverter);
     }
 
-    private SharedPreferencesChunksRepository(SharedPreferences sharedPreferences, GsonEntriesConverter gsonEntriesConverter, JsonEntriesConverter jsonEntriesConverter) {
+    private SharedPreferencesChunksRepository(SharedPreferences sharedPreferences, GsonChunksConverter gsonChunksConverter, JsonChunksConverter jsonChunksConverter) {
         this.sharedPreferences = sharedPreferences;
-        this.gsonEntriesConverter = gsonEntriesConverter;
-        this.jsonEntriesConverter = jsonEntriesConverter;
+        this.gsonChunksConverter = gsonChunksConverter;
+        this.jsonChunksConverter = jsonChunksConverter;
     }
 
     @Override
@@ -36,14 +36,14 @@ public final class SharedPreferencesChunksRepository implements ChunksRepository
     }
 
     private Chunks chunksFromJson(String json) {
-        GsonEntries gsonEntries = jsonEntriesConverter.convert(json);
-        return gsonEntriesConverter.convert(gsonEntries);
+        GsonChunks gsonChunks = jsonChunksConverter.convert(json);
+        return gsonChunksConverter.convert(gsonChunks);
     }
 
     @Override
     public void persist(Chunks chunks) {
-        GsonEntries gsonEntries = gsonEntriesConverter.convert(chunks);
-        String json = jsonEntriesConverter.convert(gsonEntries);
+        GsonChunks gsonChunks = gsonChunksConverter.convert(chunks);
+        String json = jsonChunksConverter.convert(gsonChunks);
 
         sharedPreferences.edit()
                 .putString(ALL_ENTRIES, json)

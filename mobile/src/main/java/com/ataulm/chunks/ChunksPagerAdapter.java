@@ -9,10 +9,10 @@ import com.novoda.viewpageradapter.ViewPagerAdapter;
 
 final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
-    private final EntryView.UserInteractions userInteractions;
+    private final ChunkEntryUserInteractions userInteractions;
     private Chunks chunks;
 
-    ChunksPagerAdapter(EntryView.UserInteractions userInteractions, Chunks chunks) {
+    ChunksPagerAdapter(ChunkEntryUserInteractions userInteractions, Chunks chunks) {
         this.userInteractions = userInteractions;
         this.chunks = chunks;
     }

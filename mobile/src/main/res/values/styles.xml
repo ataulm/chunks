@@ -5,4 +5,17 @@
     <!-- Customize your theme here. -->
   </style>
 
+  <style name="DayTabs" />
+
+  <style name="DayTabs.Tab">
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/day_tabs_tab_text</item>
+  </style>
+
+  <style name="Chunks" />
+
+  <style name="Chunks.EntryInputWidget">
+    <item name="android:background">@android:color/holo_orange_light</item>
+  </style>
+
 </resources>
