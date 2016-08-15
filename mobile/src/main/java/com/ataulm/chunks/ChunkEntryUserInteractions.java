@@ -6,7 +6,7 @@ interface ChunkEntryUserInteractions {
 
     void onUserMarkNotComplete(Entry entry);
 
-    void onUserMoveToTomorrow(Entry entry);
+    void onUserTransitionEntry(Entry entry, Day day);
 
     void onUserRemove(Entry entry);
 

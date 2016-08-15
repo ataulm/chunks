@@ -21,9 +21,9 @@ class AndroidChunkEntryUserInteractions implements ChunkEntryUserInteractions {
     }
 
     @Override
-    public void onUserMoveToTomorrow(Entry entry) {
+    public void onUserTransitionEntry(Entry entry, Day day) {
         chunksService.removeEntry(entry);
-        chunksService.createEntry(entry, Day.TOMORROW);
+        chunksService.createEntry(entry, day);
     }
 
     @Override

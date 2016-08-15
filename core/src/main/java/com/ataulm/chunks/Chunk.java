@@ -61,13 +61,13 @@ public abstract class Chunk implements Iterable<Entry> {
         return create(values);
     }
 
-    public Chunk update(Entry entry) {
+    public Chunk update(Entry modifiedEntry) {
         List<Entry> values = new ArrayList<>(size() - 1);
-        for (Entry value : values()) {
-            if (value.id().equals(entry.id())) {
-                values.add(entry);
+        for (Entry existingValue : values()) {
+            if (existingValue.id().equals(modifiedEntry.id())) {
+                values.add(modifiedEntry);
             } else {
-                values.add(value);
+                values.add(existingValue);
             }
         }
         return create(values);

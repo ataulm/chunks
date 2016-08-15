@@ -1,20 +1,17 @@
 package com.ataulm.chunks;
 
-public class EntryFixtures {
+public final class EntryFixtures {
 
     private String value;
-    private Day day;
 
     public static EntryFixtures anEntry() {
         return new EntryFixtures(
-                "todo item",
-                Day.TODAY
+                "todo item"
         );
     }
 
-    public EntryFixtures(String value, Day day) {
+    private EntryFixtures(String value) {
         this.value = value;
-        this.day = day;
     }
 
     public EntryFixtures withValue(String value) {
@@ -22,13 +19,8 @@ public class EntryFixtures {
         return this;
     }
 
-    public EntryFixtures with(Day day) {
-        this.day = day;
-        return this;
-    }
-
-    public Entry build() {
-        return Entry.createNew(value, day);
+    public Entry get() {
+        return Entry.createNew(value);
     }
 
 }

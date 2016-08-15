@@ -72,10 +72,13 @@ public class EntryWidget extends LinearLayout {
                     userInteractions.onUserMarkComplete(entry);
                     return true;
                 case R.id.mark_not_complete:
-                    userInteractions.onUserMarkComplete(entry);
+                    userInteractions.onUserMarkNotComplete(entry);
+                    return true;
+                case R.id.move_to_today:
+                    userInteractions.onUserTransitionEntry(entry, Day.TODAY);
                     return true;
                 case R.id.move_to_tomorrow:
-                    userInteractions.onUserMoveToTomorrow(entry);
+                    userInteractions.onUserTransitionEntry(entry, Day.TOMORROW);
                     return true;
                 case R.id.remove:
                     userInteractions.onUserRemove(entry);

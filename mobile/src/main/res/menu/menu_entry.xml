@@ -7,6 +7,9 @@
     android:id="@+id/mark_not_complete"
     android:title="mark not complete" />
   <item
+    android:id="@+id/move_to_today"
+    android:title="move to today" />
+  <item
     android:id="@+id/move_to_tomorrow"
     android:title="move to tomorrow" />
   <item

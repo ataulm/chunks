@@ -36,6 +36,7 @@ class AndroidChunksPresenter implements ChunksPresenter {
     @Override
     public void stopPresenting() {
         safeUnsubscribeFrom(subscription);
+        chunksService.persist();
     }
 
     private static void safeUnsubscribeFrom(Subscription subscription) {
