@@ -33,7 +33,12 @@ public abstract class Chunk implements Iterable<Entry> {
     }
 
     public boolean contains(Entry entry) {
-        return values().contains(entry);
+        for (Entry value : values()) {
+            if (value.id().equals(entry.id())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int size() {
@@ -62,6 +67,10 @@ public abstract class Chunk implements Iterable<Entry> {
     }
 
     public Chunk update(Entry modifiedEntry) {
+        if (!contains(modifiedEntry)) {
+            throw new IllegalArgumentException("Chunk doesn't contain Entry: " + modifiedEntry);
+        }
+
         List<Entry> values = new ArrayList<>(size() - 1);
         for (Entry existingValue : values()) {
             if (existingValue.id().equals(modifiedEntry.id())) {

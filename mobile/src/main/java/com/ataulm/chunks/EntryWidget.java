@@ -2,6 +2,9 @@ package com.ataulm.chunks;
 
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
+import android.text.Spannable;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EntryWidget extends LinearLayout {
+
+    private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
 
     @BindView(R.id.entry_text_view)
     TextView entryTextView;
@@ -32,7 +37,13 @@ public class EntryWidget extends LinearLayout {
     }
 
     public void bind(Entry entry, ChunkEntryUserInteractions userInteractions) {
-        entryTextView.setText(entry.value());
+        if (entry.completedTimestamp().isPresent()) {
+            entryTextView.setText(entry.value(), TextView.BufferType.SPANNABLE);
+            Spannable spannable = (Spannable) entryTextView.getText();
+            spannable.setSpan(STRIKE_THROUGH_SPAN, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        } else {
+            entryTextView.setText(entry.value());
+        }
 
         final PopupMenu popupMenu = setupPopupMenuListener(entry, userInteractions);
         seeAllActionsButton.setOnClickListener(
@@ -59,7 +70,6 @@ public class EntryWidget extends LinearLayout {
         private final Entry entry;
         private final ChunkEntryUserInteractions userInteractions;
 
-
         MenuClickListener(Entry entry, ChunkEntryUserInteractions userInteractions) {
             this.entry = entry;
             this.userInteractions = userInteractions;
@@ -73,6 +83,9 @@ public class EntryWidget extends LinearLayout {
                     return true;
                 case R.id.mark_not_complete:
                     userInteractions.onUserMarkNotComplete(entry);
+                    return true;
+                case R.id.move_to_yesterday:
+                    userInteractions.onUserTransitionEntry(entry, Day.YESTERDAY);
                     return true;
                 case R.id.move_to_today:
                     userInteractions.onUserTransitionEntry(entry, Day.TODAY);
