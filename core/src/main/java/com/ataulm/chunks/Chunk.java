@@ -32,9 +32,9 @@ public abstract class Chunk implements Iterable<Entry> {
         return values().get(position);
     }
 
-    public boolean contains(Entry entry) {
-        for (Entry value : values()) {
-            if (value.id().equals(entry.id())) {
+    public boolean containsEntryWith(Id id) {
+        for (Entry entry : values()) {
+            if (entry.id().equals(id)) {
                 return true;
             }
         }
@@ -46,45 +46,61 @@ public abstract class Chunk implements Iterable<Entry> {
     }
 
     public Chunk add(Entry entry) {
+        if (containsEntryWith(entry.id())) {
+            throw new IllegalArgumentException("chunk already contains entry with id: " + entry.id());
+        }
+
         List<Entry> values = new ArrayList<>(size() + 1);
         values.addAll(values());
         values.add(entry);
         return create(values);
     }
 
-    public Chunk remove(Entry entry) {
-        if (!contains(entry)) {
-            throw new IllegalArgumentException("Chunk doesn't contain Entry: " + entry);
-        }
-
-        List<Entry> values = new ArrayList<>(size() - 1);
-        for (Entry value : values()) {
-            if (!value.equals(entry)) {
-                values.add(value);
+    public Chunk add(List<Entry> entries) {
+        for (Entry entry : entries) {
+            if (containsEntryWith(entry.id())) {
+                throw new IllegalArgumentException("chunk already contains entry with id: " + entry.id());
             }
         }
-        return create(values);
+
+        List<Entry> updatedValues = new ArrayList<>(size() + entries.size());
+        updatedValues.addAll(values());
+        updatedValues.addAll(entries);
+        return create(updatedValues);
     }
 
-    public Chunk update(Entry modifiedEntry) {
-        if (!contains(modifiedEntry)) {
-            throw new IllegalArgumentException("Chunk doesn't contain Entry: " + modifiedEntry);
-        }
-
-        List<Entry> values = new ArrayList<>(size() - 1);
-        for (Entry existingValue : values()) {
-            if (existingValue.id().equals(modifiedEntry.id())) {
-                values.add(modifiedEntry);
-            } else {
-                values.add(existingValue);
+    public Chunk remove(Id id) {
+        List<Entry> updatedValues = new ArrayList<>(size());
+        for (Entry value : values()) {
+            if (!value.id().equals(id)) {
+                updatedValues.add(value);
             }
         }
-        return create(values);
+        return create(updatedValues);
+    }
+
+    public Chunk remove(List<Entry> entries) {
+        List<Entry> updatedValues = new ArrayList<>(values());
+        updatedValues.removeAll(entries);
+        return create(updatedValues);
+    }
+
+    public Chunk update(Entry entry) {
+        List<Entry> updatedValues = new ArrayList<>(size());
+        for (Entry existingValue : values()) {
+            if (existingValue.id().equals(entry.id())) {
+                updatedValues.add(entry);
+            } else {
+                updatedValues.add(existingValue);
+            }
+        }
+        return create(updatedValues);
     }
 
     @Override
     public Iterator<Entry> iterator() {
         return values().iterator();
     }
+
 }
 

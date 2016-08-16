@@ -27,7 +27,7 @@ public class ChunksTest {
                 .withTomorrow(tomorrow)
                 .get();
 
-        Chunks updatedChunks = chunks.remove(entry);
+        Chunks updatedChunks = chunks.remove(entry.id());
 
         assertThat(updatedChunks.tomorrow()).doesNotContain(entry);
     }
