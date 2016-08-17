@@ -9,9 +9,6 @@ public class GsonChunks {
     @SerializedName("last_shuffled_date")
     public String lastShuffledDate;
 
-    @SerializedName("yesterday")
-    public GsonChunk yesterday;
-
     @SerializedName("today")
     public GsonChunk today;
 

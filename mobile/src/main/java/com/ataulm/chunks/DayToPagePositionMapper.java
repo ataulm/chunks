@@ -2,13 +2,14 @@ package com.ataulm.chunks;
 
 public class DayToPagePositionMapper {
 
+    private static final int PAGE_TOMORROW = 1;
+    private static final int PAGE_TODAY = 0;
+
     public static Day getDayFor(int pagePosition) {
         switch (pagePosition) {
-            case 0:
-                return Day.YESTERDAY;
-            case 1:
+            case PAGE_TODAY:
                 return Day.TODAY;
-            case 2:
+            case PAGE_TOMORROW:
                 return Day.TOMORROW;
             default:
                 throw new IllegalStateException("unexpected pagePosition: " + pagePosition);
@@ -17,12 +18,10 @@ public class DayToPagePositionMapper {
 
     public static int getPageFor(Day day) {
         switch (day) {
-            case YESTERDAY:
-                return 0;
             case TODAY:
-                return 1;
+                return PAGE_TODAY;
             case TOMORROW:
-                return 2;
+                return PAGE_TOMORROW;
             default:
                 throw new IllegalStateException("unexpected day: " + day);
         }

@@ -10,9 +10,6 @@ import butterknife.ButterKnife;
 
 public class TabsPagerNavigationWidget extends LinearLayout {
 
-    @BindView(R.id.day_tabs_yesterday)
-    View yesterdayView;
-
     @BindView(R.id.day_tabs_today)
     View todayView;
 
@@ -32,16 +29,12 @@ public class TabsPagerNavigationWidget extends LinearLayout {
     }
 
     public void bind(Listener listener) {
-        yesterdayView.setOnClickListener(createListenerFor(Day.YESTERDAY, listener));
         todayView.setOnClickListener(createListenerFor(Day.TODAY, listener));
         tomorrowView.setOnClickListener(createListenerFor(Day.TOMORROW, listener));
     }
 
     public void display(Day day) {
         switch (day) {
-            case YESTERDAY:
-                activate(yesterdayView);
-                break;
             case TODAY:
                 activate(todayView);
                 break;
@@ -54,7 +47,6 @@ public class TabsPagerNavigationWidget extends LinearLayout {
     }
 
     private void activate(View view) {
-        yesterdayView.setActivated(yesterdayView.equals(view));
         todayView.setActivated(todayView.equals(view));
         tomorrowView.setActivated(tomorrowView.equals(view));
     }

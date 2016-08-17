@@ -1,7 +1,6 @@
 <resources>
 
   <string name="app_name">chunks</string>
-  <string name="days_tabs_yesterday">@string/yesterday</string>
   <string name="days_tabs_today">@string/today</string>
   <string name="days_tabs_tomorrow">@string/tomorrow</string>
 

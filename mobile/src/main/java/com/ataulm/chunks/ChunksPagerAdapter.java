@@ -1,5 +1,6 @@
 package com.ataulm.chunks;
 
+import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,16 +11,23 @@ import com.novoda.viewpageradapter.ViewPagerAdapter;
 final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
     private final ChunkEntryUserInteractions userInteractions;
+    private final Resources resources;
     private Chunks chunks;
 
-    ChunksPagerAdapter(ChunkEntryUserInteractions userInteractions, Chunks chunks) {
+    ChunksPagerAdapter(ChunkEntryUserInteractions userInteractions, Resources resources, Chunks chunks) {
         this.userInteractions = userInteractions;
+        this.resources = resources;
         this.chunks = chunks;
     }
 
     public void update(Chunks chunks) {
         this.chunks = chunks;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public int getCount() {
+        return 2;
     }
 
     @Override
@@ -43,40 +51,32 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
     }
 
     private Chunk getChunkForPosition(int position) {
-        if (position == 0) {
-            return chunks.yesterday();
+        Day day = getDayFor(position);
+        switch (day) {
+            case TODAY:
+                return chunks.today();
+            case TOMORROW:
+                return chunks.tomorrow();
+            default:
+                throw new IllegalArgumentException("no idea what to do for position " + position);
         }
-
-        if (position == 1) {
-            return chunks.today();
-        }
-
-        if (position == 2) {
-            return chunks.tomorrow();
-        }
-
-        throw new IllegalArgumentException("no idea what to do for position " + position);
     }
 
-    @Override
-    public int getCount() {
-        return 3;
+    private Day getDayFor(int position) {
+        return DayToPagePositionMapper.getDayFor(position);
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        if (position == 0) {
-            return "Yesterday";
+        Day day = getDayFor(position);
+        switch (day) {
+            case TODAY:
+                return resources.getString(R.string.days_tabs_today);
+            case TOMORROW:
+                return resources.getString(R.string.days_tabs_tomorrow);
+            default:
+                throw new IllegalArgumentException("no idea what to do for position " + position);
         }
-
-        if (position == 1) {
-            return "Today";
-        }
-
-        if (position == 2) {
-            return "Tomorrow";
-        }
-
-        throw new IllegalArgumentException("no idea what to do for position " + position);
     }
+
 }

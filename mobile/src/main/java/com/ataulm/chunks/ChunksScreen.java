@@ -67,12 +67,6 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
                         }
 
                         Day day = DayToPagePositionMapper.getDayFor(position);
-                        if (day == Day.YESTERDAY) {
-                            entryInputWidget.setVisibility(GONE);
-                        } else {
-                            entryInputWidget.setVisibility(VISIBLE);
-                        }
-
                         setPagerNavigation(day);
                         entryInputWidget.bind(entryInputUserInteractions, day);
                     }
@@ -85,7 +79,7 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
     private void updateViewPagerWith(Chunks chunks, ChunkEntryUserInteractions chunkEntryUserInteractions) {
         ChunksPagerAdapter chunksPagerAdapter;
         if (viewPager.getAdapter() == null) {
-            chunksPagerAdapter = new ChunksPagerAdapter(chunkEntryUserInteractions, chunks);
+            chunksPagerAdapter = new ChunksPagerAdapter(chunkEntryUserInteractions, viewPager.getResources(), chunks);
             viewPager.setAdapter(chunksPagerAdapter);
             setViewPager(Day.TODAY); // TODO: this happens on rotate, but not necessarily what we want
         } else {

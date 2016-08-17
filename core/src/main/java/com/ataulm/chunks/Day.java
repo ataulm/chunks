@@ -2,7 +2,6 @@ package com.ataulm.chunks;
 
 public enum Day {
 
-    YESTERDAY("0"),
     TODAY("1"),
     TOMORROW("2");
 

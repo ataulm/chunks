@@ -46,7 +46,7 @@ public final class ChunksFixtures {
     }
 
     public Chunks get() {
-        return Chunks.create(lastShuffledTimestamp, yesterday, today, tomorrow);
+        return Chunks.create(lastShuffledTimestamp, today, tomorrow);
     }
 
 }
