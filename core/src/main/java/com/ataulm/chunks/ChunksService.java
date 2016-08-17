@@ -4,6 +4,7 @@ import com.ataulm.Event;
 import com.ataulm.EventProxyObserver;
 import com.ataulm.EventRxFunctions;
 import com.ataulm.Log;
+import com.ataulm.Optional;
 import com.ataulm.chunks.repository.ChunksRepository;
 
 import java.util.Calendar;
@@ -12,6 +13,7 @@ import java.util.concurrent.Callable;
 
 import rx.Observable;
 import rx.functions.Action0;
+import rx.functions.Func1;
 import rx.subjects.BehaviorSubject;
 
 public class ChunksService {
@@ -29,7 +31,21 @@ public class ChunksService {
     }
 
     public Observable<Event<Chunks>> fetchEntries() {
-        return eventsSubject.doOnSubscribe(loadEventsIntoSubject());
+        return eventsSubject.doOnSubscribe(loadEventsIntoSubject()).map(new Func1<Event<Chunks>, Event<Chunks>>() {
+            @Override
+            public Event<Chunks> call(Event<Chunks> chunksEvent) {
+                Optional<Chunks> data = chunksEvent.getData();
+                if (data.isPresent() && shouldShuffleAlong(data.get())) {
+                    return chunksEvent.updateData(data.get().shuffleAlong());
+                } else {
+                    return chunksEvent;
+                }
+            }
+
+            private boolean shouldShuffleAlong(Chunks chunks) {
+                return !chunks.isEmpty() && todayIsDifferentFromLastShuffledDay(chunks);
+            }
+        });
     }
 
     private Action0 loadEventsIntoSubject() {
@@ -72,22 +88,16 @@ public class ChunksService {
         );
     }
 
-    private Chunks shuffleDaysAlong(Chunks chunks) {
-        if (chunks.isEmpty() || todayIsStillLastShuffledDay(chunks)) {
-            return chunks;
-        }
-        return chunks.shuffleAlong();
-    }
-
-    private boolean todayIsStillLastShuffledDay(Chunks chunks) {
+    private boolean todayIsDifferentFromLastShuffledDay(Chunks chunks) {
         long timestamp = Long.parseLong(chunks.lastShuffledTimestamp());
         Calendar lastShuffled = Calendar.getInstance();
         lastShuffled.setTime(new Date(timestamp));
 
         Calendar now = Calendar.getInstance();
 
-        return lastShuffled.get(Calendar.DAY_OF_YEAR) == now.get(Calendar.DAY_OF_YEAR)
-                && lastShuffled.get(Calendar.YEAR) == now.get(Calendar.YEAR);
+        boolean differentDay = lastShuffled.get(Calendar.DAY_OF_YEAR) != now.get(Calendar.DAY_OF_YEAR);
+        boolean differentYear = lastShuffled.get(Calendar.YEAR) != now.get(Calendar.YEAR);
+        return differentDay || differentYear;
     }
 
     public void createEntry(Entry entry, Day day) {

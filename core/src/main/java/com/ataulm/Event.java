@@ -38,6 +38,10 @@ public abstract class Event<T> {
 
     public abstract Optional<Throwable> getError();
 
+    public Event<T> updateData(T data) {
+        return new AutoValue_Event<>(getType(), Optional.of(data), getError());
+    }
+
     Event() {
         // instantiate AutoValue generated class
     }

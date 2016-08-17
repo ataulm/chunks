@@ -10,13 +10,13 @@ class AndroidChunkEntryUserInteractions implements ChunkEntryUserInteractions {
 
     @Override
     public void onUserMarkComplete(Entry entry) {
-        Entry updatedEntry = Entry.completed(entry);
+        Entry updatedEntry = entry.markCompleted();
         chunksService.updateEntry(updatedEntry);
     }
 
     @Override
     public void onUserMarkNotComplete(Entry entry) {
-        Entry updatedEntry = Entry.notCompleted(entry);
+        Entry updatedEntry = entry.markNotComplete();
         chunksService.updateEntry(updatedEntry);
     }
 

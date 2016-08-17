@@ -9,28 +9,24 @@ import javax.annotation.Nullable;
 public abstract class Entry {
 
     public static Entry createNew(String value) {
-        return new AutoValue_Entry(Id.create(), value, Optional.<String>absent());
+        return createFrom(Id.create(), value);
     }
 
     public static Entry createFrom(Id id, String value) {
-        return new AutoValue_Entry(id, value, Optional.<String>absent());
+        return createFrom(id, value, null);
     }
 
     public static Entry createFrom(Id id, String value, @Nullable String completedTimestamp) {
         return new AutoValue_Entry(id, value, Optional.fromNullable(completedTimestamp));
     }
 
-    public static Entry completed(Entry entry) {
+    public Entry markCompleted() {
         String completedTimestamp = String.valueOf(System.currentTimeMillis());
-        return new AutoValue_Entry(entry.id(), entry.value(), Optional.of(completedTimestamp));
+        return createFrom(id(), value(), completedTimestamp);
     }
 
-    public static Entry notCompleted(Entry entry) {
-        return new AutoValue_Entry(entry.id(), entry.value(), Optional.<String>absent());
-    }
-
-    public static Entry edited(Entry entry, String value) {
-        return new AutoValue_Entry(entry.id(), value, entry.completedTimestamp());
+    public Entry markNotComplete() {
+        return createFrom(id(), value());
     }
 
     public abstract Id id();

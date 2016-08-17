@@ -2,8 +2,8 @@ package com.ataulm.chunks;
 
 public class DayToPagePositionMapper {
 
-    private static final int PAGE_TOMORROW = 1;
     private static final int PAGE_TODAY = 0;
+    private static final int PAGE_TOMORROW = 1;
 
     public static Day getDayFor(int pagePosition) {
         switch (pagePosition) {

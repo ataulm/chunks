@@ -64,15 +64,16 @@ public abstract class Chunks {
         throw new IllegalArgumentException("no entries with id found: " + id);
     }
 
-    public boolean isEmpty() {
-        return today().isEmpty() && tomorrow().isEmpty();
-    }
+    public Chunks update(Entry entry) {
+        if (today().containsEntryWith(entry.id())) {
+            return create(lastShuffledTimestamp(), today().update(entry), tomorrow());
+        }
 
-    public Chunks transition(List<Entry> entries, Day day) {
-        Chunk updatedToday = today().remove(entries);
-        Chunk updatedTomorrow = tomorrow().remove(entries);
+        if (tomorrow().containsEntryWith(entry.id())) {
+            return create(lastShuffledTimestamp(), today(), tomorrow().update(entry));
+        }
 
-        return create(lastShuffledTimestamp(), updatedToday, updatedTomorrow).add(entries, day);
+        throw new IllegalArgumentException("no entries with id found: " + entry.id());
     }
 
     public Chunks shuffleAlong() {
@@ -87,16 +88,9 @@ public abstract class Chunks {
         return Chunks.create(generateLastShuffledTimestamp(), updatedToday, updatedTomorrow);
     }
 
-    public Chunks update(Entry entry) {
-        if (today().containsEntryWith(entry.id())) {
-            return create(lastShuffledTimestamp(), today().update(entry), tomorrow());
-        }
-
-        if (tomorrow().containsEntryWith(entry.id())) {
-            return create(lastShuffledTimestamp(), today(), tomorrow().update(entry));
-        }
-
-        throw new IllegalArgumentException("no entries with id found: " + entry.id());
+    public boolean isEmpty() {
+        return today().isEmpty() && tomorrow().isEmpty();
     }
+
 }
 
