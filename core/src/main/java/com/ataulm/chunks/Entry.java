@@ -35,5 +35,9 @@ public abstract class Entry {
 
     public abstract Optional<String> completedTimestamp();
 
+    public boolean isCompleted() {
+        return completedTimestamp().isPresent();
+    }
+
 }
 

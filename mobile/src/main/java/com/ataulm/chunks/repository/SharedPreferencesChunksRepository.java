@@ -3,7 +3,9 @@ package com.ataulm.chunks.repository;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.ataulm.chunks.ChunkDate;
 import com.ataulm.chunks.Chunks;
+import com.ataulm.chunks.SystemClock;
 
 public final class SharedPreferencesChunksRepository implements ChunksRepository {
 
@@ -31,7 +33,7 @@ public final class SharedPreferencesChunksRepository implements ChunksRepository
             String json = sharedPreferences.getString(ALL_ENTRIES, "");
             return chunksFromJson(json);
         } else {
-            return Chunks.empty();
+            return Chunks.empty(ChunkDate.create(new SystemClock()));
         }
     }
 

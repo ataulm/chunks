@@ -1,6 +1,10 @@
 package com.ataulm.chunks.repository;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 
-public class GsonChunk extends ArrayList<GsonEntry> {
+import java.util.List;
+
+public class GsonChunk {
+    @SerializedName("entries")
+    List<GsonEntry> entries;
 }

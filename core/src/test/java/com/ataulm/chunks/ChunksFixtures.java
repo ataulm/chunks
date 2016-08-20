@@ -4,26 +4,26 @@ import static com.ataulm.chunks.ChunkFixtures.aChunk;
 
 public final class ChunksFixtures {
 
-    private String lastShuffledTimestamp;
+    private ChunkDate todaysDate;
     private Chunk today;
     private Chunk tomorrow;
 
     public static ChunksFixtures aChunks() {
         return new ChunksFixtures(
-                "0",
+                ChunkDate.create(0),
                 aChunk().get(),
                 aChunk().get()
         );
     }
 
-    private ChunksFixtures(String lastShuffledTimestamp, Chunk today, Chunk tomorrow) {
-        this.lastShuffledTimestamp = lastShuffledTimestamp;
+    private ChunksFixtures(ChunkDate todaysDate, Chunk today, Chunk tomorrow) {
+        this.todaysDate = todaysDate;
         this.today = today;
         this.tomorrow = tomorrow;
     }
 
-    public ChunksFixtures withLastShuffledTimestamp(String lastShuffledTimestamp) {
-        this.lastShuffledTimestamp = lastShuffledTimestamp;
+    public ChunksFixtures withTodaysDate(ChunkDate todaysDate) {
+        this.todaysDate = todaysDate;
         return this;
     }
 
@@ -38,7 +38,7 @@ public final class ChunksFixtures {
     }
 
     public Chunks get() {
-        return Chunks.create(lastShuffledTimestamp, today, tomorrow);
+        return Chunks.create(todaysDate, today, tomorrow);
     }
 
 }

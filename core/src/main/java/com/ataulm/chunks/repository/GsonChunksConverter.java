@@ -1,5 +1,6 @@
 package com.ataulm.chunks.repository;
 
+import com.ataulm.chunks.ChunkDate;
 import com.ataulm.chunks.Chunks;
 
 public class GsonChunksConverter {
@@ -12,7 +13,7 @@ public class GsonChunksConverter {
 
     public GsonChunks convert(Chunks chunks) {
         GsonChunks gsonChunks = new GsonChunks();
-        gsonChunks.lastShuffledDate = chunks.lastShuffledTimestamp();
+        gsonChunks.todays_date = String.valueOf(chunks.todaysDate().timestamp());
         gsonChunks.today = chunkConverter.convert(chunks.today());
         gsonChunks.tomorrow = chunkConverter.convert(chunks.tomorrow());
         return gsonChunks;
@@ -20,7 +21,7 @@ public class GsonChunksConverter {
 
     public Chunks convert(GsonChunks gsonChunks) {
         return Chunks.create(
-                gsonChunks.lastShuffledDate,
+                ChunkDate.create(Long.parseLong(gsonChunks.todays_date)),
                 chunkConverter.convert(gsonChunks.today),
                 chunkConverter.convert(gsonChunks.tomorrow)
         );

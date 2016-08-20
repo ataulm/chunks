@@ -7,8 +7,6 @@ import com.ataulm.Log;
 import com.ataulm.Optional;
 import com.ataulm.chunks.repository.ChunksRepository;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.Callable;
 
 import rx.Observable;
@@ -21,6 +19,7 @@ public class ChunksService {
     private final ChunksRepository chunksRepository;
     private final Log log;
     private final BehaviorSubject<Event<Chunks>> eventsSubject;
+    private final SystemClock clock = new SystemClock();
 
     private boolean currentlyFetching;
 
@@ -31,34 +30,35 @@ public class ChunksService {
     }
 
     public Observable<Event<Chunks>> fetchEntries() {
-        return eventsSubject.doOnSubscribe(loadEventsIntoSubject()).map(new Func1<Event<Chunks>, Event<Chunks>>() {
-            @Override
-            public Event<Chunks> call(Event<Chunks> chunksEvent) {
-                Optional<Chunks> data = chunksEvent.getData();
-                if (data.isPresent() && shouldShuffleAlong(data.get())) {
-                    return chunksEvent.updateData(data.get().shuffleAlong());
-                } else {
-                    return chunksEvent;
-                }
-            }
+        /*
+         Every time this method is called, I want to shuffle stuff along
+         Problem is that although we return the shuffled along version, eventsSubject isn't updated
 
-            private boolean shouldShuffleAlong(Chunks chunks) {
-                return !chunks.isEmpty() && todayIsDifferentFromLastShuffledDay(chunks);
-            }
-        });
+
+         */
+        return eventsSubject.doOnSubscribe(loadEventsIntoSubject())
+                .map(shuffleAlong());
     }
 
     private Action0 loadEventsIntoSubject() {
         return new Action0() {
             @Override
             public void call() {
-                if (eventsAreBeingOrHaveAlreadyBeenLoaded()) {
+                if (currentlyFetching) {
                     return;
                 }
+
                 createFetchChunksObservable()
-                        .compose(EventRxFunctions.<Chunks>asEvents())
+                        .map(new Func1<Chunks, Chunks>() {
+                            @Override
+                            public Chunks call(Chunks chunks) {
+                                ChunkDate today = ChunkDate.create(clock);
+                                return chunks.shuffleAlong(today);
+                            }
+                        })
                         .doOnSubscribe(setCurrentlyLoadingFlag(true))
                         .doOnTerminate(setCurrentlyLoadingFlag(false))
+                        .compose(EventRxFunctions.<Chunks>asEvents())
                         .subscribe(new EventProxyObserver<>(eventsSubject, log));
             }
         };
@@ -73,10 +73,6 @@ public class ChunksService {
         };
     }
 
-    private boolean eventsAreBeingOrHaveAlreadyBeenLoaded() {
-        return currentlyFetching || eventsSubject.getValue().getData().isPresent();
-    }
-
     private Observable<Chunks> createFetchChunksObservable() {
         return Observable.fromCallable(
                 new Callable<Chunks>() {
@@ -88,16 +84,22 @@ public class ChunksService {
         );
     }
 
-    private boolean todayIsDifferentFromLastShuffledDay(Chunks chunks) {
-        long timestamp = Long.parseLong(chunks.lastShuffledTimestamp());
-        Calendar lastShuffled = Calendar.getInstance();
-        lastShuffled.setTime(new Date(timestamp));
+    private Func1<Event<Chunks>, Event<Chunks>> shuffleAlong() {
+        return new Func1<Event<Chunks>, Event<Chunks>>() {
+            @Override
+            public Event<Chunks> call(Event<Chunks> chunksEvent) {
+                log.debug("!!!", "shuffleAlong()");
+                Optional<Chunks> data = chunksEvent.getData();
+                if (data.isPresent()) {
+                    ChunkDate today = ChunkDate.create(clock);
+                    Chunks updatedChunks = data.get().shuffleAlong(today);
+                    return chunksEvent.updateData(updatedChunks);
+                } else {
+                    return chunksEvent;
+                }
+            }
 
-        Calendar now = Calendar.getInstance();
-
-        boolean differentDay = lastShuffled.get(Calendar.DAY_OF_YEAR) != now.get(Calendar.DAY_OF_YEAR);
-        boolean differentYear = lastShuffled.get(Calendar.YEAR) != now.get(Calendar.YEAR);
-        return differentDay || differentYear;
+        };
     }
 
     public void createEntry(Entry entry, Day day) {
@@ -120,7 +122,7 @@ public class ChunksService {
 
     private Chunks getInMemoryChunksOrEmpty() {
         Event<Chunks> event = eventsSubject.getValue();
-        return event.getData().or(Chunks.empty());
+        return event.getData().or(Chunks.empty(ChunkDate.create(clock)));
     }
 
     public void persist() {

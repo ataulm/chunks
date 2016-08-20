@@ -6,8 +6,8 @@ import java.util.List;
 
 public class GsonChunks {
 
-    @SerializedName("last_shuffled_date")
-    public String lastShuffledDate;
+    @SerializedName("todays_date")
+    public String todays_date;
 
     @SerializedName("today")
     public GsonChunk today;

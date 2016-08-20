@@ -16,15 +16,16 @@ public class GsonChunkConverter {
 
     public GsonChunk convert(Chunk chunk) {
         GsonChunk gsonChunk = new GsonChunk();
+        gsonChunk.entries = new ArrayList<>(chunk.size());
         for (Entry entry : chunk) {
-            gsonChunk.add(entryConverter.convert(entry));
+            gsonChunk.entries.add(entryConverter.convert(entry));
         }
         return gsonChunk;
     }
 
     public Chunk convert(GsonChunk gsonChunk) {
-        List<Entry> entries = new ArrayList<>(gsonChunk.size());
-        for (GsonEntry gsonEntry : gsonChunk) {
+        List<Entry> entries = new ArrayList<>(gsonChunk.entries.size());
+        for (GsonEntry gsonEntry : gsonChunk.entries) {
             Entry entry = entryConverter.convert(gsonEntry);
             entries.add(entry);
         }

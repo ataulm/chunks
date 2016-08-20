@@ -16,7 +16,7 @@ public class ChunksTest {
 
     @Test
     public void addEntryToToday() {
-        Chunks chunks = Chunks.empty();
+        Chunks chunks = Chunks.empty(ChunkDate.create(new SystemClock()));
         Entry entry = anEntry().get();
 
         Chunks updatedChunks = chunks.add(entry, Day.TODAY);
@@ -26,7 +26,7 @@ public class ChunksTest {
 
     @Test
     public void addEntryToTomorrow() {
-        Chunks chunks = Chunks.empty();
+        Chunks chunks = Chunks.empty(ChunkDate.create(new SystemClock()));
         Entry entry = anEntry().get();
 
         Chunks updatedChunks = chunks.add(entry, Day.TOMORROW);
@@ -74,7 +74,7 @@ public class ChunksTest {
 
         Chunks updatedChunks = chunks.shuffleAlong();
 
-        assertThat(updatedChunks.today().values()).isEqualTo(incompleteTasks);
+        assertThat(updatedChunks.today().entries()).isEqualTo(incompleteTasks);
     }
 
     @Test
@@ -84,9 +84,11 @@ public class ChunksTest {
 
         Chunk today = aChunk().with(todayTasks).get();
         Chunk tomorrow = aChunk().with(tomorrowTasks).get();
-        Chunks chunks = aChunks().withToday(today).withTomorrow(tomorrow).get();
 
-        Chunks updatedChunks = chunks.shuffleAlong();
+        ChunkDate todaysDate = ChunkDate.create(0);
+        Chunks chunks = aChunks().withTodaysDate(todaysDate).withToday(today).withTomorrow(tomorrow).get();
+
+        Chunks updatedChunks = chunks.shuffleAlong(todaysDate);
 
         assertThat(updatedChunks).is(withNoTasksInTomorrowIsEmptyAndTodayContains(tomorrowTasks));
     }
@@ -95,7 +97,7 @@ public class ChunksTest {
         return new Condition<Chunks>() {
             @Override
             public boolean matches(Chunks value) {
-                return value.today().values().containsAll(tomorrowTasks)
+                return value.today().entries().containsAll(tomorrowTasks)
                         && value.tomorrow().isEmpty();
             }
         };

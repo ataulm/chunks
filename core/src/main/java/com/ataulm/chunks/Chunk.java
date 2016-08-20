@@ -18,22 +18,22 @@ public abstract class Chunk implements Iterable<Entry> {
         return create(Collections.<Entry>emptyList());
     }
 
-    abstract List<Entry> values();
+    public abstract List<Entry> entries();
 
     protected Chunk() {
         // use static factory
     }
 
     public boolean isEmpty() {
-        return values().isEmpty();
+        return entries().isEmpty();
     }
 
     public Entry get(int position) {
-        return values().get(position);
+        return entries().get(position);
     }
 
     public boolean containsEntryWith(Id id) {
-        for (Entry entry : values()) {
+        for (Entry entry : entries()) {
             if (entry.id().equals(id)) {
                 return true;
             }
@@ -42,7 +42,7 @@ public abstract class Chunk implements Iterable<Entry> {
     }
 
     public int size() {
-        return values().size();
+        return entries().size();
     }
 
     public Chunk add(Entry entry) {
@@ -50,10 +50,10 @@ public abstract class Chunk implements Iterable<Entry> {
             throw new IllegalArgumentException("chunk already contains entry with id: " + entry.id());
         }
 
-        List<Entry> values = new ArrayList<>(size() + 1);
-        values.addAll(values());
-        values.add(entry);
-        return create(values);
+        List<Entry> entries = new ArrayList<>(size() + 1);
+        entries.addAll(entries());
+        entries.add(entry);
+        return create(entries);
     }
 
     public Chunk add(List<Entry> entries) {
@@ -63,43 +63,43 @@ public abstract class Chunk implements Iterable<Entry> {
             }
         }
 
-        List<Entry> updatedValues = new ArrayList<>(size() + entries.size());
-        updatedValues.addAll(values());
-        updatedValues.addAll(entries);
-        return create(updatedValues);
+        List<Entry> updatedEntries = new ArrayList<>(size() + entries.size());
+        updatedEntries.addAll(entries());
+        updatedEntries.addAll(entries);
+        return create(updatedEntries);
     }
 
     public Chunk remove(Id id) {
-        List<Entry> updatedValues = new ArrayList<>(size());
-        for (Entry value : values()) {
+        List<Entry> updatedEntries = new ArrayList<>(size());
+        for (Entry value : entries()) {
             if (!value.id().equals(id)) {
-                updatedValues.add(value);
+                updatedEntries.add(value);
             }
         }
-        return create(updatedValues);
+        return create(updatedEntries);
     }
 
     public Chunk remove(List<Entry> entries) {
-        List<Entry> updatedValues = new ArrayList<>(values());
-        updatedValues.removeAll(entries);
-        return create(updatedValues);
+        List<Entry> updatedEntries = new ArrayList<>(entries());
+        updatedEntries.removeAll(entries);
+        return create(updatedEntries);
     }
 
     public Chunk update(Entry entry) {
-        List<Entry> updatedValues = new ArrayList<>(size());
-        for (Entry existingValue : values()) {
+        List<Entry> updatedEntries = new ArrayList<>(size());
+        for (Entry existingValue : entries()) {
             if (existingValue.id().equals(entry.id())) {
-                updatedValues.add(entry);
+                updatedEntries.add(entry);
             } else {
-                updatedValues.add(existingValue);
+                updatedEntries.add(existingValue);
             }
         }
-        return create(updatedValues);
+        return create(updatedEntries);
     }
 
     @Override
     public Iterator<Entry> iterator() {
-        return values().iterator();
+        return entries().iterator();
     }
 
 }
