@@ -7,7 +7,6 @@ import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
