@@ -7,14 +7,17 @@ public class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHold
 
     private final ChunkEntryUserInteractions userInteractions;
 
+    private Day day;
     private Chunk chunk;
 
-    public ChunkRecyclerViewAdapter(ChunkEntryUserInteractions userInteractions, Chunk chunk) {
+    public ChunkRecyclerViewAdapter(ChunkEntryUserInteractions userInteractions, Day day, Chunk chunk) {
         this.userInteractions = userInteractions;
+        this.day = day;
         this.chunk = chunk;
     }
 
-    public void update(Chunk chunk) {
+    public void update(Day day, Chunk chunk) {
+        this.day = day;
         this.chunk = chunk;
         notifyDataSetChanged();
     }
@@ -27,7 +30,7 @@ public class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHold
     @Override
     public void onBindViewHolder(EntryViewHolder holder, int position) {
         Entry entry = chunk.get(position);
-        holder.entryWidget.bind(entry, userInteractions);
+        holder.entryWidget.bind(day, entry, userInteractions);
     }
 
     @Override
