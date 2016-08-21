@@ -6,6 +6,7 @@ import android.text.Spannable;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -36,7 +37,7 @@ public class EntryWidget extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(Entry entry, ChunkEntryUserInteractions userInteractions) {
+    public void bind(Day day, Entry entry, ChunkEntryUserInteractions userInteractions) {
         if (entry.completedTimestamp().isPresent()) {
             entryTextView.setText(entry.value(), TextView.BufferType.SPANNABLE);
             Spannable spannable = (Spannable) entryTextView.getText();
@@ -45,7 +46,7 @@ public class EntryWidget extends LinearLayout {
             entryTextView.setText(entry.value());
         }
 
-        final PopupMenu popupMenu = setupPopupMenuListener(entry, userInteractions);
+        final PopupMenu popupMenu = setupPopupMenuListener(day, entry, userInteractions);
         seeAllActionsButton.setOnClickListener(
                 new OnClickListener() {
 
@@ -58,46 +59,27 @@ public class EntryWidget extends LinearLayout {
         );
     }
 
-    private PopupMenu setupPopupMenuListener(Entry entry, ChunkEntryUserInteractions userInteractions) {
+    private PopupMenu setupPopupMenuListener(Day day, Entry entry, ChunkEntryUserInteractions userInteractions) {
         PopupMenu popupMenu = new PopupMenu(getContext(), seeAllActionsButton);
         popupMenu.inflate(R.menu.menu_entry);
+        Menu menu = popupMenu.getMenu();
+
+        if (day == Day.TODAY) {
+            menu.removeItem(R.id.move_to_today);
+        } else {
+            menu.removeItem(R.id.move_to_tomorrow);
+            menu.removeItem(R.id.mark_complete);
+            menu.removeItem(R.id.mark_not_complete);
+        }
+
+        if (entry.isCompleted()) {
+            menu.removeItem(R.id.mark_complete);
+        } else {
+            menu.removeItem(R.id.mark_not_complete);
+        }
+
         popupMenu.setOnMenuItemClickListener(new MenuClickListener(entry, userInteractions));
         return popupMenu;
-    }
-
-    private static class MenuClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        private final Entry entry;
-        private final ChunkEntryUserInteractions userInteractions;
-
-        MenuClickListener(Entry entry, ChunkEntryUserInteractions userInteractions) {
-            this.entry = entry;
-            this.userInteractions = userInteractions;
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.mark_complete:
-                    userInteractions.onUserMarkComplete(entry);
-                    return true;
-                case R.id.mark_not_complete:
-                    userInteractions.onUserMarkNotComplete(entry);
-                    return true;
-                case R.id.move_to_today:
-                    userInteractions.onUserTransitionEntry(entry, Day.TODAY);
-                    return true;
-                case R.id.move_to_tomorrow:
-                    userInteractions.onUserTransitionEntry(entry, Day.TOMORROW);
-                    return true;
-                case R.id.remove:
-                    userInteractions.onUserRemove(entry);
-                    return true;
-                default:
-                    throw new IllegalArgumentException("unhandled item: " + item.getTitle());
-            }
-        }
-
     }
 
 }

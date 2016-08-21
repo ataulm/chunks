@@ -40,25 +40,25 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
     @Override
     protected void bindView(RecyclerView view, int position) {
-        Chunk chunk = getChunkForPosition(position);
+        Day day = getDayFor(position);
+        Chunk chunk = getChunkFor(day);
 
         RecyclerView.Adapter adapter = view.getAdapter();
         if (adapter == null) {
-            view.setAdapter(new ChunkRecyclerViewAdapter(userInteractions, chunk));
+            view.setAdapter(new ChunkRecyclerViewAdapter(userInteractions, day, chunk));
         } else {
-            ((ChunkRecyclerViewAdapter) adapter).update(chunk);
+            ((ChunkRecyclerViewAdapter) adapter).update(day, chunk);
         }
     }
 
-    private Chunk getChunkForPosition(int position) {
-        Day day = getDayFor(position);
+    private Chunk getChunkFor(Day day) {
         switch (day) {
             case TODAY:
                 return chunks.today();
             case TOMORROW:
                 return chunks.tomorrow();
             default:
-                throw new IllegalArgumentException("no idea what to do for position " + position);
+                throw new IllegalArgumentException("day not supported: " + day);
         }
     }
 
