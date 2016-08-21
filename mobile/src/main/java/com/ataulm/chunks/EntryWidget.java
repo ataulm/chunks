@@ -80,6 +80,7 @@ public class EntryWidget extends LinearLayout {
 
         if (entry.isCompleted()) {
             menu.removeItem(R.id.mark_complete);
+            menu.removeItem(R.id.move_to_tomorrow);
         } else {
             menu.removeItem(R.id.mark_not_complete);
         }
