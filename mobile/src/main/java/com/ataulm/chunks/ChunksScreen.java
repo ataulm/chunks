@@ -39,23 +39,6 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
 
         toolbar.setTitle(R.string.chunks_app_bar_title);
         toolbar.setTitleTextColor(Color.WHITE);
-
-        setPagerNavigation(Day.TODAY);
-        tabsPagerNavigationWidget.bind(
-                new TabsPagerNavigationWidget.Listener() {
-
-                    @Override
-                    public void onClick(Day day) {
-                        setPagerNavigation(day);
-                        setViewPager(day);
-                    }
-
-                }
-        );
-    }
-
-    private void setPagerNavigation(Day day) {
-        tabsPagerNavigationWidget.display(day);
     }
 
     private void setViewPager(Day day) {
@@ -76,7 +59,6 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
                         }
 
                         Day day = DayToPagePositionMapper.getDayFor(position);
-                        setPagerNavigation(day);
                         entryInputWidget.bind(entryInputUserInteractions, day);
                     }
                 }
@@ -95,6 +77,7 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
             chunksPagerAdapter = (ChunksPagerAdapter) viewPager.getAdapter();
             chunksPagerAdapter.update(chunks);
         }
+        tabsPagerNavigationWidget.bind(viewPager);
     }
 
 }

@@ -6,15 +6,6 @@
     <!-- Customize your theme here. -->
   </style>
 
-  <style name="DayTabs" />
-
-  <style name="DayTabs.Tab">
-    <item name="android:gravity">center</item>
-    <item name="android:textColor">@color/day_tabs_tab_text</item>
-    <item name="android:textSize">18sp</item>
-    <item name="textFont">robotoRegular</item>
-  </style>
-
   <style name="Chunks" />
 
   <style name="Chunks.Toolbar" />
@@ -23,6 +14,22 @@
     <item name="android:textColor">@color/white</item>
     <item name="android:textSize">20sp</item>
     <item name="textFont">robotoMedium</item>
+  </style>
+
+  <style name="Chunks.TabsPagerNavigationWidget" />
+
+  <style name="Chunks.TabsPagerNavigationWidget.Root">
+    <item name="tabLayoutId">@layout/view_chunks_tab</item>
+    <item name="tabsLeftPadding">0dp</item>
+    <item name="indicatorColor">@color/white</item>
+    <item name="indicatorHeight">4dp</item>
+  </style>
+
+  <style name="Chunks.TabsPagerNavigationWidget.Tab">
+    <item name="android:gravity">center</item>
+    <item name="android:textColor">@color/day_tabs_tab_text</item>
+    <item name="android:textSize">18sp</item>
+    <item name="textFont">robotoRegular</item>
   </style>
 
   <style name="Chunks.EntryInputWidget" />
