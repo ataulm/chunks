@@ -1,7 +1,10 @@
 package com.ataulm.chunks;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,11 +14,14 @@ import butterknife.ButterKnife;
 
 public class ChunksScreen extends LinearLayout implements ChunksView {
 
-    @BindView(R.id.chunks_screen_view_pager)
-    ViewPager viewPager;
+    @BindView(R.id.chunks_screen_toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.chunks_screen_pager_navigation_widget)
     TabsPagerNavigationWidget tabsPagerNavigationWidget;
+
+    @BindView(R.id.chunks_screen_view_pager)
+    ViewPager viewPager;
 
     @BindView(R.id.chunks_screen_empty_input_widget)
     EntryInputWidget entryInputWidget;
@@ -30,6 +36,9 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
         super.onFinishInflate();
         View.inflate(getContext(), R.layout.merge_chunks_screen, this);
         ButterKnife.bind(this);
+
+        toolbar.setTitle(R.string.chunks_app_bar_title);
+        toolbar.setTitleTextColor(Color.WHITE);
 
         setPagerNavigation(Day.TODAY);
         tabsPagerNavigationWidget.bind(

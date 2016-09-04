@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <com.ataulm.chunks.TabsPagerNavigationWidget
-    android:id="@+id/chunks_screen_pager_navigation_widget"
+  <android.support.design.widget.AppBarLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:background="@color/deep_sky_blue">
+
+    <com.ataulm.chunks.ChunksToolbar
+      android:id="@+id/chunks_screen_toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:minHeight="56dp" />
+
+    <com.ataulm.chunks.TabsPagerNavigationWidget
+      android:id="@+id/chunks_screen_pager_navigation_widget"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+  </android.support.design.widget.AppBarLayout>
 
   <android.support.v4.view.ViewPager
     android:id="@+id/chunks_screen_view_pager"

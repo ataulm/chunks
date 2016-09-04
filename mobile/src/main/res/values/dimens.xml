@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="day_tabs_tab_min_height">56dp</dimen>
+
+  <!--Only extracting dimens that are used in more than one place-->
+  <dimen name="day_tabs_tab_min_height">@dimen/min_touch_area</dimen>
   <dimen name="min_touch_area">48dp</dimen>
+
 </resources>
