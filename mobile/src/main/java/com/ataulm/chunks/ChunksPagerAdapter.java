@@ -48,6 +48,7 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
             view.setAdapter(new ChunkRecyclerViewAdapter(userInteractions, day, chunk));
         } else {
             ((ChunkRecyclerViewAdapter) adapter).update(day, chunk);
+            view.scrollToPosition(chunk.size() - 1);
         }
     }
 
