@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="chunks_settings_heading_automation" type="id" />
+  <item name="chunks_settings_auto_clear_completed_from_today" type="id" />
+  <item name="chunks_settings_auto_advance_from_tomorrow" type="id" />
+</resources>

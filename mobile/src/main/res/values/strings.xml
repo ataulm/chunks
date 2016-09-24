@@ -4,5 +4,6 @@
   <string name="chunks_app_bar_title">@string/app_name</string>
   <string name="days_tabs_today">@string/today</string>
   <string name="days_tabs_tomorrow">@string/tomorrow</string>
+  <string name="chunks_menu_settings">@string/settings</string>
 
 </resources>
