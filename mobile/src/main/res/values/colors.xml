@@ -5,6 +5,7 @@
   <color name="deep_sky_blue">#03A9F4</color>
   <color name="white_54_on_deep_sky_blue">#76C2E4</color>
   <color name="white">#FFFFFF</color>
+  <color name="alabaster">#FAFAFA</color>
   <color name="black">#000000</color>
 
   <color name="debug_color_light">@android:color/holo_orange_light</color>
