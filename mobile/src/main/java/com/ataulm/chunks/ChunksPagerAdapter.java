@@ -12,6 +12,7 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
     private final ChunkEntryUserInteractions userInteractions;
     private final Resources resources;
+
     private Chunks chunks;
 
     ChunksPagerAdapter(ChunkEntryUserInteractions userInteractions, Resources resources, Chunks chunks) {
