@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <item
-    android:id="@+id/mark_complete"
-    android:title="mark complete" />
-  <item
-    android:id="@+id/mark_not_complete"
-    android:title="mark not complete" />
-  <item
     android:id="@+id/move_to_today"
     android:title="move to today" />
   <item

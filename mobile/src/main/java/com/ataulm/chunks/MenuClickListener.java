@@ -16,12 +16,6 @@ class MenuClickListener implements PopupMenu.OnMenuItemClickListener {
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.mark_complete:
-                userInteractions.onUserMarkComplete(entry);
-                return true;
-            case R.id.mark_not_complete:
-                userInteractions.onUserMarkNotComplete(entry);
-                return true;
             case R.id.move_to_today:
                 userInteractions.onUserTransitionEntry(entry, Day.TODAY);
                 return true;

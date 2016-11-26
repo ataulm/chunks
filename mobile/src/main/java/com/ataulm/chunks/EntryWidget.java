@@ -92,15 +92,10 @@ public class EntryWidget extends LinearLayout {
             menu.removeItem(R.id.move_to_today);
         } else {
             menu.removeItem(R.id.move_to_tomorrow);
-            menu.removeItem(R.id.mark_complete);
-            menu.removeItem(R.id.mark_not_complete);
         }
 
         if (entry.isCompleted()) {
-            menu.removeItem(R.id.mark_complete);
             menu.removeItem(R.id.move_to_tomorrow);
-        } else {
-            menu.removeItem(R.id.mark_not_complete);
         }
 
         popupMenu.setOnMenuItemClickListener(new MenuClickListener(entry, userInteractions));
