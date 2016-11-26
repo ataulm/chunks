@@ -14,6 +14,8 @@ public class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHold
         this.userInteractions = userInteractions;
         this.day = day;
         this.chunk = chunk;
+
+        super.setHasStableIds(true);
     }
 
     public void update(Day day, Chunk chunk) {

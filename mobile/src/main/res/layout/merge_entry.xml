@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
+  <CheckBox
+    android:id="@+id/entry_check_box"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:layout_gravity="center_vertical" />
+
   <TextView
     android:id="@+id/entry_text_view"
     android:layout_width="0dp"

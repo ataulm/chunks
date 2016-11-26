@@ -8,6 +8,8 @@ import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +19,9 @@ import butterknife.ButterKnife;
 public class EntryWidget extends LinearLayout {
 
     private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
+
+    @BindView(R.id.entry_check_box)
+    CheckBox checkBox;
 
     @BindView(R.id.entry_text_view)
     TextView entryTextView;
@@ -36,7 +41,20 @@ public class EntryWidget extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(Day day, Entry entry, ChunkEntryUserInteractions userInteractions) {
+    public void bind(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+        checkBox.setOnCheckedChangeListener(null);
+        checkBox.setChecked(entry.isCompleted());
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    userInteractions.onUserMarkComplete(entry);
+                } else {
+                    userInteractions.onUserMarkNotComplete(entry);
+                }
+            }
+        });
+
         bindText(entry);
         bindMenuButton(day, entry, userInteractions);
     }
