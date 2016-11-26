@@ -9,7 +9,8 @@ final class EntryViewHolder extends RecyclerView.ViewHolder {
     final EntryWidget entryWidget;
 
     public static EntryViewHolder inflate(ViewGroup parent) {
-        EntryWidget view = (EntryWidget) LayoutInflater.from(parent.getContext()).inflate(R.layout.view_entry, parent, false);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        EntryWidget view = (EntryWidget) layoutInflater.inflate(R.layout.view_entry, parent, false);
         return new EntryViewHolder(view);
     }
 
