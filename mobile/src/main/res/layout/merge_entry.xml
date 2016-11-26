@@ -3,6 +3,7 @@
 
   <CheckBox
     android:id="@+id/entry_check_box"
+    style="@style/Chunks.EntryWidget.CheckBox"
     android:layout_width="48dp"
     android:layout_height="48dp"
     android:layout_gravity="center_vertical" />

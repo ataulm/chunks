@@ -1,9 +1,12 @@
 <resources>
 
-  <!-- Base application theme. -->
-  <style name="AppTheme"
-    parent="Theme.AppCompat.Light.NoActionBar">
+  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:windowBackground">@color/alabaster</item>
+  </style>
+
+  <style name="AppTheme.CheckBox">
+    <item name="colorControlNormal">@color/black_38</item>
+    <item name="colorControlActivated">@color/azure_two</item>
   </style>
 
   <style name="Chunks" />
@@ -48,6 +51,10 @@
     <item name="android:background">@color/white</item>
     <item name="android:paddingLeft">8dp</item>
     <item name="android:paddingRight">8dp</item>
+  </style>
+
+  <style name="Chunks.EntryWidget.CheckBox" parent="AppTheme">
+    <item name="android:theme">@style/AppTheme.CheckBox</item>
   </style>
 
 </resources>

@@ -4,7 +4,7 @@
   <android.support.design.widget.AppBarLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/deep_sky_blue">
+    android:background="@color/azure">
 
     <com.ataulm.chunks.ChunksToolbar
       android:id="@+id/chunks_screen_toolbar"
