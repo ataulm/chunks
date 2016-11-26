@@ -27,7 +27,7 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
 
     @Override
     public int getCount() {
-        return 2;
+        return Day.values().length;
     }
 
     @Override
