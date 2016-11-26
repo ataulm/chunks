@@ -2,9 +2,6 @@ package com.ataulm.chunks;
 
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
-import android.text.Spannable;
-import android.text.Spanned;
-import android.text.style.StrikethroughSpan;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.View;
@@ -17,8 +14,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EntryWidget extends LinearLayout {
-
-    private static final StrikethroughSpan STRIKE_THROUGH_SPAN = new StrikethroughSpan();
 
     @BindView(R.id.entry_check_box)
     CheckBox checkBox;
@@ -55,18 +50,8 @@ public class EntryWidget extends LinearLayout {
             }
         });
 
-        bindText(entry);
+        entryTextView.setText(entry.value());
         bindMenuButton(day, entry, userInteractions);
-    }
-
-    private void bindText(Entry entry) {
-        if (entry.completedTimestamp().isPresent()) {
-            entryTextView.setText(entry.value(), TextView.BufferType.SPANNABLE);
-            Spannable spannable = (Spannable) entryTextView.getText();
-            spannable.setSpan(STRIKE_THROUGH_SPAN, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else {
-            entryTextView.setText(entry.value());
-        }
     }
 
     private void bindMenuButton(Day day, Entry entry, ChunkEntryUserInteractions userInteractions) {
