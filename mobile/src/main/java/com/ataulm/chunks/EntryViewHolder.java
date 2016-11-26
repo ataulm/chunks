@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 final class EntryViewHolder extends RecyclerView.ViewHolder {
 
-    public final EntryWidget entryWidget;
+    final EntryWidget entryWidget;
 
     public static EntryViewHolder inflate(ViewGroup parent) {
         EntryWidget view = (EntryWidget) LayoutInflater.from(parent.getContext()).inflate(R.layout.view_entry, parent, false);
