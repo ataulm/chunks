@@ -28,8 +28,9 @@
 
   <com.ataulm.chunks.EntryInputWidget
     android:id="@+id/chunks_screen_empty_input_widget"
-    style="@style/Chunks.EntryInputWidget"
+    style="@style/Chunks.EntryInputWidget.View"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:minHeight="56dp" />
 
 </merge>

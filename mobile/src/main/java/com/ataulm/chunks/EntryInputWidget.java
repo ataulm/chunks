@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,9 +16,6 @@ public class EntryInputWidget extends LinearLayout {
 
     @BindView(R.id.entry_input_edit_text)
     EditText inputEditText;
-
-    @BindView(R.id.entry_input_button_add)
-    Button addButton;
 
     public EntryInputWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -35,15 +31,6 @@ public class EntryInputWidget extends LinearLayout {
 
     public void bind(final EntryInputUserInteractions userInteractions, final Day day) {
         setEnterKeyListenerToAddEntryAndPreventMultilineInput(userInteractions, day);
-
-        addButton.setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addStack(userInteractions, day);
-                    }
-                }
-        );
     }
 
     private void setEnterKeyListenerToAddEntryAndPreventMultilineInput(final EntryInputUserInteractions userInteractions, final Day day) {

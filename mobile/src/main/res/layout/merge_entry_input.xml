@@ -7,10 +7,4 @@
     android:layout_height="wrap_content"
     android:layout_weight="100" />
 
-  <Button
-    android:id="@+id/entry_input_button_add"
-    android:layout_width="wrap_content"
-    android:layout_height="48dp"
-    android:text="Add" />
-
 </merge>
