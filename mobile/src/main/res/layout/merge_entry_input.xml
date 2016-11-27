@@ -3,8 +3,10 @@
 
   <EditText
     android:id="@+id/entry_input_edit_text"
-    android:layout_width="0dp"
+    style="@style/Chunks.EntryInputWidget.EditText"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="100" />
+    android:layout_gravity="center_vertical"
+    android:hint="@string/entry_input_hint"/>
 
 </merge>

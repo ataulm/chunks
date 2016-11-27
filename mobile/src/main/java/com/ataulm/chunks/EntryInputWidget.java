@@ -6,20 +6,19 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EntryInputWidget extends LinearLayout {
+public class EntryInputWidget extends FrameLayout {
 
     @BindView(R.id.entry_input_edit_text)
     EditText inputEditText;
 
     public EntryInputWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
-        super.setOrientation(HORIZONTAL);
     }
 
     @Override
