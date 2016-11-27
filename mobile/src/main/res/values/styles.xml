@@ -2,6 +2,7 @@
 
   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:windowBackground">@color/alabaster</item>
+    <item name="android:statusBarColor">@color/lochmara</item>
     <item name="colorPrimary">@color/cerulean</item>
     <item name="colorAccent">@color/azure_two</item>
   </style>
