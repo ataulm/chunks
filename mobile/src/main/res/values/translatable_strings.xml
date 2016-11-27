@@ -5,5 +5,8 @@
   <string name="tomorrow">Tomorrow</string>
   <string name="settings">Settings</string>
   <string name="add_a_new_task">Add a new task…</string>
+  <string name="emoji_cross_mark">❌</string>
+  <string name="emoji_rightwards_arrow_with_hook">↪️</string>
+  <string name="emoji_leftwards_arrow_with_hook">↩️</string>
 
 </resources>

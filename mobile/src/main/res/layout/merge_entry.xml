@@ -17,10 +17,16 @@
     android:layout_weight="100" />
 
   <Button
-    android:id="@+id/entry_button_see_all_actions"
+    android:id="@+id/entry_button_move"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical" />
+
+  <Button
+    android:id="@+id/entry_button_delete"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:text="..." />
+    android:text="@string/entry_widget_delete" />
 
 </merge>
