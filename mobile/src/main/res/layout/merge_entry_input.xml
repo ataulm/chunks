@@ -7,6 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:hint="@string/entry_input_hint"/>
+    android:hint="@string/entry_input_hint" />
 
 </merge>
