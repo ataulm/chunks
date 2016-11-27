@@ -10,6 +10,7 @@
 
   <TextView
     android:id="@+id/entry_text_view"
+    style="@style/Chunks.EntryWidget.Text"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
