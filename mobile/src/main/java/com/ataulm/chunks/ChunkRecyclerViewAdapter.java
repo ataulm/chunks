@@ -3,7 +3,7 @@ package com.ataulm.chunks;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-public class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHolder> {
+class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHolder> {
 
     private final ChunkEntryUserInteractions userInteractions;
 
