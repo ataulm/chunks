@@ -42,16 +42,27 @@ public class EntryWidget extends LinearLayout {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    userInteractions.onUserMarkComplete(entry);
-                } else {
-                    userInteractions.onUserMarkNotComplete(entry);
-                }
+                toggleCompleted(entry, userInteractions);
+            }
+        });
+
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleCompleted(entry, userInteractions);
             }
         });
 
         entryTextView.setText(entry.value());
         bindMenuButton(day, entry, userInteractions);
+    }
+
+    private void toggleCompleted(Entry entry, ChunkEntryUserInteractions userInteractions) {
+        if (entry.isCompleted()) {
+            userInteractions.onUserMarkNotComplete(entry);
+        } else {
+            userInteractions.onUserMarkComplete(entry);
+        }
     }
 
     private void bindMenuButton(Day day, Entry entry, ChunkEntryUserInteractions userInteractions) {

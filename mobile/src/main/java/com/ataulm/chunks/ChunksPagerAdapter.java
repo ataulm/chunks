@@ -49,7 +49,7 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
             view.setAdapter(new ChunkRecyclerViewAdapter(userInteractions, day, chunk));
         } else {
             ((ChunkRecyclerViewAdapter) adapter).update(day, chunk);
-            view.scrollToPosition(chunk.size() - 1); // TODO: this sucks onResume btw, only cool when user adds items
+            // TODO: want to scroll to bottom but ONLY when we add a new entry
         }
     }
 
