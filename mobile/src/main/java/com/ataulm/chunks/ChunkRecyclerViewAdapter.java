@@ -18,10 +18,14 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHolder> {
         super.setHasStableIds(true);
     }
 
-    public void update(Day day, Chunk chunk) {
+    public boolean update(Day day, Chunk chunk) {
+        boolean addedItem = chunk.size() > this.chunk.size();
+
         this.day = day;
         this.chunk = chunk;
         notifyDataSetChanged();
+
+        return addedItem;
     }
 
     @Override

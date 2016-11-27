@@ -48,8 +48,10 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
         if (adapter == null) {
             view.setAdapter(new ChunkRecyclerViewAdapter(userInteractions, day, chunk));
         } else {
-            ((ChunkRecyclerViewAdapter) adapter).update(day, chunk);
-            // TODO: want to scroll to bottom but ONLY when we add a new entry
+            boolean itemAdded = ((ChunkRecyclerViewAdapter) adapter).update(day, chunk);
+            if (itemAdded) {
+                view.scrollToPosition(adapter.getItemCount() - 1);
+            }
         }
     }
 
