@@ -17,10 +17,19 @@
     android:layout_weight="100" />
 
   <Button
-    android:id="@+id/entry_button_move"
+    android:id="@+id/entry_button_move_left"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical" />
+    android:layout_gravity="center_vertical"
+    android:text="@string/entry_widget_move_left" />
+
+  <Button
+    android:id="@+id/entry_button_move_right"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:visibility="gone"
+    android:text="@string/entry_widget_move_right" />
 
   <Button
     android:id="@+id/entry_button_delete"

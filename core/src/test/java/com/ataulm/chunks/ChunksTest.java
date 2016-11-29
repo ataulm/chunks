@@ -2,16 +2,13 @@ package com.ataulm.chunks;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.fest.assertions.core.Condition;
 import org.junit.Test;
 
 import static com.ataulm.chunks.ChunkFixtures.aChunk;
-import static com.ataulm.chunks.ChunksFixtures.aChunks;
 import static com.ataulm.chunks.EntryFixtures.anEntry;
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -32,11 +29,18 @@ public class ChunksTest {
             anEntry().get()
     );
 
+    private static final List<Entry> ENTRIES_SOMETIME = Arrays.asList(
+            anEntry().get(),
+            anEntry().get(),
+            anEntry().get()
+    );
+
     @Test
     public void add_entry_to_today() {
         Chunk today = aChunk().with(ENTRIES_TODAY).get();
         Chunk tomorrow = aChunk().with(ENTRIES_TOMORROW).get();
-        Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow);
+        Chunk sometime = aChunk().with(ENTRIES_SOMETIME).get();
+        Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow, sometime);
         Entry entry = anEntry().get();
 
         Chunks updatedChunks = chunks.add(entry, Day.TODAY);
@@ -48,7 +52,8 @@ public class ChunksTest {
     public void add_entry_to_tomorrow() {
         Chunk today = aChunk().with(ENTRIES_TODAY).get();
         Chunk tomorrow = aChunk().with(ENTRIES_TOMORROW).get();
-        Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow);
+        Chunk sometime = aChunk().with(ENTRIES_SOMETIME).get();
+        Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow, sometime);
         Entry entry = anEntry().get();
 
         Chunks updatedChunks = chunks.add(entry, Day.TOMORROW);
@@ -60,7 +65,7 @@ public class ChunksTest {
     public void add_entry_complains_if_duplicate() {
         Entry entry = anEntry().get();
         Chunk today = Chunk.create(Collections.singletonList(entry));
-        Chunks chunks = Chunks.create(AUGUST_02_2016, today, Chunk.empty());
+        Chunks chunks = Chunks.create(AUGUST_02_2016, today, Chunk.empty(), Chunk.empty());
 
         chunks.add(entry, Day.TODAY);
     }
@@ -69,11 +74,10 @@ public class ChunksTest {
     public void remove_entry_from_today() {
         Entry entry = anEntry().get();
         Chunk today = aChunk().with(entry).get();
-        Chunks chunks = Chunks.create(AUGUST_02_2016, today, Chunk.empty());
+        Chunks chunks = Chunks.create(AUGUST_02_2016, today, Chunk.empty(), Chunk.empty());
 
         // TODO: if this is how to remove, then duplicate entries should not be allowed even across days
         Chunks updatedChunks = chunks.remove(entry.id());
-
 
         assertThat(updatedChunks.today()).doesNotContain(entry);
     }
@@ -82,17 +86,16 @@ public class ChunksTest {
     public void remove_entry_from_tomorrow() {
         Entry entry = anEntry().get();
         Chunk tomorrow = aChunk().with(entry).get();
-        Chunks chunks = Chunks.create(AUGUST_02_2016, Chunk.empty(), tomorrow);
+        Chunks chunks = Chunks.create(AUGUST_02_2016, Chunk.empty(), tomorrow, Chunk.empty());
 
         Chunks updatedChunks = chunks.remove(entry.id());
-
 
         assertThat(updatedChunks.today()).doesNotContain(entry);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void remove_entry_complains_if_entry_not_found() {
-        Chunks chunks = Chunks.create(AUGUST_02_2016, Chunk.empty(), Chunk.empty());
+        Chunks chunks = Chunks.create(AUGUST_02_2016, Chunk.empty(), Chunk.empty(), Chunk.empty());
 
         Entry entry = anEntry().get();
         chunks.remove(entry.id());
@@ -106,7 +109,7 @@ public class ChunksTest {
         todayTasks.addAll(completeTasks);
         todayTasks.addAll(incompleteTasks);
         Chunk today = aChunk().with(todayTasks).get();
-        Chunks chunks = Chunks.create(AUGUST_02_2016, today, Chunk.empty());
+        Chunks chunks = Chunks.create(AUGUST_02_2016, today, Chunk.empty(), Chunk.empty());
 
         Chunks updatedChunks = chunks.shuffleAlong(AUGUST_03_2016);
 
@@ -119,7 +122,7 @@ public class ChunksTest {
         List<Entry> tomorrowTasks = createNewListOfIncompleteNewEntries();
         Chunk today = aChunk().with(todayTasks).get();
         Chunk tomorrow = aChunk().with(tomorrowTasks).get();
-        Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow);
+        Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow, Chunk.empty());
 
         Chunks updatedChunks = chunks.shuffleAlong(AUGUST_03_2016);
 

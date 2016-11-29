@@ -2,8 +2,6 @@ package com.ataulm.chunks.repository;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class GsonChunks {
 
     @SerializedName("todays_date")
@@ -14,5 +12,8 @@ public class GsonChunks {
 
     @SerializedName("tomorrow")
     public GsonChunk tomorrow;
+
+    @SerializedName("sometime")
+    public GsonChunk sometime;
 
 }

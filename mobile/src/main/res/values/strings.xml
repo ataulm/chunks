@@ -4,10 +4,11 @@
   <string name="chunks_app_bar_title">@string/app_name</string>
   <string name="days_tabs_today">@string/today</string>
   <string name="days_tabs_tomorrow">@string/tomorrow</string>
+  <string name="days_tabs_sometime">@string/sometime</string>
   <string name="chunks_menu_settings">@string/settings</string>
   <string name="entry_input_hint">@string/add_a_new_task</string>
   <string name="entry_widget_delete">@string/emoji_cross_mark</string>
-  <string name="entry_widget_move_to_tomorrow">@string/emoji_rightwards_arrow_with_hook</string>
-  <string name="entry_widget_move_to_today">@string/emoji_leftwards_arrow_with_hook</string>
+  <string name="entry_widget_move_right">@string/emoji_rightwards_arrow_with_hook</string>
+  <string name="entry_widget_move_left">@string/emoji_leftwards_arrow_with_hook</string>
 
 </resources>

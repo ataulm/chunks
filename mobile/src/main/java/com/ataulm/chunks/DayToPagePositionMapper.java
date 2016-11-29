@@ -4,6 +4,7 @@ public class DayToPagePositionMapper {
 
     private static final int PAGE_TODAY = 0;
     private static final int PAGE_TOMORROW = 1;
+    private static final int PAGE_SOMETIME = 2;
 
     public static Day getDayFor(int pagePosition) {
         switch (pagePosition) {
@@ -11,6 +12,8 @@ public class DayToPagePositionMapper {
                 return Day.TODAY;
             case PAGE_TOMORROW:
                 return Day.TOMORROW;
+            case PAGE_SOMETIME:
+                return Day.SOMETIME;
             default:
                 throw new IllegalStateException("unexpected pagePosition: " + pagePosition);
         }
@@ -22,6 +25,8 @@ public class DayToPagePositionMapper {
                 return PAGE_TODAY;
             case TOMORROW:
                 return PAGE_TOMORROW;
+            case SOMETIME:
+                return PAGE_SOMETIME;
             default:
                 throw new IllegalStateException("unexpected day: " + day);
         }

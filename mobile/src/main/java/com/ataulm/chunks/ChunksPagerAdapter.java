@@ -61,6 +61,8 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
                 return chunks.today();
             case TOMORROW:
                 return chunks.tomorrow();
+            case SOMETIME:
+                return chunks.sometime();
             default:
                 throw new IllegalArgumentException("day not supported: " + day);
         }
@@ -78,6 +80,8 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
                 return resources.getString(R.string.days_tabs_today);
             case TOMORROW:
                 return resources.getString(R.string.days_tabs_tomorrow);
+            case SOMETIME:
+                return resources.getString(R.string.days_tabs_sometime);
             default:
                 throw new IllegalArgumentException("no idea what to do for position " + position);
         }

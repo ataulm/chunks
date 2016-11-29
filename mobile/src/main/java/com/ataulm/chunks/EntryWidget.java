@@ -19,8 +19,11 @@ public class EntryWidget extends LinearLayout {
     @BindView(R.id.entry_text_view)
     TextView entryTextView;
 
-    @BindView(R.id.entry_button_move)
-    TextView moveButton;
+    @BindView(R.id.entry_button_move_left)
+    TextView moveLeftButton;
+
+    @BindView(R.id.entry_button_move_right)
+    TextView moveRightButton;
 
     @BindView(R.id.entry_button_delete)
     TextView deleteButton;
@@ -57,21 +60,40 @@ public class EntryWidget extends LinearLayout {
         entryTextView.setText(entry.value());
 
         if (day == Day.TODAY) {
-            moveButton.setText(R.string.entry_widget_move_to_tomorrow);
-            moveButton.setOnClickListener(new OnClickListener() {
+            moveLeftButton.setVisibility(GONE);
+            moveRightButton.setVisibility(VISIBLE);
+            moveRightButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     userInteractions.onUserTransitionEntry(entry, Day.TOMORROW);
                 }
             });
-        } else {
-            moveButton.setText(R.string.entry_widget_move_to_today);
-            moveButton.setOnClickListener(new OnClickListener() {
+        } else if (day == Day.TOMORROW) {
+            moveLeftButton.setVisibility(VISIBLE);
+            moveLeftButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     userInteractions.onUserTransitionEntry(entry, Day.TODAY);
                 }
             });
+
+            moveRightButton.setVisibility(VISIBLE);
+            moveRightButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    userInteractions.onUserTransitionEntry(entry, Day.SOMETIME);
+                }
+            });
+        } else {
+            moveLeftButton.setVisibility(VISIBLE);
+            moveLeftButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    userInteractions.onUserTransitionEntry(entry, Day.TOMORROW);
+                }
+            });
+
+            moveRightButton.setVisibility(GONE);
         }
 
         deleteButton.setOnClickListener(new OnClickListener() {
