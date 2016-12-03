@@ -17,14 +17,16 @@ import rx.subjects.BehaviorSubject;
 public class ChunksService {
 
     private final ChunksRepository chunksRepository;
+    private final Clock clock;
     private final Log log;
+
     private final BehaviorSubject<Event<Chunks>> eventsSubject;
-    private final SystemClock clock = new SystemClock();
 
     private boolean currentlyFetching;
 
-    public ChunksService(ChunksRepository chunksRepository, Log log) {
+    public ChunksService(ChunksRepository chunksRepository, Clock clock, Log log) {
         this.chunksRepository = chunksRepository;
+        this.clock = clock;
         this.log = log;
         this.eventsSubject = BehaviorSubject.create(Event.<Chunks>idle());
     }
