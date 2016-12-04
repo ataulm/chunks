@@ -13,7 +13,4 @@
   <color name="alabaster">#FAFAFA</color>
   <color name="black">#000000</color>
 
-  <color name="debug_color_light">@android:color/holo_orange_light</color>
-  <color name="debug_color_dark">@android:color/holo_purple</color>
-
 </resources>
