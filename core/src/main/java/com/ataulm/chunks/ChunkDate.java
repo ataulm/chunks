@@ -3,8 +3,6 @@ package com.ataulm.chunks;
 import com.google.auto.value.AutoValue;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 @AutoValue
 public abstract class ChunkDate {
