@@ -68,10 +68,11 @@ class AndroidChunksPresenter implements ChunksPresenter {
         @Override
         public void onNext(Event<Chunks> event) {
             Optional<Chunks> data = event.getData();
-            if (data.isPresent()) { // TODO other cases like loading (empty, not empty), empty state, error (empty, not empty)
+            if (data.isPresent()) {
                 Chunks chunks = data.get();
                 chunksView.display(chunks, entryViewUserInteractions, entryInputUserInteractions);
             } else {
+                // TODO other cases like loading (empty, not empty), empty state, error (empty, not empty)
             }
         }
 
