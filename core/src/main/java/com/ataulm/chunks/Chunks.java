@@ -67,7 +67,7 @@ public abstract class Chunks {
             return create(todaysDate(), today(), tomorrow(), sometime().remove(id));
         }
 
-        throw new IllegalArgumentException("no entries with id found: " + id);
+        return this;
     }
 
     public Chunks update(Entry entry) {
