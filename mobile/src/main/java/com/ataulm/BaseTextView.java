@@ -158,7 +158,7 @@ public class BaseTextView extends TextView {
         }
 
         private void saveFontToCache(FontType fontType, Typeface typeface) {
-            FONT_CACHE.put(fontType, new SoftReference<Typeface>(typeface));
+            FONT_CACHE.put(fontType, new SoftReference<>(typeface));
         }
 
     }
