@@ -24,6 +24,10 @@ public class GsonChunkConverter {
     }
 
     public Chunk convert(GsonChunk gsonChunk) {
+        if (gsonChunk == null) {
+            return Chunk.empty();
+        }
+
         List<Entry> entries = new ArrayList<>(gsonChunk.entries.size());
         for (GsonEntry gsonEntry : gsonChunk.entries) {
             Entry entry = entryConverter.convert(gsonEntry);
