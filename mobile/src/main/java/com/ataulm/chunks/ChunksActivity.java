@@ -1,5 +1,6 @@
 package com.ataulm.chunks;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import butterknife.ButterKnife;
@@ -22,6 +23,13 @@ public class ChunksActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         chunksPresenter.startPresenting();
+
+        Intent intent = getIntent();
+        if (intent.hasExtra(Intent.EXTRA_TEXT)) {
+            String text = intent.getStringExtra(Intent.EXTRA_TEXT);
+            intent.removeExtra(Intent.EXTRA_TEXT);
+            chunksPresenter.onExternalShareText(text);
+        }
     }
 
     @Override

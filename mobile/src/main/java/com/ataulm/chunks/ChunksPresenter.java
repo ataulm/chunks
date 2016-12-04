@@ -6,4 +6,5 @@ interface ChunksPresenter {
 
     void stopPresenting();
 
+    void onExternalShareText(String text);
 }

@@ -34,6 +34,11 @@ class AndroidChunksPresenter implements ChunksPresenter {
     }
 
     @Override
+    public void onExternalShareText(String text) {
+        chunksService.createEntry(Entry.createNew(text.trim()), Day.TODAY);
+    }
+
+    @Override
     public void stopPresenting() {
         safeUnsubscribeFrom(subscription);
         chunksService.persist();
