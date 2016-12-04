@@ -2,7 +2,6 @@
 <resources>
 
   <!--Only extracting dimens that are used in more than one place-->
-  <dimen name="day_tabs_tab_min_height">@dimen/min_touch_area</dimen>
   <dimen name="min_touch_area">48dp</dimen>
 
 </resources>
