@@ -67,7 +67,7 @@
   <style name="Chunks.EntryWidget" />
 
   <style name="Chunks.EntryWidget.View">
-    <item name="android:background">@color/white</item>
+    <item name="android:background">@drawable/chunks_entrywidget_background</item>
     <item name="android:paddingLeft">8dp</item>
     <item name="android:paddingTop">4dp</item>
     <item name="android:paddingRight">0dp</item>
