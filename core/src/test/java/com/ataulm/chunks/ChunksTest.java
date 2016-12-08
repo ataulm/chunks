@@ -93,14 +93,6 @@ public class ChunksTest {
         assertThat(updatedChunks.today()).doesNotContain(entry);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void remove_entry_complains_if_entry_not_found() {
-        Chunks chunks = Chunks.create(AUGUST_02_2016, Chunk.empty(), Chunk.empty(), Chunk.empty());
-
-        Entry entry = anEntry().get();
-        chunks.remove(entry.id());
-    }
-
     @Test
     public void shuffle_along_with_different_day_moves_all_completed_tasks() {
         List<Entry> completeTasks = createNewListOfCompleteNewEntries();
