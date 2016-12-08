@@ -8,16 +8,18 @@ import android.view.ViewGroup;
 
 import com.novoda.viewpageradapter.ViewPagerAdapter;
 
-final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
+final class ChunksPagerAdapter extends ViewPagerAdapter<ChunksPage> {
 
     private final ChunkEntryUserInteractions userInteractions;
+    private final OnPageChangeListenerDelegate onPageChangeListenerDelegate;
     private final Resources resources;
 
     private Chunks chunks;
 
-    ChunksPagerAdapter(ChunkEntryUserInteractions userInteractions, Resources resources, Chunks chunks) {
+    ChunksPagerAdapter(ChunkEntryUserInteractions userInteractions, OnPageChangeListenerDelegate onPageChangeListenerDelegate, Resources resources, Chunks chunks) {
         this.userInteractions = userInteractions;
         this.resources = resources;
+        this.onPageChangeListenerDelegate = onPageChangeListenerDelegate;
         this.chunks = chunks;
     }
 
@@ -32,27 +34,26 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<RecyclerView> {
     }
 
     @Override
-    protected RecyclerView createView(ViewGroup container, int position) {
+    protected ChunksPage createView(ViewGroup container, int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(container.getContext());
-        RecyclerView recyclerView = (RecyclerView) layoutInflater.inflate(R.layout.view_entries_page, container, false);
-        recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        return recyclerView;
+        ChunksPage chunksPage = (ChunksPage) layoutInflater.inflate(R.layout.view_entries_page, container, false);
+        onPageChangeListenerDelegate.register(chunksPage);
+        return chunksPage;
     }
 
     @Override
-    protected void bindView(RecyclerView view, int position) {
+    protected void bindView(ChunksPage view, int position) {
         Day day = getDayFor(position);
         Chunk chunk = getChunkFor(day);
 
-        RecyclerView.Adapter adapter = view.getAdapter();
-        if (adapter == null) {
-            view.setAdapter(new ChunkRecyclerViewAdapter(userInteractions, day, chunk));
-        } else {
-            boolean itemAdded = ((ChunkRecyclerViewAdapter) adapter).update(day, chunk);
-            if (itemAdded) {
-                view.scrollToPosition(adapter.getItemCount() - 1);
-            }
-        }
+        view.update(chunk, userInteractions, day);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object key) {
+        super.destroyItem(container, position, key);
+        ChunksPage view = ((ChunksPage) key);
+        onPageChangeListenerDelegate.deregister(view);
     }
 
     private Chunk getChunkFor(Day day) {
