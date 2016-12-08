@@ -16,26 +16,35 @@
     android:layout_gravity="center_vertical"
     android:layout_weight="100" />
 
-  <Button
+  <TextView
     android:id="@+id/entry_button_move_left"
+    style="@style/Chunks.EntryWidget.Icon.MoveLeft"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
+    android:minWidth="48dp"
+    android:minHeight="48dp"
     android:text="@string/entry_widget_move_left" />
 
-  <Button
+  <TextView
     android:id="@+id/entry_button_move_right"
+    style="@style/Chunks.EntryWidget.Icon.MoveRight"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
+    android:minWidth="48dp"
+    android:minHeight="48dp"
     android:visibility="gone"
     android:text="@string/entry_widget_move_right" />
 
-  <Button
+  <TextView
     android:id="@+id/entry_button_delete"
+    style="@style/Chunks.EntryWidget.Icon.Delete"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
+    android:minWidth="48dp"
+    android:minHeight="48dp"
     android:text="@string/entry_widget_delete" />
 
 </merge>
