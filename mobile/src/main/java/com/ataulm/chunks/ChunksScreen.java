@@ -1,24 +1,15 @@
 package com.ataulm.chunks;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import com.ataulm.chunks.settings.SettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ChunksScreen extends LinearLayout implements ChunksView {
-
-    @BindView(R.id.chunks_screen_toolbar)
-    Toolbar toolbar;
 
     @BindView(R.id.chunks_screen_pager_navigation_widget)
     TabsPagerNavigationWidget tabsPagerNavigationWidget;
@@ -41,31 +32,6 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
         super.onFinishInflate();
         View.inflate(getContext(), R.layout.merge_chunks_screen, this);
         ButterKnife.bind(this);
-
-        toolbar.setTitle(R.string.chunks_app_bar_title);
-        toolbar.setTitleTextColor(Color.WHITE);
-
-        if (new SettingsFeature().isEnabled()) {
-            inflateToolbarMenu();
-        }
-    }
-
-    private void inflateToolbarMenu() {
-        toolbar.inflateMenu(R.menu.menu_chunks);
-        toolbar.setOnMenuItemClickListener(
-                new Toolbar.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.menu_chunks_settings) {
-                            Intent intent = new Intent(getContext(), SettingsActivity.class);
-                            getContext().startActivity(intent);
-                            return true;
-                        }
-                        return false;
-                    }
-                }
-        );
-
     }
 
     @Override
