@@ -135,6 +135,22 @@ public class ChunksTest {
         assertThat(updatedChunks).is(without(completed));
     }
 
+    @Test
+    public void shuffle_along_with_different_day_removes_all_completed_tasks_from_sometime() {
+        List<Entry> todayTasks = createNewListOfIncompleteNewEntries();
+        List<Entry> tomorrowTasks = createNewListOfIncompleteNewEntries();
+        Entry completed = anEntry().withCompletedTimestamp("0").get();
+        List<Entry> sometimeTasks = createNewListOfIncompleteNewEntriesAnd(completed);
+        Chunk today = aChunk().with(todayTasks).get();
+        Chunk tomorrow = aChunk().with(tomorrowTasks).get();
+        Chunk sometime = aChunk().with(sometimeTasks).get();
+        Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow, sometime);
+
+        Chunks updatedChunks = chunks.shuffleAlong(AUGUST_03_2016);
+
+        assertThat(updatedChunks).is(without(completed));
+    }
+
     private static Condition<Chunks> without(final Entry entry) {
         return new Condition<Chunks>() {
             @Override

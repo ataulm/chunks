@@ -104,10 +104,18 @@ public abstract class Chunks {
             }
         }
 
+        List<Entry> updatedSometimeEntries = new ArrayList<>();
+        for (Entry entry : sometime()) {
+            if (!entry.isCompleted()) {
+                updatedSometimeEntries.add(entry);
+            }
+        }
+
         Chunk updatedToday = Chunk.create(updatedTodayEntries);
         Chunk updatedTomorrow = Chunk.empty();
+        Chunk updatedSometime = Chunk.create(updatedSometimeEntries);
 
-        return Chunks.create(todaysDate, updatedToday, updatedTomorrow, sometime());
+        return Chunks.create(todaysDate, updatedToday, updatedTomorrow, updatedSometime);
     }
 
 }
