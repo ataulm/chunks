@@ -132,8 +132,19 @@ public class ChunksTest {
 
         Chunks updatedChunks = chunks.shuffleAlong(AUGUST_03_2016);
 
-        assertThat(updatedChunks.today()).doesNotContain(completed);
-        assertThat(updatedChunks.tomorrow()).doesNotContain(completed);
+        assertThat(updatedChunks).is(without(completed));
+    }
+
+    private static Condition<Chunks> without(final Entry entry) {
+        return new Condition<Chunks>() {
+            @Override
+            public boolean matches(Chunks chunks) {
+                boolean chunksContainsEntry = chunks.today().containsEntryWith(entry.id())
+                        || chunks.tomorrow().containsEntryWith(entry.id())
+                        || chunks.sometime().containsEntryWith(entry.id());
+                return !chunksContainsEntry;
+            }
+        };
     }
 
     private static Condition<Chunks> withNoTasksInTomorrowAndTodayContains(final List<Entry> tomorrowTasks) {
