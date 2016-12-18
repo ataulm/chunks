@@ -97,7 +97,12 @@ public abstract class Chunks {
                 updatedTodayEntries.add(entry);
             }
         }
-        updatedTodayEntries.addAll(tomorrow().entries());
+
+        for (Entry entry : tomorrow()) {
+            if (!entry.isCompleted()) {
+                updatedTodayEntries.add(entry);
+            }
+        }
 
         Chunk updatedToday = Chunk.create(updatedTodayEntries);
         Chunk updatedTomorrow = Chunk.empty();
