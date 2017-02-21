@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Chunk implements Iterable<Entry> {
 
@@ -33,12 +35,17 @@ public abstract class Chunk implements Iterable<Entry> {
     }
 
     public boolean containsEntryWith(Id id) {
+        return findEntryWith(id) != null;
+    }
+
+    @Nullable
+    public Entry findEntryWith(Id id) {
         for (Entry entry : entries()) {
             if (entry.id().equals(id)) {
-                return true;
+                return entry;
             }
         }
-        return false;
+        return null;
     }
 
     public int size() {

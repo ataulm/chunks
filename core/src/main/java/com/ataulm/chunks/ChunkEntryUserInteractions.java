@@ -8,6 +8,8 @@ interface ChunkEntryUserInteractions {
 
     void onUserTransitionEntry(Entry entry, Day day);
 
+    void onUserEdit(Entry entry);
+
     void onUserRemove(Entry entry);
 
 }

@@ -36,6 +36,10 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
 
     @Override
     public void display(Chunks chunks, ChunkEntryUserInteractions chunkEntryUserInteractions, final EntryInputUserInteractions entryInputUserInteractions) {
+        if (chunks.input().isPresent()) {
+            entryInputWidget.setText(chunks.input().get());
+        }
+
         viewPager.clearOnPageChangeListeners();
         viewPager.addOnPageChangeListener(onPageChangeListenerDelegate);
         viewPager.addOnPageChangeListener(
@@ -48,7 +52,7 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
                         }
 
                         Day day = DayToPagePositionMapper.getDayFor(position);
-                        entryInputWidget.bind(entryInputUserInteractions, day);
+                        entryInputWidget.update(entryInputUserInteractions, day);
                     }
                 }
         );

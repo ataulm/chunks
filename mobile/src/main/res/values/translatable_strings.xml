@@ -10,6 +10,7 @@
   <string name="move_to_today">Move to Today️</string>
   <string name="move_to_tomorrow">Move to Tomorrow</string>
   <string name="move_to_later">Move to Later</string>
+  <string name="edit">Edit</string>
   <string name="delete">Delete</string>
 
 </resources>

@@ -28,7 +28,11 @@ public class EntryInputWidget extends FrameLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(final EntryInputUserInteractions userInteractions, final Day day) {
+    public void setText(String text) {
+        inputEditText.append(text);
+    }
+
+    public void update(final EntryInputUserInteractions userInteractions, final Day day) {
         setEnterKeyListenerToAddEntryAndPreventMultilineInput(userInteractions, day);
     }
 

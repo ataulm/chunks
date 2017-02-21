@@ -9,12 +9,19 @@ import java.util.List;
 final class ChunksActions {
 
     private final Actions actions;
+    private final Action editAction;
     private final Action moveToTodayAction;
     private final Action moveToTomorrowAction;
     private final Action moveToLaterAction;
     private final Action deleteAction;
 
     public static ChunksActions create(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+        Action editAction = new Action(R.id.action_edit, R.string.action_edit, new Runnable() {
+            @Override
+            public void run() {
+                userInteractions.onUserEdit(entry);
+            }
+        });
         Action moveToTodayAction = new Action(R.id.action_move_to_today, R.string.action_move_to_today, new Runnable() {
             @Override
             public void run() {
@@ -40,22 +47,23 @@ final class ChunksActions {
             }
         });
 
-        Actions actions = new Actions(collateActions(day, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction));
-        return new ChunksActions(actions, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction);
+        Actions actions = new Actions(collateActions(day, editAction, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction));
+        return new ChunksActions(actions, editAction, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction);
     }
 
-    private static List<Action> collateActions(Day day, Action moveToTodayAction, Action moveToTomorrowAction, Action moveToLaterAction, Action deleteAction) {
+    private static List<Action> collateActions(Day day, Action editAction, Action moveToTodayAction, Action moveToTomorrowAction, Action moveToLaterAction, Action deleteAction) {
         if (day == Day.TODAY) {
-            return Arrays.asList(moveToTomorrowAction, moveToLaterAction, deleteAction);
+            return Arrays.asList(editAction, moveToTomorrowAction, moveToLaterAction, deleteAction);
         } else if (day == Day.TOMORROW) {
-            return Arrays.asList(moveToTodayAction, moveToLaterAction, deleteAction);
+            return Arrays.asList(editAction, moveToTodayAction, moveToLaterAction, deleteAction);
         } else {
-            return Arrays.asList(moveToTodayAction, moveToTomorrowAction, deleteAction);
+            return Arrays.asList(editAction, moveToTodayAction, moveToTomorrowAction, deleteAction);
         }
     }
 
-    private ChunksActions(Actions actions, Action moveToTodayAction, Action moveToTomorrowAction, Action moveToLaterAction, Action deleteAction) {
+    private ChunksActions(Actions actions, Action editAction, Action moveToTodayAction, Action moveToTomorrowAction, Action moveToLaterAction, Action deleteAction) {
         this.actions = actions;
+        this.editAction = editAction;
         this.moveToTodayAction = moveToTodayAction;
         this.moveToTomorrowAction = moveToTomorrowAction;
         this.moveToLaterAction = moveToLaterAction;

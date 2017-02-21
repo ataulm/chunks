@@ -116,6 +116,12 @@ public class ChunksService {
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
+    public void editEntry(Entry entry) {
+        Chunks chunks = getInMemoryChunksOrEmpty();
+        Chunks updatedChunks = chunks.edit(entry.id());
+        eventsSubject.onNext(Event.idle(updatedChunks));
+    }
+
     public void removeEntry(Entry entry) {
         Chunks chunks = getInMemoryChunksOrEmpty();
         Chunks updatedChunks = chunks.remove(entry.id());

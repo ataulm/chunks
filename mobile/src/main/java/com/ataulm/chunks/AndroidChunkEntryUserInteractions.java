@@ -27,6 +27,11 @@ class AndroidChunkEntryUserInteractions implements ChunkEntryUserInteractions {
     }
 
     @Override
+    public void onUserEdit(Entry entry) {
+        chunksService.editEntry(entry);
+    }
+
+    @Override
     public void onUserRemove(Entry entry) {
         chunksService.removeEntry(entry);
     }

@@ -1,19 +1,26 @@
 package com.ataulm.chunks;
 
+import com.ataulm.Optional;
 import com.google.auto.value.AutoValue;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 @AutoValue
 public abstract class Chunks {
 
-    public static Chunks create(ChunkDate todaysDate, Chunk today, Chunk tomorrow, Chunk sometime) {
-        return new AutoValue_Chunks(todaysDate, today, tomorrow, sometime);
-    }
-
     public static Chunks empty(ChunkDate todaysDate) {
         return create(todaysDate, Chunk.empty(), Chunk.empty(), Chunk.empty());
+    }
+
+    public static Chunks create(ChunkDate todaysDate, Chunk today, Chunk tomorrow, Chunk sometime) {
+        return create(todaysDate, today, tomorrow, sometime, null);
+    }
+
+    public static Chunks create(ChunkDate todaysDate, Chunk today, Chunk tomorrow, Chunk sometime, @Nullable String input) {
+        return new AutoValue_Chunks(todaysDate, today, tomorrow, sometime, Optional.fromNullable(input));
     }
 
     protected Chunks() {
@@ -27,6 +34,8 @@ public abstract class Chunks {
     public abstract Chunk tomorrow();
 
     public abstract Chunk sometime();
+
+    public abstract Optional<String> input();
 
     public Chunks add(Entry entry, Day day) {
         switch (day) {
@@ -52,6 +61,25 @@ public abstract class Chunks {
             default:
                 throw new IllegalArgumentException("unsupported day: " + day);
         }
+    }
+
+    public Chunks edit(Id id) {
+        if (today().containsEntryWith(id)) {
+            Entry entry = today().findEntryWith(id);
+            return create(todaysDate(), today().remove(id), tomorrow(), sometime(), entry.value());
+        }
+
+        if (tomorrow().containsEntryWith(id)) {
+            Entry entry = tomorrow().findEntryWith(id);
+            return create(todaysDate(), today(), tomorrow().remove(id), sometime(), entry.value());
+        }
+
+        if (sometime().containsEntryWith(id)) {
+            Entry entry = sometime().findEntryWith(id);
+            return create(todaysDate(), today(), tomorrow(), sometime().remove(id), entry.value());
+        }
+
+        return this;
     }
 
     public Chunks remove(Id id) {
