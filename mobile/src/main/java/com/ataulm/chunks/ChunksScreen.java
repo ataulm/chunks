@@ -4,12 +4,12 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChunksScreen extends LinearLayout implements ChunksView {
+public class ChunksScreen extends FrameLayout implements ChunksView {
 
     @BindView(R.id.chunks_screen_pager_navigation_widget)
     TabsPagerNavigationWidget tabsPagerNavigationWidget;
@@ -24,7 +24,6 @@ public class ChunksScreen extends LinearLayout implements ChunksView {
 
     public ChunksScreen(Context context, AttributeSet attrs) {
         super(context, attrs);
-        super.setOrientation(VERTICAL);
     }
 
     @Override
