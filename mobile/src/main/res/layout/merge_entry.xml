@@ -38,13 +38,13 @@
     android:text="@string/entry_widget_move_right" />
 
   <TextView
-    android:id="@+id/entry_button_delete"
-    style="@style/Chunks.EntryWidget.Icon.Delete"
+    android:id="@+id/entry_button_menu"
+    style="@style/Chunks.EntryWidget.Icon.Menu"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
     android:minWidth="48dp"
     android:minHeight="48dp"
-    android:text="@string/entry_widget_delete" />
+    android:text="@string/entry_widget_menu" />
 
 </merge>

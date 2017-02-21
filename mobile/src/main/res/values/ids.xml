@@ -3,4 +3,8 @@
   <item name="chunks_settings_heading_automation" type="id" />
   <item name="chunks_settings_auto_clear_completed_from_today" type="id" />
   <item name="chunks_settings_auto_advance_from_tomorrow" type="id" />
+  <item name="action_move_to_today" type="id" />
+  <item name="action_move_to_tomorrow" type="id" />
+  <item name="action_move_to_later" type="id" />
+  <item name="action_delete" type="id" />
 </resources>

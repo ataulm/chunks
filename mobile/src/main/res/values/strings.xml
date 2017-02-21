@@ -6,8 +6,12 @@
   <string name="days_tabs_tomorrow">@string/tomorrow</string>
   <string name="days_tabs_sometime">@string/later</string>
   <string name="entry_input_hint">@string/add_a_new_task</string>
-  <string name="entry_widget_delete">@string/emoji_cross_mark</string>
+  <string name="entry_widget_menu">@string/emoji_spouting_whale</string>
   <string name="entry_widget_move_right">@string/emoji_rightwards_arrow_with_hook</string>
   <string name="entry_widget_move_left">@string/emoji_leftwards_arrow_with_hook</string>
+  <string name="action_move_to_today">@string/move_to_today</string>
+  <string name="action_move_to_tomorrow">@string/move_to_tomorrow</string>
+  <string name="action_move_to_later">@string/move_to_later</string>
+  <string name="action_delete">@string/delete</string>
 
 </resources>

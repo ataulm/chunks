@@ -4,8 +4,12 @@
   <string name="tomorrow">Tomorrow</string>
   <string name="later">Later</string>
   <string name="add_a_new_task">Add a new task…</string>
-  <string name="emoji_cross_mark">❌</string>
+  <string name="emoji_spouting_whale">🐳</string>
   <string name="emoji_rightwards_arrow_with_hook">↪️</string>
   <string name="emoji_leftwards_arrow_with_hook">↩️</string>
+  <string name="move_to_today">Move to Today️</string>
+  <string name="move_to_tomorrow">Move to Tomorrow</string>
+  <string name="move_to_later">Move to Later</string>
+  <string name="delete">Delete</string>
 
 </resources>

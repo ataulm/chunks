@@ -90,7 +90,7 @@
   <style name="Chunks.EntryWidget.Icon.MoveRight"
     parent="Chunks.EntryWidget.Icon" />
 
-  <style name="Chunks.EntryWidget.Icon.Delete"
+  <style name="Chunks.EntryWidget.Icon.Menu"
     parent="Chunks.EntryWidget.Icon" />
 
 </resources>
