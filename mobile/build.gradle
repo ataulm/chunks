@@ -8,7 +8,7 @@ def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword 
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.ataulm.chunks"
@@ -42,7 +42,7 @@ android {
 dependencies {
     compile project(":core")
 
-    def supportVersion = '25.0.1'
+    def supportVersion = '25.1.0'
     compile "com.android.support:appcompat-v7:${supportVersion}"
     compile "com.android.support:support-v13:${supportVersion}"
     compile "com.android.support:recyclerview-v7:${supportVersion}"
