@@ -3,7 +3,7 @@ package com.ataulm.chunks;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHolder> {
+class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder> {
 
     private final ChunkEntryUserInteractions userInteractions;
 
@@ -29,14 +29,14 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<EntryViewHolder> {
     }
 
     @Override
-    public EntryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return EntryViewHolder.inflate(parent);
+    public ChunkItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return ChunkItemViewHolder.inflate(parent);
     }
 
     @Override
-    public void onBindViewHolder(EntryViewHolder holder, int position) {
+    public void onBindViewHolder(ChunkItemViewHolder holder, int position) {
         Entry entry = chunk.get(position);
-        holder.entryWidget.bind(day, entry, userInteractions);
+        holder.chunkItemView.bind(day, entry, userInteractions);
     }
 
     @Override

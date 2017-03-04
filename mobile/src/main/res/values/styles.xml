@@ -50,17 +50,17 @@
     <item name="android:textSize">16sp</item>
   </style>
 
-  <style name="Chunks.EntriesPage" />
+  <style name="Chunks.Page" />
 
-  <style name="Chunks.EntriesPage.View">
+  <style name="Chunks.Page.View">
     <item name="android:paddingTop">4dp</item>
     <item name="android:paddingBottom">4dp</item>
     <item name="android:clipToPadding">false</item>
   </style>
 
-  <style name="Chunks.EntryWidget" />
+  <style name="Chunks.Item" />
 
-  <style name="Chunks.EntryWidget.View">
+  <style name="Chunks.Item.View">
     <item name="android:background">@drawable/chunks_entrywidget_background</item>
     <item name="android:paddingLeft">8dp</item>
     <item name="android:paddingTop">4dp</item>
@@ -68,29 +68,29 @@
     <item name="android:paddingBottom">4dp</item>
   </style>
 
-  <style name="Chunks.EntryWidget.CheckBox"
+  <style name="Chunks.Item.CheckBox"
     parent="AppTheme">
     <item name="android:theme">@style/AppTheme.CheckBox</item>
   </style>
 
-  <style name="Chunks.EntryWidget.Text">
+  <style name="Chunks.Item.Text">
     <item name="android:textColor">@color/black</item>
     <item name="android:textSize">16sp</item>
     <item name="android:lineSpacingExtra">6sp</item>
   </style>
 
-  <style name="Chunks.EntryWidget.Icon">
+  <style name="Chunks.Item.Icon">
     <item name="android:gravity">center</item>
     <item name="android:background">@drawable/chunks_entrywidget_icon_background</item>
   </style>
 
-  <style name="Chunks.EntryWidget.Icon.MoveLeft"
-    parent="Chunks.EntryWidget.Icon" />
+  <style name="Chunks.Item.Icon.MoveLeft"
+    parent="Chunks.Item.Icon" />
 
-  <style name="Chunks.EntryWidget.Icon.MoveRight"
-    parent="Chunks.EntryWidget.Icon" />
+  <style name="Chunks.Item.Icon.MoveRight"
+    parent="Chunks.Item.Icon" />
 
-  <style name="Chunks.EntryWidget.Icon.Menu"
-    parent="Chunks.EntryWidget.Icon" />
+  <style name="Chunks.Item.Icon.Menu"
+    parent="Chunks.Item.Icon" />
 
 </resources>

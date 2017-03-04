@@ -14,7 +14,7 @@ import com.novoda.accessibility.ActionsAlertDialogCreator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EntryWidget extends LinearLayout {
+public class ChunkItemView extends LinearLayout {
 
     @BindView(R.id.entry_check_box)
     CheckBox checkBox;
@@ -32,7 +32,7 @@ public class EntryWidget extends LinearLayout {
     TextView menuButton;
     private ActionsAlertDialogCreator actionsAlertDialogCreator;
 
-    public EntryWidget(Context context, AttributeSet attrs) {
+    public ChunkItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
     }

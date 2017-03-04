@@ -3,14 +3,14 @@
 
   <CheckBox
     android:id="@+id/entry_check_box"
-    style="@style/Chunks.EntryWidget.CheckBox"
+    style="@style/Chunks.Item.CheckBox"
     android:layout_width="48dp"
     android:layout_height="48dp"
     android:layout_gravity="center_vertical" />
 
   <TextView
     android:id="@+id/entry_text_view"
-    style="@style/Chunks.EntryWidget.Text"
+    style="@style/Chunks.Item.Text"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
@@ -18,7 +18,7 @@
 
   <TextView
     android:id="@+id/entry_button_move_left"
-    style="@style/Chunks.EntryWidget.Icon.MoveLeft"
+    style="@style/Chunks.Item.Icon.MoveLeft"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
@@ -28,7 +28,7 @@
 
   <TextView
     android:id="@+id/entry_button_move_right"
-    style="@style/Chunks.EntryWidget.Icon.MoveRight"
+    style="@style/Chunks.Item.Icon.MoveRight"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
@@ -39,7 +39,7 @@
 
   <TextView
     android:id="@+id/entry_button_menu"
-    style="@style/Chunks.EntryWidget.Icon.Menu"
+    style="@style/Chunks.Item.Icon.Menu"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
