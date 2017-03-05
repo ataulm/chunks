@@ -3,5 +3,6 @@
 
   <!--Only extracting dimens that are used in more than one place-->
   <dimen name="min_touch_area">48dp</dimen>
+  <dimen name="chunk_item_icon">24dp</dimen>
 
 </resources>
