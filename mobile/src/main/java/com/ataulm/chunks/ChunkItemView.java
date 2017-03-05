@@ -41,7 +41,7 @@ public class ChunkItemView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        View.inflate(getContext(), R.layout.merge_entry, this);
+        View.inflate(getContext(), R.layout.merge_chunk_item, this);
         ButterKnife.bind(this);
         actionsAlertDialogCreator = new ActionsAlertDialogCreator(getContext());
     }

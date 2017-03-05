@@ -21,7 +21,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="100" />
+        android:layout_weight="100"
+        tools:text="Something to do" />
 
     <ImageView
         android:id="@+id/entry_button_move_left"
