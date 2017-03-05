@@ -29,7 +29,7 @@ public class ChunkItemViewActivityTest {
 
     @Test
     public void givenIncompleteEntry_clickingCheckBox_hitsOnUserMarkComplete() {
-        bind(Day.TODAY, Entry.createNew("hello"), hitCounter);
+        bind(Day.TODAY, incompleteEntry());
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
@@ -38,7 +38,7 @@ public class ChunkItemViewActivityTest {
 
     @Test
     public void givenIncompleteEntry_clickingItemView_hitsOnUserMarkComplete() {
-        bind(Day.TODAY, Entry.createNew("hello"), hitCounter);
+        bind(Day.TODAY, incompleteEntry());
 
         onView(withId(R.id.test_view)).perform(click());
 
@@ -47,7 +47,7 @@ public class ChunkItemViewActivityTest {
 
     @Test
     public void givenCompletedEntry_clickingCheckBox_hitsOnUserMarkNotComplete() {
-        bind(Day.TODAY, Entry.createFrom(Id.create(), "hello", ""), hitCounter);
+        bind(Day.TODAY, completeEntry());
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
@@ -56,21 +56,30 @@ public class ChunkItemViewActivityTest {
 
     @Test
     public void givenCompletedEntry_clickingItemView_hitsOnUserMarkNotComplete() {
-        bind(Day.TODAY, Entry.createFrom(Id.create(), "hello", ""), hitCounter);
+        bind(Day.TODAY, completeEntry());
 
         onView(withId(R.id.test_view)).perform(click());
 
         hitCounter.assertHit(R.id.hits_on_user_mark_not_complete);
     }
 
-    private void bind(final Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+    private void bind(final Day day, final Entry entry) {
         final ChunkItemViewActivity activity = activityRule.getActivity();
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                activity.chunkItemView.bind(day, entry, userInteractions);
+                activity.chunkItemView.bind(day, entry, hitCounter);
             }
         });
+    }
+
+    private Entry incompleteEntry() {
+        return Entry.createNew("anything");
+    }
+
+    private Entry completeEntry() {
+        // TODO: empty string shouldn't be valid timestamp (but it is)
+        return Entry.createFrom(Id.create(), "anything", "");
     }
 
 }
