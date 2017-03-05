@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hits_on_user_mark_complete">onUserMarkComplete</string>
+    <string name="hits_on_user_mark_not_complete">onUserMarkNotComplete</string>
+    <string name="hits_on_user_transition_entry_today">onUserTransitionEntryToday</string>
+    <string name="hits_on_user_transition_entry_tomorrow">onUserTransitionEntryTomorrow</string>
+    <string name="hits_on_user_transition_entry_sometime">onUserTransitionEntrySometime</string>
+    <string name="hits_on_user_edit_entry">onUserEditEntry</string>
+    <string name="hits_on_user_remove_entry">onUserRemoveEntry</string>
+
+</resources>

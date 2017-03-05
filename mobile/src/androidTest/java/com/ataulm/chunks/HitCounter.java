@@ -1,61 +1,90 @@
 package com.ataulm.chunks;
 
-import android.support.annotation.IdRes;
-import android.util.SparseBooleanArray;
+import android.content.res.Resources;
+import android.support.annotation.StringRes;
+
+import java.util.HashMap;
+import java.util.Map;
 
 class HitCounter implements ChunkEntryUserInteractions {
 
-    private final SparseBooleanArray hits = new SparseBooleanArray();
+    private final Map<CharSequence, Boolean> hits = new HashMap<>();
+    private final Resources resources;
+
+    HitCounter(Resources resources) {
+        this.resources = resources;
+    }
 
     @Override
     public void onUserMarkComplete(Entry entry) {
-        hits.put(R.id.hits_on_user_mark_complete, true);
+        markHit(R.string.hits_on_user_mark_complete);
     }
 
     @Override
     public void onUserMarkNotComplete(Entry entry) {
-        hits.put(R.id.hits_on_user_mark_not_complete, true);
+        markHit(R.string.hits_on_user_mark_not_complete);
     }
 
     @Override
     public void onUserTransitionEntry(Entry entry, Day day) {
         if (day == Day.TODAY) {
-            hits.put(R.id.hits_on_user_transition_entry_today, true);
+            markHit(R.string.hits_on_user_transition_entry_today);
         }
 
         if (day == Day.TOMORROW) {
-            hits.put(R.id.hits_on_user_transition_entry_tomorrow, true);
+            markHit(R.string.hits_on_user_transition_entry_tomorrow);
         }
 
         if (day == Day.SOMETIME) {
-            hits.put(R.id.hits_on_user_transition_entry_sometime, true);
+            markHit(R.string.hits_on_user_transition_entry_sometime);
         }
     }
 
     @Override
     public void onUserEdit(Entry entry) {
-        hits.put(R.id.hits_on_user_edit_entry, true);
+        markHit(R.string.hits_on_user_edit_entry);
     }
 
     @Override
     public void onUserRemove(Entry entry) {
-        hits.put(R.id.hits_on_user_remove_entry, true);
+        markHit(R.string.hits_on_user_remove_entry);
     }
 
-    public void assertHit(@IdRes int id) {
-        if (!hit(id)) {
-            throw new AssertionError("Expected hit, but didn't get one");
+    private void markHit(@StringRes int id) {
+        hits.put(resources.getString(id), true);
+    }
+
+    public void assertHit(@StringRes int id) {
+        CharSequence key = getKey(id);
+        assertHit(key);
+    }
+
+    public void assertHit(CharSequence key) {
+        if (!hit(key)) {
+            throw new AssertionError("Wanted hit, but no hits found: " + key);
         }
     }
 
-    public void assertNoHit(@IdRes int id) {
-        if (hit(id)) {
-            throw new AssertionError("Expected no hit, but got one");
+    public void assertNoHit(@StringRes int id) {
+        CharSequence key = getKey(id);
+        assertNoHit(key);
+    }
+
+    public void assertNoHit(CharSequence key) {
+        if (hit(key)) {
+            throw new AssertionError("Wanted no hit, but got one: " + key);
         }
     }
 
-    private boolean hit(@IdRes int id) {
-        return hits.get(id, false);
+    private CharSequence getKey(@StringRes int id) {
+        return resources.getString(id);
+    }
+
+    private boolean hit(CharSequence key) {
+        if (hits.containsKey(key)) {
+            return hits.get(key);
+        }
+        return false;
     }
 
 }

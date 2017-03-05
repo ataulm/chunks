@@ -24,7 +24,7 @@ public class ChunkItemViewActivityTest {
 
     @Before
     public void setUp() {
-        hitCounter = new HitCounter();
+        hitCounter = new HitCounter(activityRule.getActivity().getResources());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class ChunkItemViewActivityTest {
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
-        hitCounter.assertHit(R.id.hits_on_user_mark_complete);
+        hitCounter.assertHit(R.string.hits_on_user_mark_complete);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class ChunkItemViewActivityTest {
 
         onView(withId(R.id.test_view)).perform(click());
 
-        hitCounter.assertHit(R.id.hits_on_user_mark_complete);
+        hitCounter.assertHit(R.string.hits_on_user_mark_complete);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ChunkItemViewActivityTest {
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
-        hitCounter.assertHit(R.id.hits_on_user_mark_not_complete);
+        hitCounter.assertHit(R.string.hits_on_user_mark_not_complete);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class ChunkItemViewActivityTest {
 
         onView(withId(R.id.test_view)).perform(click());
 
-        hitCounter.assertHit(R.id.hits_on_user_mark_not_complete);
+        hitCounter.assertHit(R.string.hits_on_user_mark_not_complete);
     }
 
     private void bind(final Day day, final Entry entry) {
