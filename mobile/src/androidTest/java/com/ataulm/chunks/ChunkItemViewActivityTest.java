@@ -12,7 +12,9 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -79,6 +81,20 @@ public class ChunkItemViewActivityTest {
         bind(Day.TODAY, completeEntry("test"));
 
         onView(allOf(withId(R.id.entry_text_view), withText("test"))).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void givenCompleteEntry_checkBoxChecked() {
+        bind(Day.TODAY, completeEntry());
+
+        onView(withId(R.id.entry_check_box)).check(matches(isChecked()));
+    }
+
+    @Test
+    public void givenIncompleteEntry_checkBoxNotChecked() {
+        bind(Day.TODAY, incompleteEntry());
+
+        onView(withId(R.id.entry_check_box)).check(matches(isNotChecked()));
     }
 
     @Test
