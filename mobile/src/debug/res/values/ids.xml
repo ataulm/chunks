@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="hits_on_user_mark_complete" type="id" />
+    <item name="hits_on_user_mark_not_complete" type="id" />
+    <item name="hits_on_user_transition_entry_today" type="id" />
+    <item name="hits_on_user_transition_entry_sometime" type="id" />
+    <item name="hits_on_user_transition_entry_tomorrow" type="id" />
+    <item name="hits_on_user_edit_entry" type="id" />
+    <item name="hits_on_user_remove_entry" type="id" />
+</resources>
