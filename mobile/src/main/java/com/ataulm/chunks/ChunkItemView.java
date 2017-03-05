@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,7 +30,8 @@ public class ChunkItemView extends LinearLayout {
     TextView moveRightButton;
 
     @BindView(R.id.entry_button_menu)
-    TextView menuButton;
+    ImageView menuButton;
+
     private ActionsAlertDialogCreator actionsAlertDialogCreator;
 
     public ChunkItemView(Context context, AttributeSet attrs) {

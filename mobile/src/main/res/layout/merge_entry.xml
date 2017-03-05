@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/white"
+    tools:layout_height="wrap_content"
+    tools:layout_width="match_parent"
+    tools:paddingLeft="16dp"
+    tools:paddingRight="16dp"
+    tools:parentTag="LinearLayout">
 
-  <CheckBox
-    android:id="@+id/entry_check_box"
-    style="@style/Chunks.Item.CheckBox"
-    android:layout_width="48dp"
-    android:layout_height="48dp"
-    android:layout_gravity="center_vertical" />
+    <CheckBox
+        android:id="@+id/entry_check_box"
+        style="@style/Chunks.Item.CheckBox"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical" />
 
-  <TextView
-    android:id="@+id/entry_text_view"
-    style="@style/Chunks.Item.Text"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:layout_weight="100" />
+    <TextView
+        android:id="@+id/entry_text_view"
+        style="@style/Chunks.Item.Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="100" />
 
-  <TextView
-    android:id="@+id/entry_button_move_left"
-    style="@style/Chunks.Item.Icon.MoveLeft"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:minWidth="48dp"
-    android:minHeight="48dp"
-    android:text="@string/entry_widget_move_left" />
+    <TextView
+        android:id="@+id/entry_button_move_left"
+        style="@style/Chunks.Item.Icon.MoveLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:minHeight="48dp"
+        android:minWidth="48dp"
+        android:text="@string/entry_widget_move_left" />
 
-  <TextView
-    android:id="@+id/entry_button_move_right"
-    style="@style/Chunks.Item.Icon.MoveRight"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:minWidth="48dp"
-    android:minHeight="48dp"
-    android:visibility="gone"
-    android:text="@string/entry_widget_move_right" />
+    <TextView
+        android:id="@+id/entry_button_move_right"
+        style="@style/Chunks.Item.Icon.MoveRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:minHeight="48dp"
+        android:minWidth="48dp"
+        android:text="@string/entry_widget_move_right"
+        android:visibility="gone" />
 
-  <TextView
-    android:id="@+id/entry_button_menu"
-    style="@style/Chunks.Item.Icon.Menu"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:layout_marginBottom="3dp"
-    android:minWidth="48dp"
-    android:minHeight="48dp"
-    android:text="@string/entry_widget_menu" />
+    <ImageView
+        android:id="@+id/entry_button_menu"
+        style="@style/Chunks.Item.Icon.Menu"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/chunk_item_menu" />
 
 </merge>
