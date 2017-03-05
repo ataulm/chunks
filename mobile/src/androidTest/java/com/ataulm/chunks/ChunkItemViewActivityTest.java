@@ -98,6 +98,54 @@ public class ChunkItemViewActivityTest {
     }
 
     @Test
+    public void givenEntryForToday_clickingMenu_opensMenuWithCorrectOptions() {
+        bind(Day.TODAY, completeEntry());
+
+        onView(withId(R.id.entry_button_menu)).perform(click());
+
+        viewsWithTextDisplayed(
+                R.string.action_edit,
+                R.string.action_move_to_tomorrow,
+                R.string.action_move_to_later,
+                R.string.action_delete
+        );
+    }
+
+    @Test
+    public void givenEntryForTomorrow_clickingMenu_opensMenuWithCorrectOptions() {
+        bind(Day.TOMORROW, completeEntry());
+
+        onView(withId(R.id.entry_button_menu)).perform(click());
+
+        viewsWithTextDisplayed(
+                R.string.action_edit,
+                R.string.action_move_to_today,
+                R.string.action_move_to_later,
+                R.string.action_delete
+        );
+    }
+
+    @Test
+    public void givenEntryForSometime_clickingMenu_opensMenuWithCorrectOptions() {
+        bind(Day.SOMETIME, completeEntry());
+
+        onView(withId(R.id.entry_button_menu)).perform(click());
+
+        viewsWithTextDisplayed(
+                R.string.action_edit,
+                R.string.action_move_to_today,
+                R.string.action_move_to_tomorrow,
+                R.string.action_delete
+        );
+    }
+
+    private void viewsWithTextDisplayed(int... ids) {
+        for (int id : ids) {
+            onView(withText(id)).check(matches(isDisplayed()));
+        }
+    }
+
+    @Test
     public void givenIncompleteEntry_clickingCheckBox_hitsOnUserMarkComplete() {
         bind(Day.TODAY, incompleteEntry());
 
