@@ -23,26 +23,22 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="100" />
 
-    <TextView
+    <ImageView
         android:id="@+id/entry_button_move_left"
         style="@style/Chunks.Item.Icon.MoveLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center_vertical"
-        android:minHeight="48dp"
-        android:minWidth="48dp"
-        android:text="@string/entry_widget_move_left" />
+        android:src="@drawable/chunk_item_move_left" />
 
-    <TextView
+    <ImageView
         android:id="@+id/entry_button_move_right"
         style="@style/Chunks.Item.Icon.MoveRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center_vertical"
-        android:minHeight="48dp"
-        android:minWidth="48dp"
-        android:text="@string/entry_widget_move_right"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:src="@drawable/chunk_item_move_right" />
 
     <ImageView
         android:id="@+id/entry_button_menu"

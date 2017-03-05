@@ -80,14 +80,13 @@
     <style name="Chunks.Item.Icon">
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/chunks_entrywidget_icon_background</item>
+        <item name="android:scaleType">center</item>
     </style>
 
     <style name="Chunks.Item.Icon.MoveLeft" parent="Chunks.Item.Icon" />
 
     <style name="Chunks.Item.Icon.MoveRight" parent="Chunks.Item.Icon" />
 
-    <style name="Chunks.Item.Icon.Menu" parent="Chunks.Item.Icon">
-        <item name="android:scaleType">center</item>
-    </style>
+    <style name="Chunks.Item.Icon.Menu" parent="Chunks.Item.Icon" />
 
 </resources>
