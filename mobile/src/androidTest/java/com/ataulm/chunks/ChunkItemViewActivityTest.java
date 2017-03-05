@@ -14,6 +14,8 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -73,6 +75,13 @@ public class ChunkItemViewActivityTest {
     }
 
     @Test
+    public void givenEntry_correctTextDisplayed() {
+        bind(Day.TODAY, completeEntry("test"));
+
+        onView(allOf(withId(R.id.entry_text_view), withText("test"))).check(matches(isDisplayed()));
+    }
+
+    @Test
     public void givenIncompleteEntry_clickingCheckBox_hitsOnUserMarkComplete() {
         bind(Day.TODAY, incompleteEntry());
 
@@ -124,7 +133,12 @@ public class ChunkItemViewActivityTest {
 
     private Entry completeEntry() {
         // TODO: empty string shouldn't be valid timestamp (but it is)
-        return Entry.createFrom(Id.create(), "anything", "");
+        return completeEntry("anything");
+    }
+
+    private Entry completeEntry(String value) {
+        // TODO: empty string shouldn't be valid timestamp (but it is)
+        return Entry.createFrom(Id.create(), value, "");
     }
 
 }
