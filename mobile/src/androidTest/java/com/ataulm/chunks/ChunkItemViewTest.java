@@ -3,10 +3,14 @@ package com.ataulm.chunks;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.Before;
+import com.novoda.espresso.ViewTestRule;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -15,20 +19,20 @@ import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class ChunkItemViewTest {
 
     @Rule
-    public ViewActivityRule<ChunkItemView> viewActivityRule = new ViewActivityRule<>(R.layout.test_chunk_item_view);
+    public ViewTestRule<ChunkItemView> viewActivityRule = new ViewTestRule<>(R.layout.test_chunk_item_view);
 
-    private HitCounter hitCounter;
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Before
-    public void setUp() {
-        hitCounter = new HitCounter(viewActivityRule.getActivity().getResources());
-    }
+    @Mock
+    ChunkEntryUserInteractions listener;
 
     @Test
     public void givenEntryForToday_moveRightDisplayed() {
@@ -143,45 +147,49 @@ public class ChunkItemViewTest {
 
     @Test
     public void givenIncompleteEntry_clickingCheckBox_hitsOnUserMarkComplete() {
-        bind(Day.TODAY, incompleteEntry());
+        Entry entry = incompleteEntry();
+        bind(Day.TODAY, entry);
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
-        hitCounter.assertHit(R.string.hits_on_user_mark_complete);
+        verify(listener).onUserMarkComplete(entry);
     }
 
     @Test
     public void givenIncompleteEntry_clickingItemView_hitsOnUserMarkComplete() {
-        bind(Day.TODAY, incompleteEntry());
+        Entry entry = incompleteEntry();
+        bind(Day.TODAY, entry);
 
         onView(withClassName(is(ChunkItemView.class.getName()))).perform(click());
 
-        hitCounter.assertHit(R.string.hits_on_user_mark_complete);
+        verify(listener).onUserMarkComplete(entry);
     }
 
     @Test
     public void givenCompletedEntry_clickingCheckBox_hitsOnUserMarkNotComplete() {
-        bind(Day.TODAY, completeEntry());
+        Entry entry = completeEntry();
+        bind(Day.TODAY, entry);
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
-        hitCounter.assertHit(R.string.hits_on_user_mark_not_complete);
+        verify(listener).onUserMarkNotComplete(entry);
     }
 
     @Test
     public void givenCompletedEntry_clickingItemView_hitsOnUserMarkNotComplete() {
-        bind(Day.TODAY, completeEntry());
+        Entry entry = completeEntry();
+        bind(Day.TODAY, entry);
 
         onView(withClassName(is(ChunkItemView.class.getName()))).perform(click());
 
-        hitCounter.assertHit(R.string.hits_on_user_mark_not_complete);
+        verify(listener).onUserMarkNotComplete(entry);
     }
 
     private void bind(final Day day, final Entry entry) {
-        viewActivityRule.bindView(new ViewActivityRule.Binder<ChunkItemView>() {
+        viewActivityRule.bindViewUsing(new ViewTestRule.Binder<ChunkItemView>() {
             @Override
             public void bind(ChunkItemView view) {
-                view.bind(day, entry, hitCounter);
+                view.bind(day, entry, listener);
             }
         });
     }
