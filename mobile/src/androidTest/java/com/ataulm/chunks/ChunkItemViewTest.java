@@ -15,7 +15,12 @@ import org.mockito.junit.MockitoRule;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
@@ -139,12 +144,6 @@ public class ChunkItemViewTest {
         );
     }
 
-    private void viewsWithTextDisplayed(int... ids) {
-        for (int id : ids) {
-            onView(withText(id)).check(matches(isDisplayed()));
-        }
-    }
-
     @Test
     public void givenIncompleteEntry_clickingCheckBox_hitsOnUserMarkComplete() {
         Entry entry = incompleteEntry();
@@ -206,6 +205,12 @@ public class ChunkItemViewTest {
     private Entry completeEntry(String value) {
         // TODO: empty string shouldn't be valid timestamp (but it is)
         return Entry.createFrom(Id.create(), value, "");
+    }
+
+    private void viewsWithTextDisplayed(int... ids) {
+        for (int id : ids) {
+            onView(withText(id)).check(matches(isDisplayed()));
+        }
     }
 
 }
