@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static com.ataulm.chunks.AccessibilityViewMatchers.withUsageHintOnClick;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -22,6 +24,13 @@ public class ChunkItemView_TalkBackEnabled_Test extends ChunkItemViewTest {
     @Override
     protected ViewTestRule<ChunkItemView> getViewTestRule() {
         return viewActivityRule;
+    }
+
+    @Test
+    public void itemViewHasCustomUsageHint() {
+        bind(Day.TODAY, completeEntry());
+
+        onItemView().check(matches(withUsageHintOnClick("see all actions")));
     }
 
     @Test
