@@ -97,49 +97,61 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     }
 
     @Test
-    public void givenEntryForToday_clickingMenu_opensMenuWithCorrectOptions() {
+    public void givenCompleteEntry_clickingMenu_opensMenuWithMarkNotComplete() {
         bind(Day.TODAY, completeEntry());
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
-        viewsWithTextDisplayed(
-                R.string.action_edit,
-                R.string.action_move_to_tomorrow,
-                R.string.action_move_to_later,
-                R.string.action_delete
-        );
+        assertDisplayingViewsWithText(R.string.action_mark_not_complete);
     }
 
     @Test
-    public void givenEntryForTomorrow_clickingMenu_opensMenuWithCorrectOptions() {
-        bind(Day.TOMORROW, completeEntry());
+    public void givenIncompleteEntry_clickingMenu_opensMenuWithMarkComplete() {
+        bind(Day.TODAY, incompleteEntry());
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
-        viewsWithTextDisplayed(
-                R.string.action_edit,
-                R.string.action_move_to_today,
-                R.string.action_move_to_later,
-                R.string.action_delete
-        );
+        assertDisplayingViewsWithText(R.string.action_mark_complete);
     }
 
     @Test
-    public void givenEntryForSometime_clickingMenu_opensMenuWithCorrectOptions() {
-        bind(Day.SOMETIME, completeEntry());
+    public void givenEntryForToday_clickingMenu_opensMenuWithMoveToTomorrowAndMoveToLater() {
+        bind(Day.TODAY, incompleteEntry());
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
-        viewsWithTextDisplayed(
-                R.string.action_edit,
-                R.string.action_move_to_today,
+        assertDisplayingViewsWithText(
                 R.string.action_move_to_tomorrow,
-                R.string.action_delete
+                R.string.action_move_to_later
         );
     }
 
     @Test
-    public void givenIncompleteEntry_clickingCheckBox_hitsOnUserMarkComplete() {
+    public void givenEntryForTomorrow_clickingMenu_opensMenuWithMoveToTodayAndMoveToLater() {
+        bind(Day.TOMORROW, incompleteEntry());
+
+        onView(withId(R.id.entry_button_menu)).perform(click());
+
+        assertDisplayingViewsWithText(
+                R.string.action_move_to_today,
+                R.string.action_move_to_later
+        );
+    }
+
+    @Test
+    public void givenEntryForLater_clickingMenu_opensMenuWithMoveToTodayAndMoveToTomorrow() {
+        bind(Day.SOMETIME, incompleteEntry());
+
+        onView(withId(R.id.entry_button_menu)).perform(click());
+
+        assertDisplayingViewsWithText(
+                R.string.action_move_to_today,
+                R.string.action_move_to_tomorrow
+        );
+    }
+
+    @Test
+    public void givenIncompleteEntry_clickingCheckBox_callsOnUserMarkComplete() {
         Entry entry = incompleteEntry();
         bind(Day.TODAY, entry);
 
@@ -149,7 +161,7 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     }
 
     @Test
-    public void givenIncompleteEntry_clickingItemView_hitsOnUserMarkComplete() {
+    public void givenIncompleteEntry_clickingItemView_callsOnUserMarkComplete() {
         Entry entry = incompleteEntry();
         bind(Day.TODAY, entry);
 
@@ -159,7 +171,7 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     }
 
     @Test
-    public void givenCompletedEntry_clickingCheckBox_hitsOnUserMarkNotComplete() {
+    public void givenCompletedEntry_clickingCheckBox_callsOnUserMarkNotComplete() {
         Entry entry = completeEntry();
         bind(Day.TODAY, entry);
 
@@ -169,7 +181,7 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     }
 
     @Test
-    public void givenCompletedEntry_clickingItemView_hitsOnUserMarkNotComplete() {
+    public void givenCompletedEntry_clickingItemView_callsOnUserMarkNotComplete() {
         Entry entry = completeEntry();
         bind(Day.TODAY, entry);
 

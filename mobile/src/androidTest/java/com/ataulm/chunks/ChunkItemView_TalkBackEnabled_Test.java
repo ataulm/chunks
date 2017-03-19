@@ -30,7 +30,7 @@ public class ChunkItemView_TalkBackEnabled_Test extends ChunkItemViewTest {
 
         onItemView().perform(click());
 
-        viewsWithTextDisplayed(
+        assertDisplayingViewsWithText(
                 R.string.action_edit,
                 R.string.action_move_to_tomorrow,
                 R.string.action_move_to_later,

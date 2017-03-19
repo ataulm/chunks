@@ -19,7 +19,6 @@
       </intent-filter>
 
     </activity>
-    <activity android:name=".settings.SettingsActivity" />
 
     <activity-alias
       android:name="activity.primary_launcher"

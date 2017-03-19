@@ -4,6 +4,7 @@ import android.support.test.espresso.ViewInteraction;
 
 import com.novoda.espresso.ViewTestRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
@@ -44,7 +45,7 @@ abstract class ChunkItemViewTest {
         return Entry.createFrom(Id.create(), value, "");
     }
 
-    protected void viewsWithTextDisplayed(int... ids) {
+    protected void assertDisplayingViewsWithText(int... ids) {
         for (int id : ids) {
             onView(withText(id)).check(matches(isDisplayed()));
         }
