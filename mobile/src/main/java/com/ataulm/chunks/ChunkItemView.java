@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.novoda.accessibility.AccessibilityServices;
 import com.novoda.accessibility.ActionsAlertDialogCreator;
 
 import butterknife.BindView;
@@ -31,11 +32,14 @@ public class ChunkItemView extends LinearLayout {
     @BindView(R.id.entry_button_menu)
     View menuButton;
 
-    private ActionsAlertDialogCreator actionsAlertDialogCreator;
+    private final AccessibilityServices accessibilityServices;
+    private final ActionsAlertDialogCreator actionsAlertDialogCreator;
 
     public ChunkItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
+        accessibilityServices = AccessibilityServices.newInstance(context);
+        actionsAlertDialogCreator = new ActionsAlertDialogCreator(context);
     }
 
     @Override
@@ -43,7 +47,6 @@ public class ChunkItemView extends LinearLayout {
         super.onFinishInflate();
         View.inflate(getContext(), R.layout.merge_chunk_item, this);
         ButterKnife.bind(this);
-        actionsAlertDialogCreator = new ActionsAlertDialogCreator(getContext());
     }
 
     public void bind(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
@@ -55,14 +58,14 @@ public class ChunkItemView extends LinearLayout {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                toggleCompleted(entry, userInteractions);
+                toggleCompleted(entry, chunksActions);
             }
         });
 
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleCompleted(entry, userInteractions);
+                toggleCompleted(entry, chunksActions);
             }
         });
 
@@ -105,14 +108,20 @@ public class ChunkItemView extends LinearLayout {
                 alertDialog.show();
             }
         });
+
+        if (accessibilityServices.isSpokenFeedbackEnabled()) {
+            new ItemViewClickActions(this).setClickListeners(chunksActions.actions());
+            moveLeftButton.setVisibility(GONE);
+            moveRightButton.setVisibility(GONE);
+            menuButton.setVisibility(GONE);
+        }
     }
 
-
-    private void toggleCompleted(Entry entry, ChunkEntryUserInteractions userInteractions) {
+    private void toggleCompleted(Entry entry, ChunksActions chunksActions) {
         if (entry.isCompleted()) {
-            userInteractions.onUserMarkNotComplete(entry);
+            chunksActions.markNotCompleteAction().run();
         } else {
-            userInteractions.onUserMarkComplete(entry);
+            chunksActions.markCompleteAction().run();
         }
     }
 

@@ -4,6 +4,8 @@
   <string name="tomorrow">Tomorrow</string>
   <string name="later">Later</string>
   <string name="add_a_new_task">Add a new task…</string>
+  <string name="mark_complete">Mark complete</string>
+  <string name="mark_not_complete">Mark not complete</string>
   <string name="move_to_today">Move to Today️</string>
   <string name="move_to_tomorrow">Move to Tomorrow</string>
   <string name="move_to_later">Move to Later</string>

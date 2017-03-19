@@ -3,12 +3,15 @@ package com.ataulm.chunks;
 import com.novoda.accessibility.Action;
 import com.novoda.accessibility.Actions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 final class ChunksActions {
 
     private final Actions actions;
+    private final Action markCompleteAction;
+    private final Action markNotCompleteAction;
     private final Action editAction;
     private final Action moveToTodayAction;
     private final Action moveToTomorrowAction;
@@ -16,6 +19,18 @@ final class ChunksActions {
     private final Action deleteAction;
 
     public static ChunksActions create(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+        Action markCompleteAction = new Action(R.id.action_mark_complete, R.string.action_mark_complete, new Runnable() {
+            @Override
+            public void run() {
+                userInteractions.onUserMarkComplete(entry);
+            }
+        });
+        Action markNotCompleteAction = new Action(R.id.action_mark_not_complete, R.string.action_mark_not_complete, new Runnable() {
+            @Override
+            public void run() {
+                userInteractions.onUserMarkNotComplete(entry);
+            }
+        });
         Action editAction = new Action(R.id.action_edit, R.string.action_edit, new Runnable() {
             @Override
             public void run() {
@@ -47,22 +62,34 @@ final class ChunksActions {
             }
         });
 
-        Actions actions = new Actions(collateActions(day, editAction, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction));
-        return new ChunksActions(actions, editAction, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction);
+        Actions actions = new Actions(collateActions(entry, day, markCompleteAction, markNotCompleteAction, editAction, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction));
+        return new ChunksActions(actions, markCompleteAction, markNotCompleteAction, editAction, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction);
     }
 
-    private static List<Action> collateActions(Day day, Action editAction, Action moveToTodayAction, Action moveToTomorrowAction, Action moveToLaterAction, Action deleteAction) {
-        if (day == Day.TODAY) {
-            return Arrays.asList(editAction, moveToTomorrowAction, moveToLaterAction, deleteAction);
-        } else if (day == Day.TOMORROW) {
-            return Arrays.asList(editAction, moveToTodayAction, moveToLaterAction, deleteAction);
+    private static List<Action> collateActions(Entry entry, Day day, Action markCompleteAction, Action markNotCompleteAction, Action editAction, Action moveToTodayAction, Action moveToTomorrowAction, Action moveToLaterAction, Action deleteAction) {
+        List<Action> actions = new ArrayList<>(Arrays.asList(markCompleteAction, markNotCompleteAction, editAction, moveToTodayAction, moveToTomorrowAction, moveToLaterAction, deleteAction));
+
+        if (entry.isCompleted()) {
+            actions.remove(markCompleteAction);
         } else {
-            return Arrays.asList(editAction, moveToTodayAction, moveToTomorrowAction, deleteAction);
+            actions.remove(markNotCompleteAction);
         }
+
+        if (day == Day.TODAY) {
+            actions.remove(moveToTodayAction);
+        } else if (day == Day.TOMORROW) {
+            actions.remove(moveToTomorrowAction);
+        } else {
+            actions.remove(moveToLaterAction);
+        }
+
+        return actions;
     }
 
-    private ChunksActions(Actions actions, Action editAction, Action moveToTodayAction, Action moveToTomorrowAction, Action moveToLaterAction, Action deleteAction) {
+    private ChunksActions(Actions actions, Action markCompleteAction, Action markNotCompleteAction, Action editAction, Action moveToTodayAction, Action moveToTomorrowAction, Action moveToLaterAction, Action deleteAction) {
         this.actions = actions;
+        this.markCompleteAction = markCompleteAction;
+        this.markNotCompleteAction = markNotCompleteAction;
         this.editAction = editAction;
         this.moveToTodayAction = moveToTodayAction;
         this.moveToTomorrowAction = moveToTomorrowAction;
@@ -72,6 +99,18 @@ final class ChunksActions {
 
     public Actions actions() {
         return actions;
+    }
+
+    public Action markNotCompleteAction() {
+        return markNotCompleteAction;
+    }
+
+    public Action markCompleteAction() {
+        return markCompleteAction;
+    }
+
+    public Action editAction() {
+        return editAction;
     }
 
     public Action moveToTodayAction() {
