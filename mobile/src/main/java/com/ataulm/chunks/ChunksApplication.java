@@ -23,7 +23,7 @@ public class ChunksApplication extends Application {
         GsonChunksConverter gsonChunksConverter = new GsonChunksConverter(new GsonChunkConverter(new GsonEntryConverter()));
         JsonChunksConverter jsonChunksConverter = new JsonChunksConverter(new Gson());
         ChunksRepository chunksRepository = SharedPreferencesChunksRepository.create(this, gsonChunksConverter, jsonChunksConverter);
-        chunksService = new ChunksService(chunksRepository, new SystemClock(), new AndroidLog());
+        chunksService = new ChunksService(chunksRepository, new ChunkEditor(), new SystemClock(), new AndroidLog());
     }
 
     public ChunksService getChunksService() {

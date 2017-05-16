@@ -17,6 +17,7 @@ import rx.subjects.BehaviorSubject;
 public class ChunksService {
 
     private final ChunksRepository chunksRepository;
+    private final ChunkEditor chunkEditor;
     private final Clock clock;
     private final Log log;
 
@@ -24,8 +25,9 @@ public class ChunksService {
 
     private boolean currentlyFetching;
 
-    public ChunksService(ChunksRepository chunksRepository, Clock clock, Log log) {
+    public ChunksService(ChunksRepository chunksRepository, ChunkEditor chunkEditor, Clock clock, Log log) {
         this.chunksRepository = chunksRepository;
+        this.chunkEditor = chunkEditor;
         this.clock = clock;
         this.log = log;
         this.eventsSubject = BehaviorSubject.create(Event.<Chunks>idle());
@@ -106,25 +108,25 @@ public class ChunksService {
 
     public void createEntry(Entry entry, Day day) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunks.add(entry, day);
+        Chunks updatedChunks = chunkEditor.add(chunks, day, entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void updateEntry(Entry entry) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunks.update(entry);
+        Chunks updatedChunks = chunkEditor.update(chunks, entry);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void editEntry(Entry entry) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunks.edit(entry.id());
+        Chunks updatedChunks = chunkEditor.edit(chunks, entry.id());
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
     public void removeEntry(Entry entry) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunks.remove(entry.id());
+        Chunks updatedChunks = chunkEditor.remove(chunks, entry.id());
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
