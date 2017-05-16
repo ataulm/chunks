@@ -3,9 +3,6 @@ package com.ataulm.chunks;
 import com.ataulm.Optional;
 import com.google.auto.value.AutoValue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -36,38 +33,6 @@ public abstract class Chunks {
     public abstract Chunk sometime();
 
     public abstract Optional<String> input();
-
-    public Chunks shuffleAlong(ChunkDate todaysDate) {
-        if (todaysDate.isSameDayAs(todaysDate())) {
-            return this;
-        }
-
-        List<Entry> updatedTodayEntries = new ArrayList<>();
-        for (Entry entry : today()) {
-            if (!entry.isCompleted()) {
-                updatedTodayEntries.add(entry);
-            }
-        }
-
-        for (Entry entry : tomorrow()) {
-            if (!entry.isCompleted()) {
-                updatedTodayEntries.add(entry);
-            }
-        }
-
-        List<Entry> updatedSometimeEntries = new ArrayList<>();
-        for (Entry entry : sometime()) {
-            if (!entry.isCompleted()) {
-                updatedSometimeEntries.add(entry);
-            }
-        }
-
-        Chunk updatedToday = Chunk.create(updatedTodayEntries);
-        Chunk updatedTomorrow = Chunk.empty();
-        Chunk updatedSometime = Chunk.create(updatedSometimeEntries);
-
-        return Chunks.create(todaysDate, updatedToday, updatedTomorrow, updatedSometime);
-    }
 
 }
 

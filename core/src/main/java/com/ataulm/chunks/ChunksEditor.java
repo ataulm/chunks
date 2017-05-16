@@ -3,7 +3,7 @@ package com.ataulm.chunks;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChunkEditor {
+public class ChunksEditor {
 
     public Chunk add(Chunk chunk, Entry entry) {
         assertNoEntryWithSameId(chunk, entry);
@@ -113,18 +113,6 @@ public class ChunkEditor {
         return chunks;
     }
 
-    private static void assertNoEntriesWithSameId(Chunks chunks, Entry entry) {
-        assertNoEntryWithSameId(chunks.today(), entry);
-        assertNoEntryWithSameId(chunks.tomorrow(), entry);
-        assertNoEntryWithSameId(chunks.sometime(), entry);
-    }
-
-    private static void assertNoEntryWithSameId(Chunk chunk, Entry entry) {
-        if (chunk.containsEntryWith(entry.id())) {
-            throw new IllegalArgumentException("chunk already contains entry with id: " + entry.id());
-        }
-    }
-
     public Chunks remove(Chunks chunks, Id id) {
         if (chunks.today().containsEntryWith(id)) {
             Chunk updatedToday = remove(chunks.today(), id);
@@ -161,6 +149,50 @@ public class ChunkEditor {
         }
 
         throw new IllegalArgumentException("no entries with id found: " + entry.id());
+    }
+
+    public Chunks shuffleAlong(Chunks chunks, ChunkDate todaysDate) {
+        if (chunks.todaysDate().isSameDayAs(todaysDate)) {
+            return chunks;
+        }
+
+        List<Entry> updatedTodayEntries = new ArrayList<>();
+        for (Entry entry : chunks.today()) {
+            if (!entry.isCompleted()) {
+                updatedTodayEntries.add(entry);
+            }
+        }
+
+        for (Entry entry : chunks.tomorrow()) {
+            if (!entry.isCompleted()) {
+                updatedTodayEntries.add(entry);
+            }
+        }
+
+        List<Entry> updatedSometimeEntries = new ArrayList<>();
+        for (Entry entry : chunks.sometime()) {
+            if (!entry.isCompleted()) {
+                updatedSometimeEntries.add(entry);
+            }
+        }
+
+        Chunk updatedToday = Chunk.create(updatedTodayEntries);
+        Chunk updatedTomorrow = Chunk.empty();
+        Chunk updatedSometime = Chunk.create(updatedSometimeEntries);
+
+        return Chunks.create(todaysDate, updatedToday, updatedTomorrow, updatedSometime);
+    }
+
+    private static void assertNoEntriesWithSameId(Chunks chunks, Entry entry) {
+        assertNoEntryWithSameId(chunks.today(), entry);
+        assertNoEntryWithSameId(chunks.tomorrow(), entry);
+        assertNoEntryWithSameId(chunks.sometime(), entry);
+    }
+
+    private static void assertNoEntryWithSameId(Chunk chunk, Entry entry) {
+        if (chunk.containsEntryWith(entry.id())) {
+            throw new IllegalArgumentException("chunk already contains entry with id: " + entry.id());
+        }
     }
 
 }
