@@ -151,6 +151,33 @@ public class ChunksEditor {
         throw new IllegalArgumentException("no entries with id found: " + entry.id());
     }
 
+    public Chunk move(Chunk chunk, int originalEntryPosition, int newEntryPosition) {
+        if (originalEntryPosition < 0 || originalEntryPosition >= chunk.size()) {
+            throw new IllegalArgumentException("originalEntryPosition is out of bounds: " + originalEntryPosition);
+        }
+
+        if (newEntryPosition < 0 || newEntryPosition >= chunk.size()) {
+            throw new IllegalArgumentException("newEntryPosition is out of bounds: " + newEntryPosition);
+        }
+
+        if (originalEntryPosition == newEntryPosition) {
+            return chunk;
+        }
+
+        List<Entry> updatedEntries = new ArrayList<>(chunk.entries());
+        Entry entry = updatedEntries.get(originalEntryPosition);
+
+        if (originalEntryPosition > newEntryPosition) {
+            updatedEntries.add(newEntryPosition, entry);
+            updatedEntries.remove(originalEntryPosition + 1);
+        } else {
+            updatedEntries.add(newEntryPosition + 1, entry);
+            updatedEntries.remove(originalEntryPosition);
+        }
+
+        return Chunk.create(updatedEntries);
+    }
+
     public Chunks shuffleAlong(Chunks chunks, ChunkDate todaysDate) {
         if (chunks.todaysDate().isSameDayAs(todaysDate)) {
             return chunks;

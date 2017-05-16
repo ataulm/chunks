@@ -255,6 +255,100 @@ public class ChunksEditorTest {
         }
     }
 
+
+    @Test
+    public void moveEntryToEarlierPosition() {
+        Entry zero = anEntry().get();
+        Entry one = anEntry().get();
+        Entry two = anEntry().get();
+        Entry three = anEntry().get();
+        Chunk chunk = aChunk().with(Arrays.asList(zero, one, two, three)).get();
+
+        Chunk updatedChunk = chunksEditor.move(chunk, 3, 0);
+
+        assertThat(updatedChunk.entries()).containsExactly(three, zero, one, two);
+    }
+
+    @Test
+    public void moveEntryToLaterPosition() {
+        Entry zero = anEntry().get();
+        Entry one = anEntry().get();
+        Entry two = anEntry().get();
+        Entry three = anEntry().get();
+        Chunk chunk = aChunk().with(Arrays.asList(zero, one, two, three)).get();
+
+        Chunk updatedChunk = chunksEditor.move(chunk, 0, 3);
+
+        assertThat(updatedChunk.entries()).containsExactly(one, two, three, zero);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void moveEntryWithOriginalEntryPositionLowerThanZeroThrowsError() {
+        Entry entry = anEntry().get();
+        Chunk chunk = aChunk().with(entry).get();
+        int originalEntryPosition = -1;
+
+        try {
+            chunksEditor.move(chunk, originalEntryPosition, 0);
+        } catch (IllegalArgumentException e) {
+            assertThat(e).hasMessageContaining(String.valueOf(originalEntryPosition));
+            throw e;
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void moveEntryWithNewEntryPositionLowerThanZeroThrowsError() {
+        Entry entry = anEntry().get();
+        Chunk chunk = aChunk().with(entry).get();
+        int newEntryPosition = -1;
+
+        try {
+            chunksEditor.move(chunk, 0, newEntryPosition);
+        } catch (IllegalArgumentException e) {
+            assertThat(e).hasMessageContaining(String.valueOf(newEntryPosition));
+            throw e;
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void moveEntryWithOriginalEntryPositionGreaterThanMaxIndexThrowsError() {
+        Entry entry = anEntry().get();
+        Chunk chunk = aChunk().with(entry).get();
+        int originalEntryPosition = chunk.size();
+
+        try {
+            chunksEditor.move(chunk, originalEntryPosition, 0);
+        } catch (IllegalArgumentException e) {
+            assertThat(e).hasMessageContaining(String.valueOf(originalEntryPosition));
+            throw e;
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void moveEntryWithNewEntryPositionGreaterThanMaxIndexThrowsError() {
+        Entry entry = anEntry().get();
+        Chunk chunk = aChunk().with(entry).get();
+        int newEntryPosition = chunk.size();
+
+        try {
+            chunksEditor.move(chunk, 0, newEntryPosition);
+        } catch (IllegalArgumentException e) {
+            assertThat(e).hasMessageContaining(String.valueOf(newEntryPosition));
+            throw e;
+        }
+    }
+
+    @Test
+    public void moveEntryWithSameOriginalAndNewEntryPositionsDoesNothing() {
+        Entry one = anEntry().get();
+        Entry two = anEntry().get();
+        Chunk chunk = aChunk().with(Arrays.asList(one, two)).get();
+
+        Chunk updatedChunks = chunksEditor.move(chunk, 0, 0);
+
+        assertThat(updatedChunks).isEqualTo(chunk);
+    }
+
     @Test
     public void shuffle_along_with_different_day_moves_all_completed_tasks() {
         List<Entry> completeTasks = createNewListOfCompleteNewEntries();
