@@ -35,4 +35,10 @@ class AndroidChunkEntryUserInteractions implements ChunkEntryUserInteractions {
     public void onUserRemove(Entry entry) {
         chunksService.removeEntry(entry);
     }
+
+    @Override
+    public void onUserMove(Entry entry, int position) {
+        chunksService.moveEntry(entry, position);
+    }
+
 }

@@ -12,4 +12,6 @@ interface ChunkEntryUserInteractions {
 
     void onUserRemove(Entry entry);
 
+    void onUserMove(Entry entry, int position);
+
 }

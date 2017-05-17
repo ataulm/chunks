@@ -36,7 +36,7 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder>
     @Override
     public void onBindViewHolder(ChunkItemViewHolder holder, int position) {
         Entry entry = chunk.get(position);
-        holder.chunkItemView.bind(day, entry, userInteractions);
+        holder.chunkItemView.bind(chunk, day, entry, userInteractions);
     }
 
     @Override

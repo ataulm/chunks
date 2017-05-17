@@ -51,11 +51,11 @@ abstract class ChunkItemViewTest {
         }
     }
 
-    protected void bind(final Day day, final Entry entry) {
+    protected void bind(final Chunk chunk, final Day day, final Entry entry) {
         getViewTestRule().bindViewUsing(new ViewTestRule.Binder<ChunkItemView>() {
             @Override
             public void bind(ChunkItemView view) {
-                view.bind(day, entry, listener);
+                view.bind(chunk, day, entry, listener);
             }
         });
     }

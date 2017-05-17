@@ -17,6 +17,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.ataulm.chunks.ChunkFixtures.aChunk;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.verify;
@@ -35,70 +36,99 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenEntryForToday_moveRightDisplayed() {
-        bind(Day.TODAY, completeEntry());
+        Entry entry = completeEntry();
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(isDisplayed()));
     }
 
     @Test
     public void givenEntryForToday_moveLeftNotDisplayed() {
-        bind(Day.TODAY, completeEntry());
+        Entry entry = completeEntry();
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(not(isDisplayed())));
     }
 
     @Test
     public void givenEntryForTomorrow_moveLeftDisplayed() {
-        bind(Day.TOMORROW, completeEntry());
+        Entry entry = completeEntry();
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.TOMORROW, entry);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(isDisplayed()));
     }
 
     @Test
     public void givenEntryForTomorrow_moveRightNotDisplayed() {
-        bind(Day.TOMORROW, completeEntry());
+        Entry entry = completeEntry();
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.TOMORROW, entry);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(not(isDisplayed())));
     }
 
     @Test
     public void givenEntryForSometime_moveLeftDisplayed() {
-        bind(Day.SOMETIME, completeEntry());
+        Entry entry = completeEntry();
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.SOMETIME, entry);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(isDisplayed()));
     }
 
     @Test
     public void givenEntryForSometime_moveRightNotDisplayed() {
-        bind(Day.SOMETIME, completeEntry());
+        Entry entry = completeEntry();
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.SOMETIME, entry);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(not(isDisplayed())));
     }
 
     @Test
     public void givenEntry_correctTextDisplayed() {
-        bind(Day.TODAY, completeEntry("test"));
+        Entry entry = completeEntry("test");
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.TODAY, entry);
 
         onView(allOf(withId(R.id.entry_text_view), withText("test"))).check(matches(isDisplayed()));
     }
 
     @Test
     public void givenCompleteEntry_checkBoxChecked() {
-        bind(Day.TODAY, completeEntry());
+        Entry entry = completeEntry();
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_check_box)).check(matches(isChecked()));
     }
 
     @Test
     public void givenIncompleteEntry_checkBoxNotChecked() {
-        bind(Day.TODAY, incompleteEntry());
+        Entry entry = incompleteEntry();
+        Chunk chunk = aChunk().with(entry).get();
+
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_check_box)).check(matches(isNotChecked()));
     }
 
     @Test
     public void givenCompleteEntry_clickingMenu_opensMenuWithMarkNotComplete() {
-        bind(Day.TODAY, completeEntry());
+        Entry entry = completeEntry();
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -107,7 +137,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenIncompleteEntry_clickingMenu_opensMenuWithMarkComplete() {
-        bind(Day.TODAY, incompleteEntry());
+        Entry entry = incompleteEntry();
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -116,7 +148,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenEntryForToday_clickingMenu_opensMenuWithMoveToTomorrowAndMoveToLater() {
-        bind(Day.TODAY, incompleteEntry());
+        Entry entry = incompleteEntry();
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -128,7 +162,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenEntryForTomorrow_clickingMenu_opensMenuWithMoveToTodayAndMoveToLater() {
-        bind(Day.TOMORROW, incompleteEntry());
+        Entry entry = incompleteEntry();
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.TOMORROW, entry);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -140,7 +176,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenEntryForLater_clickingMenu_opensMenuWithMoveToTodayAndMoveToTomorrow() {
-        bind(Day.SOMETIME, incompleteEntry());
+        Entry entry = incompleteEntry();
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.SOMETIME, entry);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -153,7 +191,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     @Test
     public void givenIncompleteEntry_clickingCheckBox_callsOnUserMarkComplete() {
         Entry entry = incompleteEntry();
-        bind(Day.TODAY, entry);
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
@@ -163,7 +202,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     @Test
     public void givenIncompleteEntry_clickingItemView_callsOnUserMarkComplete() {
         Entry entry = incompleteEntry();
-        bind(Day.TODAY, entry);
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.TODAY, entry);
 
         onItemView().perform(click());
 
@@ -173,7 +213,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     @Test
     public void givenCompletedEntry_clickingCheckBox_callsOnUserMarkNotComplete() {
         Entry entry = completeEntry();
-        bind(Day.TODAY, entry);
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.TODAY, entry);
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
@@ -183,7 +224,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     @Test
     public void givenCompletedEntry_clickingItemView_callsOnUserMarkNotComplete() {
         Entry entry = completeEntry();
-        bind(Day.TODAY, entry);
+        Chunk chunk = aChunk().with(entry).get();
+        bind(chunk, Day.TODAY, entry);
 
         onItemView().perform(click());
 

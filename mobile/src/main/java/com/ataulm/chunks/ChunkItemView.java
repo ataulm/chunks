@@ -49,8 +49,9 @@ public class ChunkItemView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
-        final ChunksActions chunksActions = ChunksActions.create(day, entry, userInteractions);
+    // TODO: perhaps we don't get ChunkEntryUserInteractions here - rather, we get ChunkActions which has optional actions. That way this view can be dumber and cannot do something it isn't eligible to do (causing an error).
+    public void bind(Chunk chunk, Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+        final ChunksActions chunksActions = ChunksActions.create(chunk, day, entry, userInteractions);
         final AlertDialog alertDialog = actionsAlertDialogCreator.create(chunksActions.actions());
 
         checkBox.setOnCheckedChangeListener(null);

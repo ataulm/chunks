@@ -10,4 +10,6 @@
   <item name="action_move_to_later" type="id" />
   <item name="action_delete" type="id" />
   <item name="action_edit" type="id" />
+  <item name="action_move_up" type="id" />
+  <item name="action_move_down" type="id" />
 </resources>
