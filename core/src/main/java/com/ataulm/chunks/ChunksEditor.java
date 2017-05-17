@@ -151,22 +151,36 @@ public class ChunksEditor {
         throw new IllegalArgumentException("no entries with id found: " + entry.id());
     }
 
-    public Chunk move(Chunk chunk, int originalEntryPosition, int newEntryPosition) {
-        if (originalEntryPosition < 0 || originalEntryPosition >= chunk.size()) {
-            throw new IllegalArgumentException("originalEntryPosition is out of bounds: " + originalEntryPosition);
+    public Chunks move(Chunks chunks, Entry entry, int newEntryPosition) {
+        if (chunks.today().containsEntryWith(entry.id())) {
+            Chunk updatedToday = move(chunks.today(), entry, newEntryPosition);
+            return Chunks.create(chunks.todaysDate(), updatedToday, chunks.tomorrow(), chunks.sometime());
         }
 
+        if (chunks.tomorrow().containsEntryWith(entry.id())) {
+            Chunk updatedTomorrow = move(chunks.tomorrow(), entry, newEntryPosition);
+            return Chunks.create(chunks.todaysDate(), chunks.today(), updatedTomorrow, chunks.sometime());
+        }
+
+        if (chunks.sometime().containsEntryWith(entry.id())) {
+            Chunk updatedSometime = move(chunks.sometime(), entry, newEntryPosition);
+            return Chunks.create(chunks.todaysDate(), chunks.today(), chunks.tomorrow(), updatedSometime);
+        }
+
+        throw new IllegalArgumentException("no entries with id found: " + entry.id());
+    }
+
+    public Chunk move(Chunk chunk, Entry entry, int newEntryPosition) {
         if (newEntryPosition < 0 || newEntryPosition >= chunk.size()) {
             throw new IllegalArgumentException("newEntryPosition is out of bounds: " + newEntryPosition);
         }
 
-        if (originalEntryPosition == newEntryPosition) {
+        int originalEntryPosition = chunk.entries().indexOf(entry);
+        if (originalEntryPosition == -1 || originalEntryPosition == newEntryPosition) {
             return chunk;
         }
 
         List<Entry> updatedEntries = new ArrayList<>(chunk.entries());
-        Entry entry = updatedEntries.get(originalEntryPosition);
-
         if (originalEntryPosition > newEntryPosition) {
             updatedEntries.add(newEntryPosition, entry);
             updatedEntries.remove(originalEntryPosition + 1);

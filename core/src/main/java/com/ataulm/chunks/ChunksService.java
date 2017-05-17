@@ -130,6 +130,28 @@ public class ChunksService {
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
+    public void moveEntry(Entry entry, int newPosition) {
+        Chunks chunks = getInMemoryChunksOrEmpty();
+        Chunks updatedChunks = chunksEditor.move(chunks, entry, newPosition);
+        eventsSubject.onNext(Event.idle(updatedChunks));
+    }
+
+    private static Chunk findChunkWithEntry(Chunks chunks, Entry entry) {
+        if (chunks.today().containsEntryWith(entry.id())) {
+            return chunks.today();
+        }
+
+        if (chunks.tomorrow().containsEntryWith(entry.id())) {
+            return chunks.tomorrow();
+        }
+
+        if (chunks.sometime().containsEntryWith(entry.id())) {
+            return chunks.sometime();
+        }
+
+        throw new IllegalArgumentException("Entry not found in chunks: " + entry + ", " + chunks);
+    }
+
     private Chunks getInMemoryChunksOrEmpty() {
         Event<Chunks> event = eventsSubject.getValue();
         return event.getData().or(Chunks.empty(ChunkDate.create(clock)));
