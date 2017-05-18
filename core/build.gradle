@@ -1,5 +1,19 @@
+plugins {
+    id 'net.ltgt.apt' version '0.10'
+}
+
 apply plugin: 'java'
-apply plugin: JavaAptPlugin.class
+
+/////////////////////////////////////////////////////////////////////////
+// for AutoValue in ASide
+/////////////////////////////////////////////////////////////////////////
+apply plugin: 'idea'
+idea {
+    module {
+        generatedSourceDirs += project.file('build/generated/source/apt')
+    }
+}
+/////////////////////////////////////////////////////////////////////////
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -7,7 +21,8 @@ dependencies {
     compile 'com.google.code.findbugs:annotations:3.0.0'
     compile 'io.reactivex:rxjava:1.1.1'
 
-    javapt 'com.google.auto.value:auto-value:1.1'
+    compileOnly 'com.google.auto.value:auto-value:1.4'
+    apt 'com.google.auto.value:auto-value:1.4'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.9.5"
@@ -16,3 +31,17 @@ dependencies {
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+task createCoreTestFixturesJar(type: Jar, dependsOn: testClasses) {
+    from sourceSets.test.output.classesDir
+    classifier = 'test'
+    include '**/*Fixtures.class'
+}
+
+configurations {
+    coreTestFixtures.extendsFrom testCompile
+}
+
+artifacts {
+    coreTestFixtures createCoreTestFixturesJar
+}

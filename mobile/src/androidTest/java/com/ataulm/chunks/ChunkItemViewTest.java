@@ -4,7 +4,6 @@ import android.support.test.espresso.ViewInteraction;
 
 import com.novoda.espresso.ViewTestRule;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
@@ -25,37 +24,37 @@ abstract class ChunkItemViewTest {
     @Mock
     ChunkEntryUserInteractions listener;
 
-    protected abstract ViewTestRule<ChunkItemView> getViewTestRule();
+    abstract ViewTestRule<ChunkItemView> getViewTestRule();
 
-    protected ViewInteraction onItemView() {
+    ViewInteraction onItemView() {
         return onView(withClassName(is(ChunkItemView.class.getName())));
     }
 
-    protected Entry incompleteEntry() {
+    Entry incompleteEntry() {
         return Entry.createNew("anything");
     }
 
-    protected Entry completeEntry() {
+    Entry completeEntry() {
         // TODO: empty string shouldn't be valid timestamp (but it is)
         return completeEntry("anything");
     }
 
-    protected Entry completeEntry(String value) {
+    Entry completeEntry(String value) {
         // TODO: empty string shouldn't be valid timestamp (but it is)
         return Entry.createFrom(Id.create(), value, "");
     }
 
-    protected void assertDisplayingViewsWithText(int... ids) {
+    void assertDisplayingViewsWithText(int... ids) {
         for (int id : ids) {
             onView(withText(id)).check(matches(isDisplayed()));
         }
     }
 
-    protected void bind(final Chunk chunk, final Day day, final Entry entry) {
+    void bind(final Entry entry, final ChunksActions chunksActions) {
         getViewTestRule().bindViewUsing(new ViewTestRule.Binder<ChunkItemView>() {
             @Override
             public void bind(ChunkItemView view) {
-                view.bind(chunk, day, entry, listener);
+                view.bind(entry, chunksActions);
             }
         });
     }

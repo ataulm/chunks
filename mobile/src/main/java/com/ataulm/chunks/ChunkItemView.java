@@ -49,9 +49,7 @@ public class ChunkItemView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    // TODO: perhaps we don't get ChunkEntryUserInteractions here - rather, we get ChunkActions which has optional actions. That way this view can be dumber and cannot do something it isn't eligible to do (causing an error).
-    public void bind(Chunk chunk, Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
-        final ChunksActions chunksActions = ChunksActions.create(chunk, day, entry, userInteractions);
+    public void bind(Entry entry, final ChunksActions chunksActions) {
         final AlertDialog alertDialog = actionsAlertDialogCreator.create(chunksActions.actions());
 
         checkBox.setOnCheckedChangeListener(null);
@@ -59,48 +57,39 @@ public class ChunkItemView extends LinearLayout {
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                toggleCompleted(entry, chunksActions);
+                toggleCompleted(chunksActions);
             }
         });
 
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                toggleCompleted(entry, chunksActions);
+                toggleCompleted(chunksActions);
             }
         });
 
         entryTextView.setText(entry.value());
 
-        if (day == Day.TODAY) {
+        if (chunksActions.transitionToPreviousDay().isPresent()) {
+            moveRightButton.setVisibility(GONE);
+            moveLeftButton.setVisibility(VISIBLE);
+            moveLeftButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    chunksActions.transitionToPreviousDay().get().run();
+                }
+            });
+        }
+
+        if (chunksActions.transitionToNextDay().isPresent()) {
             moveLeftButton.setVisibility(GONE);
             moveRightButton.setVisibility(VISIBLE);
             moveRightButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    chunksActions.moveToTomorrowAction().run();
+                    chunksActions.transitionToNextDay().get().run();
                 }
             });
-        } else if (day == Day.TOMORROW) {
-            moveLeftButton.setVisibility(VISIBLE);
-            moveLeftButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    chunksActions.moveToTodayAction().run();
-                }
-            });
-
-            moveRightButton.setVisibility(GONE);
-        } else {
-            moveLeftButton.setVisibility(VISIBLE);
-            moveLeftButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    chunksActions.moveToTomorrowAction().run();
-                }
-            });
-
-            moveRightButton.setVisibility(GONE);
         }
 
         menuButton.setOnClickListener(new OnClickListener() {
@@ -118,11 +107,13 @@ public class ChunkItemView extends LinearLayout {
         }
     }
 
-    private void toggleCompleted(Entry entry, ChunksActions chunksActions) {
-        if (entry.isCompleted()) {
-            chunksActions.markNotCompleteAction().run();
+    private void toggleCompleted(ChunksActions chunksActions) {
+        if (chunksActions.markComplete().isPresent()) {
+            chunksActions.markComplete().get().run();
+        } else if (chunksActions.markNotComplete().isPresent()) {
+            chunksActions.markNotComplete().get().run();
         } else {
-            chunksActions.markCompleteAction().run();
+            throw new IllegalStateException("actions has neither complete/incomplete? " + chunksActions);
         }
     }
 

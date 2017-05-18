@@ -38,8 +38,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForToday_moveRightDisplayed() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
 
-        bind(chunk, Day.TODAY, entry);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(isDisplayed()));
     }
@@ -48,8 +49,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForToday_moveLeftNotDisplayed() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
 
-        bind(chunk, Day.TODAY, entry);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(not(isDisplayed())));
     }
@@ -58,8 +60,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForTomorrow_moveLeftDisplayed() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, entry, listener);
 
-        bind(chunk, Day.TOMORROW, entry);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(isDisplayed()));
     }
@@ -68,8 +71,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForTomorrow_moveRightNotDisplayed() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, entry, listener);
 
-        bind(chunk, Day.TOMORROW, entry);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(not(isDisplayed())));
     }
@@ -78,8 +82,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForSometime_moveLeftDisplayed() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, entry, listener);
 
-        bind(chunk, Day.SOMETIME, entry);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(isDisplayed()));
     }
@@ -88,8 +93,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForSometime_moveRightNotDisplayed() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, entry, listener);
 
-        bind(chunk, Day.SOMETIME, entry);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(not(isDisplayed())));
     }
@@ -98,8 +104,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntry_correctTextDisplayed() {
         Entry entry = completeEntry("test");
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
 
-        bind(chunk, Day.TODAY, entry);
+        bind(entry, chunksActions);
 
         onView(allOf(withId(R.id.entry_text_view), withText("test"))).check(matches(isDisplayed()));
     }
@@ -108,8 +115,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenCompleteEntry_checkBoxChecked() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
 
-        bind(chunk, Day.TODAY, entry);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_check_box)).check(matches(isChecked()));
     }
@@ -118,8 +126,9 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenIncompleteEntry_checkBoxNotChecked() {
         Entry entry = incompleteEntry();
         Chunk chunk = aChunk().with(entry).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
 
-        bind(chunk, Day.TODAY, entry);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_check_box)).check(matches(isNotChecked()));
     }
@@ -128,7 +137,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenCompleteEntry_clickingMenu_opensMenuWithMarkNotComplete() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.TODAY, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -139,7 +149,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenIncompleteEntry_clickingMenu_opensMenuWithMarkComplete() {
         Entry entry = incompleteEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.TODAY, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -150,7 +161,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForToday_clickingMenu_opensMenuWithMoveToTomorrowAndMoveToLater() {
         Entry entry = incompleteEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.TODAY, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -164,7 +176,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForTomorrow_clickingMenu_opensMenuWithMoveToTodayAndMoveToLater() {
         Entry entry = incompleteEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.TOMORROW, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, entry, listener);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -178,7 +191,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenEntryForLater_clickingMenu_opensMenuWithMoveToTodayAndMoveToTomorrow() {
         Entry entry = incompleteEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.SOMETIME, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, entry, listener);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -192,7 +206,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenIncompleteEntry_clickingCheckBox_callsOnUserMarkComplete() {
         Entry entry = incompleteEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.TODAY, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
@@ -203,7 +218,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenIncompleteEntry_clickingItemView_callsOnUserMarkComplete() {
         Entry entry = incompleteEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.TODAY, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        bind(entry, chunksActions);
 
         onItemView().perform(click());
 
@@ -214,7 +230,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenCompletedEntry_clickingCheckBox_callsOnUserMarkNotComplete() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.TODAY, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        bind(entry, chunksActions);
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
@@ -225,7 +242,8 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
     public void givenCompletedEntry_clickingItemView_callsOnUserMarkNotComplete() {
         Entry entry = completeEntry();
         Chunk chunk = aChunk().with(entry).get();
-        bind(chunk, Day.TODAY, entry);
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        bind(entry, chunksActions);
 
         onItemView().perform(click());
 
