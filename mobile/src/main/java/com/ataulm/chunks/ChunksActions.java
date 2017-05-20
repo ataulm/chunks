@@ -108,7 +108,7 @@ abstract class ChunksActions {
         if (originalEntryPosition == 0) {
             return Optional.absent();
         }
-        return Optional.of(new Action(R.id.action_move_up, R.string.move_up, new Runnable() {
+        return Optional.of(new Action(R.id.action_move_up, R.string.action_move_up, new Runnable() {
             @Override
             public void run() {
                 userInteractions.onUserMove(entry, originalEntryPosition - 1);
@@ -121,7 +121,7 @@ abstract class ChunksActions {
         if (originalEntryPosition == chunk.size() - 1) {
             return Optional.absent();
         }
-        return Optional.of(new Action(R.id.action_move_down, R.string.move_down, new Runnable() {
+        return Optional.of(new Action(R.id.action_move_down, R.string.action_move_down, new Runnable() {
             @Override
             public void run() {
                 userInteractions.onUserMove(entry, originalEntryPosition + 1);
