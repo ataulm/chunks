@@ -40,10 +40,10 @@ abstract class ChunksActions {
         if (!entry.isCompleted()) {
             return Optional.absent();
         }
-        return Optional.of(new Action(R.id.action_mark_complete, R.string.action_mark_complete, new Runnable() {
+        return Optional.of(new Action(R.id.action_mark_not_complete, R.string.action_mark_not_complete, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserMarkComplete(entry);
+                userInteractions.onUserMarkNotComplete(entry);
             }
         }));
     }
