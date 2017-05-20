@@ -17,9 +17,10 @@ import static android.view.View.VISIBLE;
 
 final class ChunkItemViewHolder extends RecyclerView.ViewHolder {
 
+    private final ChunkItemView itemView;
+    private final ItemViewClickActions itemViewClickActions;
     private final AccessibilityServices accessibilityServices;
     private final ActionsAlertDialogCreator actionsAlertDialogCreator;
-    private final ChunkItemView itemView;
 
     public static ChunkItemViewHolder inflate(ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -31,8 +32,9 @@ final class ChunkItemViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.itemView = itemView;
 
-        accessibilityServices = AccessibilityServices.newInstance(itemView.getContext());
-        actionsAlertDialogCreator = new ActionsAlertDialogCreator(itemView.getContext());
+        this.itemViewClickActions = new ItemViewClickActions(itemView);
+        this.accessibilityServices = AccessibilityServices.newInstance(itemView.getContext());
+        this.actionsAlertDialogCreator = new ActionsAlertDialogCreator(itemView.getContext());
     }
 
     public void bind(Entry entry, final ChunksActions chunksActions) {
@@ -88,7 +90,7 @@ final class ChunkItemViewHolder extends RecyclerView.ViewHolder {
         });
 
         if (accessibilityServices.isSpokenFeedbackEnabled()) {
-            new ItemViewClickActions(itemView).setClickListeners(chunksActions.actions());
+            itemViewClickActions.setClickListeners(chunksActions.actions());
             itemView.moveLeftButton().setVisibility(GONE);
             itemView.moveRightButton().setVisibility(GONE);
             itemView.menuButton().setVisibility(GONE);
