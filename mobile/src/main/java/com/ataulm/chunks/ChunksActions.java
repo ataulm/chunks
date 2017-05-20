@@ -14,14 +14,15 @@ abstract class ChunksActions {
         Optional<Action> markComplete = createMarkCompleteAction(entry, userInteractions);
         Optional<Action> markNotComplete = createMarkNotCompleteAction(entry, userInteractions);
         Action edit = createEditAction(entry, userInteractions);
-        Optional<Action> transitionToPreviousDay = createTransitionToPreviousDayAction(day, entry, userInteractions);
-        Optional<Action> transitionToNextDay = createTransitionToNextDayAction(day, entry, userInteractions);
+        Optional<Action> transitionToToday = createTransitionToTodayAction(day, entry, userInteractions);
+        Optional<Action> transitionToTomorrow = createTransitionToTomorrowAction(day, entry, userInteractions);
+        Optional<Action> transitionToLater = createTransitionToLaterAction(day, entry, userInteractions);
         Optional<Action> moveUp = createMoveUpAction(chunk, entry, userInteractions);
         Optional<Action> moveDown = createMoveDownAction(chunk, entry, userInteractions);
         Action delete = createDeleteAction(entry, userInteractions);
 
-        Actions actions = collate(markComplete, markNotComplete, edit, transitionToPreviousDay, transitionToNextDay, moveUp, moveDown, delete);
-        return new AutoValue_ChunksActions(actions, markComplete, markNotComplete, edit, transitionToPreviousDay, transitionToNextDay, moveUp, moveDown, delete);
+        Actions actions = collate(markComplete, markNotComplete, edit, transitionToToday, transitionToTomorrow, transitionToLater, moveUp, moveDown, delete);
+        return new AutoValue_ChunksActions(actions, markComplete, markNotComplete, edit, transitionToToday, transitionToTomorrow, transitionToLater, moveUp, moveDown, delete, day);
     }
 
     private static Optional<Action> createMarkCompleteAction(final Entry entry, final ChunkEntryUserInteractions userInteractions) {
@@ -57,50 +58,40 @@ abstract class ChunksActions {
         });
     }
 
-    private static Optional<Action> createTransitionToPreviousDayAction(final Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
-        switch (day) {
-            case TODAY:
-                return Optional.absent();
-            case TOMORROW:
-                return Optional.of(new Action(R.id.action_move_to_today, R.string.action_move_to_today, new Runnable() {
-                    @Override
-                    public void run() {
-                        userInteractions.onUserTransitionEntry(entry, Day.TODAY);
-                    }
-                }));
-            case SOMETIME:
-                return Optional.of(new Action(R.id.action_move_to_tomorrow, R.string.action_move_to_tomorrow, new Runnable() {
-                    @Override
-                    public void run() {
-                        userInteractions.onUserTransitionEntry(entry, Day.TOMORROW);
-                    }
-                }));
-            default:
-                throw new IllegalArgumentException("unhandled day: " + day);
+    private static Optional<Action> createTransitionToTodayAction(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+        if (day == Day.TODAY) {
+            return Optional.absent();
         }
+        return Optional.of(new Action(R.id.action_move_to_today, R.string.action_move_to_today, new Runnable() {
+            @Override
+            public void run() {
+                userInteractions.onUserTransitionEntry(entry, Day.TODAY);
+            }
+        }));
     }
 
-    private static Optional<Action> createTransitionToNextDayAction(final Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
-        switch (day) {
-            case TODAY:
-                return Optional.of(new Action(R.id.action_move_to_tomorrow, R.string.action_move_to_tomorrow, new Runnable() {
-                    @Override
-                    public void run() {
-                        userInteractions.onUserTransitionEntry(entry, Day.TOMORROW);
-                    }
-                }));
-            case TOMORROW:
-                return Optional.of(new Action(R.id.action_move_to_later, R.string.action_move_to_later, new Runnable() {
-                    @Override
-                    public void run() {
-                        userInteractions.onUserTransitionEntry(entry, Day.SOMETIME);
-                    }
-                }));
-            case SOMETIME:
-                return Optional.absent();
-            default:
-                throw new IllegalArgumentException("unhandled day: " + day);
+    private static Optional<Action> createTransitionToTomorrowAction(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+        if (day == Day.TOMORROW) {
+            return Optional.absent();
         }
+        return Optional.of(new Action(R.id.action_move_to_tomorrow, R.string.action_move_to_tomorrow, new Runnable() {
+            @Override
+            public void run() {
+                userInteractions.onUserTransitionEntry(entry, Day.TOMORROW);
+            }
+        }));
+    }
+
+    private static Optional<Action> createTransitionToLaterAction(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+        if (day == Day.SOMETIME) {
+            return Optional.absent();
+        }
+        return Optional.of(new Action(R.id.action_move_to_later, R.string.action_move_to_later, new Runnable() {
+            @Override
+            public void run() {
+                userInteractions.onUserTransitionEntry(entry, Day.SOMETIME);
+            }
+        }));
     }
 
     private static Optional<Action> createMoveUpAction(final Chunk chunk, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
@@ -142,8 +133,9 @@ abstract class ChunksActions {
             Optional<Action> markComplete,
             Optional<Action> markNotComplete,
             Action edit,
-            Optional<Action> transitionToPreviousDay,
-            Optional<Action> transitionToNextDay,
+            Optional<Action> transitionToToday,
+            Optional<Action> transitionToTomorrow,
+            Optional<Action> transitionToLater,
             Optional<Action> moveUp,
             Optional<Action> moveDown,
             Action delete
@@ -156,11 +148,14 @@ abstract class ChunksActions {
             actions.add(markNotComplete.get());
         }
         actions.add(edit);
-        if (transitionToPreviousDay.isPresent()) {
-            actions.add(transitionToPreviousDay.get());
+        if (transitionToToday.isPresent()) {
+            actions.add(transitionToToday.get());
         }
-        if (transitionToNextDay.isPresent()) {
-            actions.add(transitionToNextDay.get());
+        if (transitionToTomorrow.isPresent()) {
+            actions.add(transitionToTomorrow.get());
+        }
+        if (transitionToLater.isPresent()) {
+            actions.add(transitionToLater.get());
         }
         if (moveUp.isPresent()) {
             actions.add(moveUp.get());
@@ -180,14 +175,46 @@ abstract class ChunksActions {
 
     abstract Action edit();
 
-    abstract Optional<Action> transitionToPreviousDay();
+    abstract Optional<Action> transitionToToday();
 
-    abstract Optional<Action> transitionToNextDay();
+    abstract Optional<Action> transitionToTomorrow();
+
+    abstract Optional<Action> transitionToLater();
 
     abstract Optional<Action> moveUp();
 
     abstract Optional<Action> moveDown();
 
     abstract Action delete();
+
+    abstract Day currentDay();
+
+    Optional<Action> transitionToPreviousDay() {
+        Day day = currentDay();
+        switch (day) {
+            case TODAY:
+                return Optional.absent();
+            case TOMORROW:
+                return transitionToToday();
+            case SOMETIME:
+                return transitionToTomorrow();
+            default:
+                throw new IllegalArgumentException("unknown day: " + day);
+        }
+    }
+
+    Optional<Action> transitionToNextDay() {
+        Day day = currentDay();
+        switch (day) {
+            case TODAY:
+                return transitionToTomorrow();
+            case TOMORROW:
+                return transitionToLater();
+            case SOMETIME:
+                return Optional.absent();
+            default:
+                throw new IllegalArgumentException("unknown day: " + day);
+        }
+    }
 
 }

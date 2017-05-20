@@ -9,7 +9,9 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ataulm.Optional;
 import com.novoda.accessibility.AccessibilityServices;
+import com.novoda.accessibility.Action;
 import com.novoda.accessibility.ActionsAlertDialogCreator;
 
 import butterknife.BindView;
@@ -49,7 +51,7 @@ public class ChunkItemView extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    public void bind(Entry entry, final ChunksActions chunksActions) {
+    public void bind(Day day, Entry entry, final ChunksActions chunksActions) {
         final AlertDialog alertDialog = actionsAlertDialogCreator.create(chunksActions.actions());
 
         checkBox.setOnCheckedChangeListener(null);
@@ -70,24 +72,26 @@ public class ChunkItemView extends LinearLayout {
 
         entryTextView.setText(entry.value());
 
-        if (chunksActions.transitionToPreviousDay().isPresent()) {
-            moveRightButton.setVisibility(GONE);
-            moveLeftButton.setVisibility(VISIBLE);
-            moveLeftButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    chunksActions.transitionToPreviousDay().get().run();
-                }
-            });
-        }
-
-        if (chunksActions.transitionToNextDay().isPresent()) {
+        final Optional<Action> transitionNextDay = chunksActions.transitionToNextDay();
+        if (transitionNextDay.isPresent()) {
             moveLeftButton.setVisibility(GONE);
             moveRightButton.setVisibility(VISIBLE);
             moveRightButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    chunksActions.transitionToNextDay().get().run();
+                    transitionNextDay.get().run();
+                }
+            });
+        }
+
+        final Optional<Action> transitionPreviousDay = chunksActions.transitionToPreviousDay();
+        if (transitionPreviousDay.isPresent()) {
+            moveRightButton.setVisibility(GONE);
+            moveLeftButton.setVisibility(VISIBLE);
+            moveLeftButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    transitionPreviousDay.get().run();
                 }
             });
         }

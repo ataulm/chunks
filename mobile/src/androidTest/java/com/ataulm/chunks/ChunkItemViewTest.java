@@ -54,7 +54,7 @@ abstract class ChunkItemViewTest {
         getViewTestRule().bindViewUsing(new ViewTestRule.Binder<ChunkItemView>() {
             @Override
             public void bind(ChunkItemView view) {
-                view.bind(entry, chunksActions);
+                view.bind(chunksActions.currentDay(), entry, chunksActions);
             }
         });
     }
