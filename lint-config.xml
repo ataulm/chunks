@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+
+    <!--This doesn't mean contentDescriptions shouldn't be set - it's just almost always set programmatically-->
+    <issue id="ContentDescription" severity="ignore" />
+
+</lint>
