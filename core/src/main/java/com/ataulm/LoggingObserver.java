@@ -12,7 +12,7 @@ public class LoggingObserver<T> implements Observer<T> {
 
     @Override
     public void onCompleted() {
-        log.debug(getTag(), "onCompleted()");
+        log.verbose(getTag(), "onCompleted()");
     }
 
     @Override
@@ -22,7 +22,7 @@ public class LoggingObserver<T> implements Observer<T> {
 
     @Override
     public void onNext(T t) {
-        log.debug(getTag(), "onNext(t): " + t);
+        log.verbose(getTag(), "onNext(t): " + t);
     }
 
     private String getTag() {

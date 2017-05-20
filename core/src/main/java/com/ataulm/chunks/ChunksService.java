@@ -92,7 +92,6 @@ public class ChunksService {
         return new Func1<Event<Chunks>, Event<Chunks>>() {
             @Override
             public Event<Chunks> call(Event<Chunks> chunksEvent) {
-                log.debug("!!!", "shuffleAlong()");
                 Optional<Chunks> data = chunksEvent.getData();
                 if (data.isPresent()) {
                     ChunkDate today = ChunkDate.create(clock);
