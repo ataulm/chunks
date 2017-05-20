@@ -14,5 +14,6 @@
   <string name="action_delete">@string/delete</string>
   <string name="action_move_up">@string/move_up</string>
   <string name="action_move_down">@string/move_down</string>
+  <string name="empty_chunk">@string/whats_next</string>
 
 </resources>
