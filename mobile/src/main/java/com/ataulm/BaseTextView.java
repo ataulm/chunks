@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.method.TransformationMethod;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
 import com.ataulm.chunks.R;
 
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class BaseTextView extends TextView {
+public class BaseTextView extends AppCompatTextView {
 
     private final TypefaceFactory typefaceFactory;
 
@@ -220,7 +220,8 @@ public class BaseTextView extends TextView {
             // No op
         }
 
-        @SuppressWarnings("checkstyle:visibilitymodifier") // We follow closer to Google code style for this one.
+        @SuppressWarnings("checkstyle:visibilitymodifier")
+        // We follow closer to Google code style for this one.
         private static final class SpanPosition {
 
             public final Object span;
