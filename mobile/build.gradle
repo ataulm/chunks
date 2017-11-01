@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'provide this in gradle.properties'
 def signingStorePassword = hasProperty('signingStorePassword') ? signingStorePassword : 'provide this in gradle.properties'
@@ -7,13 +6,13 @@ def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provid
 def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         applicationId "com.ataulm.chunks"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 2
         versionName "1.0.2"
 
@@ -48,27 +47,27 @@ android {
 dependencies {
     compile project(":core")
 
-    def supportVersion = '25.3.1'
+    def supportVersion = '27.0.0'
     compile "com.android.support:appcompat-v7:${supportVersion}"
     compile "com.android.support:support-v13:${supportVersion}"
     compile "com.android.support:recyclerview-v7:${supportVersion}"
     compile "com.android.support:design:${supportVersion}"
 
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'com.novoda:accessibilitools:1.4.0'
-    compile 'com.novoda:landing-strip:1.0.1'
-    compile 'com.novoda:view-pager-adapter:0.9.1'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.novoda:accessibilitools:1.4.1'
+    compile 'com.novoda:landing-strip:1.0.1' // TODO update to latest
+    compile 'com.novoda:view-pager-adapter:0.9.1' // TODO update to latest
     compile 'com.jakewharton:butterknife:8.0.1'
-    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
 
-    apt 'com.google.auto.value:auto-value:1.4'
+    annotationProcessor 'com.google.auto.value:auto-value:1.4' // TODO: update to latest
     provided 'com.google.auto.value:auto-value:1.4'
 
     debugCompile('com.novoda:espresso-support-extras:0.0.3')
     androidTestCompile('com.novoda:espresso-support:0.0.3') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile 'org.mockito:mockito-core:1.10.19' // TODO: update to latest
     androidTestCompile "com.google.dexmaker:dexmaker:1.2"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
     androidTestCompile project(path: ':core', configuration: 'coreTestFixtures')
