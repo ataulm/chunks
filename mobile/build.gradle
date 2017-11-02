@@ -6,13 +6,13 @@ def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provid
 def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "26.0.2"
+    compileSdkVersion versions.androidSdk.compile
+    buildToolsVersion versions.androidSdk.buildTools
 
     defaultConfig {
         applicationId "com.ataulm.chunks"
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion versions.androidSdk.min
+        targetSdkVersion versions.androidSdk.target
         versionCode 2
         versionName "1.0.2"
 
@@ -47,37 +47,36 @@ android {
 dependencies {
     compile project(":core")
 
-    def supportVersion = '27.0.0'
-    compile "com.android.support:appcompat-v7:${supportVersion}"
-    compile "com.android.support:support-v13:${supportVersion}"
-    compile "com.android.support:recyclerview-v7:${supportVersion}"
-    compile "com.android.support:design:${supportVersion}"
+    compile libraries.supportAppCompatV7
+    compile libraries.supportV13
+    compile libraries.supportRecyclerview
+    compile libraries.supportDesign
 
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'com.novoda:accessibilitools:1.4.1'
-    compile 'com.novoda:landing-strip:1.0.1' // TODO update to latest
-    compile 'com.novoda:view-pager-adapter:0.9.1' // TODO update to latest
-    compile 'com.jakewharton:butterknife:8.0.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile libraries.rxAndroid
+    compile libraries.accessibilitools
+    compile libraries.landingStrip
+    compile libraries.viewPagerAdapter
+    compile libraries.butterknife
+    annotationProcessor libraries.butterknifeCompiler
 
-    annotationProcessor 'com.google.auto.value:auto-value:1.4' // TODO: update to latest
-    provided 'com.google.auto.value:auto-value:1.4'
+    annotationProcessor libraries.autoValue
+    provided libraries.autoValue
 
-    debugCompile('com.novoda:espresso-support-extras:0.0.3')
-    androidTestCompile('com.novoda:espresso-support:0.0.3') {
+    debugCompile libraries.espressoSupportExtras
+    androidTestCompile(libraries.espressoSupport) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile 'org.mockito:mockito-core:1.10.19' // TODO: update to latest
-    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
-    androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
+    androidTestCompile libraries.mockitoCore
+    androidTestCompile libraries.dexmaker
+    androidTestCompile libraries.dexmakerMockito
     androidTestCompile project(path: ':core', configuration: 'coreTestFixtures')
 
     // Android runner and rules support
-    androidTestCompile('com.android.support.test:runner:0.5') {
+    androidTestCompile(libraries.androidTestRunner) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
     // Espresso support
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
+    androidTestCompile(libraries.androidEspressoCore) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 }

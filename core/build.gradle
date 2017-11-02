@@ -17,16 +17,16 @@ idea {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.code.gson:gson:2.7' // TODO: update to latest
-    compile 'com.google.code.findbugs:annotations:3.0.0'
-    compile 'io.reactivex:rxjava:1.1.1' // TODO: update to latest
+    compile libraries.gson
+    compile libraries.findbugsAnnotations
+    compile libraries.rxJava
 
-    compileOnly 'com.google.auto.value:auto-value:1.4' // TODO: update to latest
-    apt 'com.google.auto.value:auto-value:1.4'
+    compileOnly libraries.autoValue
+    apt libraries.autoValue
 
-    testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:1.9.5"
-    testCompile 'org.easytesting:fest-assert-core:2.0M10'
+    testCompile libraries.jUnit
+    testCompile libraries.mockitoCore
+    testCompile libraries.festAssertCore
 }
 
 sourceCompatibility = 1.7
