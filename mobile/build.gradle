@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.novoda.build-properties'
-apply plugin: 'io.fabric'
 
 buildProperties {
     fabric {
@@ -9,6 +8,13 @@ buildProperties {
     signing {
         file project.file('../signing.properties')
     }
+}
+
+String MISSING_FABRIC_KEY = 'missing_fabric_key'
+String fabricApiKey = buildProperties.fabric['apiKey'].or(MISSING_FABRIC_KEY).string
+boolean shouldEnableFabric = fabricApiKey != MISSING_FABRIC_KEY
+if (shouldEnableFabric) {
+    apply plugin: 'io.fabric'
 }
 
 android {
@@ -24,17 +30,18 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        buildConfigBoolean 'SHOULD_ENABLE_FABRIC', shouldEnableFabric
         manifestPlaceholders = [
-                fabricApiKey: buildProperties.fabric['apiKey'].string
+                fabricApiKey: fabricApiKey
         ]
     }
 
     signingConfigs {
         release {
-            storeFile file(buildProperties.signing['storeFile'].string)
-            storePassword buildProperties.signing['storePassword'].string
-            keyAlias buildProperties.signing['keyAlias'].string
-            keyPassword buildProperties.signing['keyPassword'].string
+            storeFile file(buildProperties.signing['storeFile'].or('/absolute/path/to/keystore/file').string)
+            storePassword buildProperties.signing['storePassword'].or('password').string
+            keyAlias buildProperties.signing['keyAlias'].or('keyalias').string
+            keyPassword buildProperties.signing['keyPassword'].or('keypassword').string
         }
     }
 

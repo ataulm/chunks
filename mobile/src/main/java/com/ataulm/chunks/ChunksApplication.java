@@ -33,6 +33,9 @@ public class ChunksApplication extends Application {
     }
 
     private void initializeFabric() {
+        if (!BuildConfig.SHOULD_ENABLE_FABRIC) {
+            return;
+        }
         CrashlyticsCore core = new CrashlyticsCore.Builder().build();
         Crashlytics crashlytics = new Crashlytics.Builder().core(core).build();
         Fabric.with(this, crashlytics);
