@@ -1,9 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.novoda.build-properties'
+apply plugin: 'io.fabric'
 
 def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'provide this in gradle.properties'
 def signingStorePassword = hasProperty('signingStorePassword') ? signingStorePassword : 'provide this in gradle.properties'
 def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provide this in gradle.properties'
 def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
+
+buildProperties {
+    fabric {
+        file project.file('../fabric.properties')
+    }
+}
 
 android {
     compileSdkVersion versions.androidSdk.compile
@@ -17,6 +25,10 @@ android {
         versionName "1.0.4"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [
+                fabricApiKey: buildProperties.fabric['apiKey'].string
+        ]
     }
 
     signingConfigs {
@@ -47,20 +59,19 @@ android {
 dependencies {
     compile project(":core")
 
+    compile libraries.accessibilitools
+    annotationProcessor libraries.autoValue
+    provided libraries.autoValue
+    compile libraries.butterknife
+    annotationProcessor libraries.butterknifeCompiler
+    compile(libraries.crashlytics) { transitive = true }
+    compile libraries.landingStrip
+    compile libraries.rxAndroid
     compile libraries.supportAppCompatV7
     compile libraries.supportV13
     compile libraries.supportRecyclerview
     compile libraries.supportDesign
-
-    compile libraries.rxAndroid
-    compile libraries.accessibilitools
-    compile libraries.landingStrip
     compile libraries.viewPagerAdapter
-    compile libraries.butterknife
-    annotationProcessor libraries.butterknifeCompiler
-
-    annotationProcessor libraries.autoValue
-    provided libraries.autoValue
 
     debugCompile libraries.espressoSupportExtras
     androidTestCompile(libraries.espressoSupport) {

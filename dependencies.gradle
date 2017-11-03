@@ -16,7 +16,9 @@ ext {
     libraries = [
             build                : [
                     androidGradle : 'com.android.tools.build:gradle:3.0.0',
-                    bintrayRelease: 'com.novoda:bintray-release:0.7.0'
+                    bintrayRelease: 'com.novoda:bintray-release:0.7.0',
+                    buildProperties: 'com.novoda:gradle-build-properties-plugin:0.3',
+                    fabric        : 'io.fabric.tools:gradle:1.22.1'
             ],
             accessibilitools     : 'com.novoda:accessibilitools:1.4.1',
             autoValue            : 'com.google.auto.value:auto-value:1.4',
@@ -24,6 +26,7 @@ ext {
             androidEspressoCore  : 'com.android.support.test.espresso:espresso-core:3.0.1',
             butterknife          : "com.jakewharton:butterknife:${versions.butterknife}",
             butterknifeCompiler  : "com.jakewharton:butterknife-compiler:${versions.butterknife}",
+            crashlytics          : 'com.crashlytics.sdk.android:crashlytics:2.6.8@aar',
             dexmaker             : "com.google.dexmaker:dexmaker:${versions.dexmaker}",
             dexmakerMockito      : "com.google.dexmaker:dexmaker-mockito:${versions.dexmaker}",
             espressoSupport      : "com.novoda:espresso-support:${versions.espressoSupport}",
