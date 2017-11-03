@@ -1,6 +1,7 @@
 buildscript {
     apply from: 'dependencies.gradle'
     repositories {
+        google()
         jcenter()
     }
     dependencies {
@@ -12,9 +13,6 @@ buildscript {
 allprojects {
     repositories {
         google()
-        maven {
-            url 'http://dl.bintray.com/novoda/maven'
-        }
         jcenter()
     }
 }
