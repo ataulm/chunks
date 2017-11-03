@@ -16,11 +16,11 @@ android {
     buildToolsVersion versions.androidSdk.buildTools
 
     defaultConfig {
-        applicationId "com.ataulm.chunks"
+        applicationId 'com.ataulm.chunks'
         minSdkVersion versions.androidSdk.min
         targetSdkVersion versions.androidSdk.target
         versionCode 5
-        versionName "1.0.5"
+        versionName '1.0.5'
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
