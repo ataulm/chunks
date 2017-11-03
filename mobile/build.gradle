@@ -21,8 +21,8 @@ android {
         applicationId "com.ataulm.chunks"
         minSdkVersion versions.androidSdk.min
         targetSdkVersion versions.androidSdk.target
-        versionCode 4
-        versionName "1.0.4"
+        versionCode 5
+        versionName "1.0.5"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
