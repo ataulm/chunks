@@ -2,14 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.novoda.build-properties'
 apply plugin: 'io.fabric'
 
-def signingStoreFile = hasProperty('signingStoreFile') ? signingStoreFile : 'provide this in gradle.properties'
-def signingStorePassword = hasProperty('signingStorePassword') ? signingStorePassword : 'provide this in gradle.properties'
-def signingKeyAlias = hasProperty('signingKeyAlias') ? signingKeyAlias : 'provide this in gradle.properties'
-def signingKeyPassword = hasProperty('signingKeyPassword') ? signingKeyPassword : 'provide this in gradle.properties'
-
 buildProperties {
     fabric {
         file project.file('../fabric.properties')
+    }
+    signing {
+        file project.file('../signing.properties')
     }
 }
 
@@ -33,10 +31,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(signingStoreFile)
-            storePassword signingStorePassword
-            keyAlias signingKeyAlias
-            keyPassword signingKeyPassword
+            storeFile file(buildProperties.signing['storeFile'].string)
+            storePassword buildProperties.signing['storePassword'].string
+            keyAlias buildProperties.signing['keyAlias'].string
+            keyPassword buildProperties.signing['keyPassword'].string
         }
     }
 
