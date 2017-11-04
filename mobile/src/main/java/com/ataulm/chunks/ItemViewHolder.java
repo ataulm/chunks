@@ -15,20 +15,20 @@ import com.novoda.accessibility.ActionsAlertDialogCreator;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-final class ChunkItemViewHolder extends RecyclerView.ViewHolder {
+final class ItemViewHolder extends RecyclerView.ViewHolder {
 
-    private final ChunkItemView itemView;
+    private final ItemView itemView;
     private final ItemViewClickActions itemViewClickActions;
     private final AccessibilityServices accessibilityServices;
     private final ActionsAlertDialogCreator actionsAlertDialogCreator;
 
-    public static ChunkItemViewHolder inflate(ViewGroup parent) {
+    public static ItemViewHolder inflate(ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ChunkItemView view = (ChunkItemView) layoutInflater.inflate(R.layout.view_chunk_item, parent, false);
-        return new ChunkItemViewHolder(view);
+        ItemView view = (ItemView) layoutInflater.inflate(R.layout.view_chunk_item, parent, false);
+        return new ItemViewHolder(view);
     }
 
-    ChunkItemViewHolder(ChunkItemView itemView) {
+    ItemViewHolder(ItemView itemView) {
         super(itemView);
         this.itemView = itemView;
 
@@ -56,7 +56,7 @@ final class ChunkItemViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        itemView.entryTextView().setText(item.value());
+        itemView.itemTextView().setText(item.value());
 
         final Optional<Action> transitionNextDay = chunksActions.transitionToNextDay();
         if (transitionNextDay.isPresent()) {

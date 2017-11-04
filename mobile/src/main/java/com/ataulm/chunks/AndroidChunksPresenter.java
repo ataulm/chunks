@@ -27,7 +27,7 @@ class AndroidChunksPresenter implements ChunksPresenter {
                 .subscribe(
                         new ChunksObserver(
                                 new AndroidLog(),
-                                new AndroidChunkItemUserInteractions(chunksService),
+                                new AndroidItemUserInteractions(chunksService),
                                 new AndroidItemInputUserInteractions(chunksService)
                         )
                 );
@@ -52,12 +52,12 @@ class AndroidChunksPresenter implements ChunksPresenter {
 
     private class ChunksObserver extends LoggingObserver<Event<Chunks>> {
 
-        private final ChunkItemUserInteractions entryViewUserInteractions;
+        private final ItemUserInteractions entryViewUserInteractions;
         private final ItemInputUserInteractions itemInputUserInteractions;
 
         public ChunksObserver(
                 Log log,
-                ChunkItemUserInteractions entryViewUserInteractions,
+                ItemUserInteractions entryViewUserInteractions,
                 ItemInputUserInteractions itemInputUserInteractions
         ) {
             super(log);

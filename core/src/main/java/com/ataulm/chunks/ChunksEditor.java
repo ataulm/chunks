@@ -5,52 +5,52 @@ import java.util.List;
 
 public class ChunksEditor {
 
-    public Chunk add(Chunk chunk, Item item) {
-        assertNoEntryWithSameId(chunk, item);
+    public Items add(Items items, Item item) {
+        assertNoEntryWithSameId(items, item);
 
-        List<Item> entries = new ArrayList<>(chunk.size() + 1);
-        entries.addAll(chunk.entries());
+        List<Item> entries = new ArrayList<>(items.size() + 1);
+        entries.addAll(items.entries());
         entries.add(item);
-        return Chunk.create(entries);
+        return Items.create(entries);
     }
 
-    public Chunk add(Chunk chunk, List<Item> entries) {
+    public Items add(Items items, List<Item> entries) {
         for (Item item : entries) {
-            assertNoEntryWithSameId(chunk, item);
+            assertNoEntryWithSameId(items, item);
         }
 
-        List<Item> updatedEntries = new ArrayList<>(chunk.size() + entries.size());
-        updatedEntries.addAll(chunk.entries());
+        List<Item> updatedEntries = new ArrayList<>(items.size() + entries.size());
+        updatedEntries.addAll(items.entries());
         updatedEntries.addAll(entries);
-        return Chunk.create(updatedEntries);
+        return Items.create(updatedEntries);
     }
 
-    public Chunk remove(Chunk chunk, Id id) {
-        List<Item> updatedEntries = new ArrayList<>(chunk.size());
-        for (Item value : chunk.entries()) {
+    public Items remove(Items items, Id id) {
+        List<Item> updatedEntries = new ArrayList<>(items.size());
+        for (Item value : items.entries()) {
             if (!value.id().equals(id)) {
                 updatedEntries.add(value);
             }
         }
-        return Chunk.create(updatedEntries);
+        return Items.create(updatedEntries);
     }
 
-    public Chunk remove(Chunk chunk, List<Item> entries) {
-        List<Item> updatedEntries = new ArrayList<>(chunk.entries());
+    public Items remove(Items items, List<Item> entries) {
+        List<Item> updatedEntries = new ArrayList<>(items.entries());
         updatedEntries.removeAll(entries);
-        return Chunk.create(updatedEntries);
+        return Items.create(updatedEntries);
     }
 
-    public Chunk update(Chunk chunk, Item item) {
-        List<Item> updatedEntries = new ArrayList<>(chunk.size());
-        for (Item existingValue : chunk.entries()) {
+    public Items update(Items items, Item item) {
+        List<Item> updatedEntries = new ArrayList<>(items.size());
+        for (Item existingValue : items.entries()) {
             if (existingValue.id().equals(item.id())) {
                 updatedEntries.add(item);
             } else {
                 updatedEntries.add(existingValue);
             }
         }
-        return Chunk.create(updatedEntries);
+        return Items.create(updatedEntries);
     }
 
     public Chunks add(Chunks chunks, Day day, Item item) {
@@ -58,13 +58,13 @@ public class ChunksEditor {
 
         switch (day) {
             case TODAY:
-                Chunk updatedToday = add(chunks.today(), item);
+                Items updatedToday = add(chunks.today(), item);
                 return Chunks.create(chunks.todaysDate(), updatedToday, chunks.tomorrow(), chunks.sometime());
             case TOMORROW:
-                Chunk updatedTomorrow = add(chunks.tomorrow(), item);
+                Items updatedTomorrow = add(chunks.tomorrow(), item);
                 return Chunks.create(chunks.todaysDate(), chunks.today(), updatedTomorrow, chunks.sometime());
             case SOMETIME:
-                Chunk updatedSometime = add(chunks.sometime(), item);
+                Items updatedSometime = add(chunks.sometime(), item);
                 return Chunks.create(chunks.todaysDate(), chunks.today(), chunks.tomorrow(), updatedSometime);
             default:
                 throw new IllegalArgumentException("unsupported day: " + day);
@@ -78,13 +78,13 @@ public class ChunksEditor {
 
         switch (day) {
             case TODAY:
-                Chunk updatedToday = add(chunks.today(), entries);
+                Items updatedToday = add(chunks.today(), entries);
                 return Chunks.create(chunks.todaysDate(), updatedToday, chunks.tomorrow(), chunks.sometime());
             case TOMORROW:
-                Chunk updatedTomorrow = add(chunks.tomorrow(), entries);
+                Items updatedTomorrow = add(chunks.tomorrow(), entries);
                 return Chunks.create(chunks.todaysDate(), chunks.today(), updatedTomorrow, chunks.sometime());
             case SOMETIME:
-                Chunk updatedSometime = add(chunks.sometime(), entries);
+                Items updatedSometime = add(chunks.sometime(), entries);
                 return Chunks.create(chunks.todaysDate(), chunks.today(), chunks.tomorrow(), updatedSometime);
             default:
                 throw new IllegalArgumentException("unsupported day: " + day);
@@ -94,19 +94,19 @@ public class ChunksEditor {
     public Chunks edit(Chunks chunks, Id id) {
         if (chunks.today().containsEntryWith(id)) {
             Item item = chunks.today().findEntryWith(id);
-            Chunk updatedToday = remove(chunks.today(), id);
+            Items updatedToday = remove(chunks.today(), id);
             return Chunks.create(chunks.todaysDate(), updatedToday, chunks.tomorrow(), chunks.sometime(), item.value());
         }
 
         if (chunks.tomorrow().containsEntryWith(id)) {
             Item item = chunks.tomorrow().findEntryWith(id);
-            Chunk updatedTomorrow = remove(chunks.tomorrow(), id);
+            Items updatedTomorrow = remove(chunks.tomorrow(), id);
             return Chunks.create(chunks.todaysDate(), chunks.today(), updatedTomorrow, chunks.sometime(), item.value());
         }
 
         if (chunks.sometime().containsEntryWith(id)) {
             Item item = chunks.sometime().findEntryWith(id);
-            Chunk updatedSometime = remove(chunks.sometime(), id);
+            Items updatedSometime = remove(chunks.sometime(), id);
             return Chunks.create(chunks.todaysDate(), chunks.today(), chunks.tomorrow(), updatedSometime, item.value());
         }
 
@@ -115,17 +115,17 @@ public class ChunksEditor {
 
     public Chunks remove(Chunks chunks, Id id) {
         if (chunks.today().containsEntryWith(id)) {
-            Chunk updatedToday = remove(chunks.today(), id);
+            Items updatedToday = remove(chunks.today(), id);
             return Chunks.create(chunks.todaysDate(), updatedToday, chunks.tomorrow(), chunks.sometime());
         }
 
         if (chunks.tomorrow().containsEntryWith(id)) {
-            Chunk updatedTomorrow = remove(chunks.tomorrow(), id);
+            Items updatedTomorrow = remove(chunks.tomorrow(), id);
             return Chunks.create(chunks.todaysDate(), chunks.today(), updatedTomorrow, chunks.sometime());
         }
 
         if (chunks.sometime().containsEntryWith(id)) {
-            Chunk updatedSometime = remove(chunks.sometime(), id);
+            Items updatedSometime = remove(chunks.sometime(), id);
             return Chunks.create(chunks.todaysDate(), chunks.today(), chunks.tomorrow(), updatedSometime);
         }
 
@@ -134,17 +134,17 @@ public class ChunksEditor {
 
     public Chunks update(Chunks chunks, Item item) {
         if (chunks.today().containsEntryWith(item.id())) {
-            Chunk updatedToday = update(chunks.today(), item);
+            Items updatedToday = update(chunks.today(), item);
             return Chunks.create(chunks.todaysDate(), updatedToday, chunks.tomorrow(), chunks.sometime());
         }
 
         if (chunks.tomorrow().containsEntryWith(item.id())) {
-            Chunk updatedTomorrow = update(chunks.tomorrow(), item);
+            Items updatedTomorrow = update(chunks.tomorrow(), item);
             return Chunks.create(chunks.todaysDate(), chunks.today(), updatedTomorrow, chunks.sometime());
         }
 
         if (chunks.sometime().containsEntryWith(item.id())) {
-            Chunk updatedSometime = update(chunks.sometime(), item);
+            Items updatedSometime = update(chunks.sometime(), item);
             return Chunks.create(chunks.todaysDate(), chunks.today(), chunks.tomorrow(), updatedSometime);
         }
 
@@ -153,34 +153,34 @@ public class ChunksEditor {
 
     public Chunks move(Chunks chunks, Item item, int newEntryPosition) {
         if (chunks.today().containsEntryWith(item.id())) {
-            Chunk updatedToday = move(chunks.today(), item, newEntryPosition);
+            Items updatedToday = move(chunks.today(), item, newEntryPosition);
             return Chunks.create(chunks.todaysDate(), updatedToday, chunks.tomorrow(), chunks.sometime());
         }
 
         if (chunks.tomorrow().containsEntryWith(item.id())) {
-            Chunk updatedTomorrow = move(chunks.tomorrow(), item, newEntryPosition);
+            Items updatedTomorrow = move(chunks.tomorrow(), item, newEntryPosition);
             return Chunks.create(chunks.todaysDate(), chunks.today(), updatedTomorrow, chunks.sometime());
         }
 
         if (chunks.sometime().containsEntryWith(item.id())) {
-            Chunk updatedSometime = move(chunks.sometime(), item, newEntryPosition);
+            Items updatedSometime = move(chunks.sometime(), item, newEntryPosition);
             return Chunks.create(chunks.todaysDate(), chunks.today(), chunks.tomorrow(), updatedSometime);
         }
 
         throw new IllegalArgumentException("no entries with id found: " + item.id());
     }
 
-    public Chunk move(Chunk chunk, Item item, int newEntryPosition) {
-        if (newEntryPosition < 0 || newEntryPosition >= chunk.size()) {
+    public Items move(Items items, Item item, int newEntryPosition) {
+        if (newEntryPosition < 0 || newEntryPosition >= items.size()) {
             throw new IllegalArgumentException("newEntryPosition is out of bounds: " + newEntryPosition);
         }
 
-        int originalEntryPosition = chunk.entries().indexOf(item);
+        int originalEntryPosition = items.entries().indexOf(item);
         if (originalEntryPosition == -1 || originalEntryPosition == newEntryPosition) {
-            return chunk;
+            return items;
         }
 
-        List<Item> updatedEntries = new ArrayList<>(chunk.entries());
+        List<Item> updatedEntries = new ArrayList<>(items.entries());
         if (originalEntryPosition > newEntryPosition) {
             updatedEntries.add(newEntryPosition, item);
             updatedEntries.remove(originalEntryPosition + 1);
@@ -189,7 +189,7 @@ public class ChunksEditor {
             updatedEntries.remove(originalEntryPosition);
         }
 
-        return Chunk.create(updatedEntries);
+        return Items.create(updatedEntries);
     }
 
     public Chunks shuffleAlong(Chunks chunks, ChunkDate todaysDate) {
@@ -217,9 +217,9 @@ public class ChunksEditor {
             }
         }
 
-        Chunk updatedToday = Chunk.create(updatedTodayEntries);
-        Chunk updatedTomorrow = Chunk.empty();
-        Chunk updatedSometime = Chunk.create(updatedSometimeEntries);
+        Items updatedToday = Items.create(updatedTodayEntries);
+        Items updatedTomorrow = Items.empty();
+        Items updatedSometime = Items.create(updatedSometimeEntries);
 
         return Chunks.create(todaysDate, updatedToday, updatedTomorrow, updatedSometime);
     }
@@ -230,9 +230,9 @@ public class ChunksEditor {
         assertNoEntryWithSameId(chunks.sometime(), item);
     }
 
-    private static void assertNoEntryWithSameId(Chunk chunk, Item item) {
-        if (chunk.containsEntryWith(item.id())) {
-            throw new IllegalArgumentException("chunk already contains item with id: " + item.id());
+    private static void assertNoEntryWithSameId(Items items, Item item) {
+        if (items.containsEntryWith(item.id())) {
+            throw new IllegalArgumentException("items already contains item with id: " + item.id());
         }
     }
 

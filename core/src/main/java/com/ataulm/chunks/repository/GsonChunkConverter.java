@@ -1,6 +1,6 @@
 package com.ataulm.chunks.repository;
 
-import com.ataulm.chunks.Chunk;
+import com.ataulm.chunks.Items;
 import com.ataulm.chunks.Item;
 
 import java.util.ArrayList;
@@ -14,18 +14,18 @@ public class GsonChunkConverter {
         this.entryConverter = entryConverter;
     }
 
-    public GsonChunk convert(Chunk chunk) {
+    public GsonChunk convert(Items items) {
         GsonChunk gsonChunk = new GsonChunk();
-        gsonChunk.entries = new ArrayList<>(chunk.size());
-        for (Item item : chunk) {
+        gsonChunk.entries = new ArrayList<>(items.size());
+        for (Item item : items) {
             gsonChunk.entries.add(entryConverter.convert(item));
         }
         return gsonChunk;
     }
 
-    public Chunk convert(GsonChunk gsonChunk) {
+    public Items convert(GsonChunk gsonChunk) {
         if (gsonChunk == null) {
-            return Chunk.empty();
+            return Items.empty();
         }
 
         List<Item> entries = new ArrayList<>(gsonChunk.entries.size());
@@ -33,7 +33,7 @@ public class GsonChunkConverter {
             Item item = entryConverter.convert(gsonItem);
             entries.add(item);
         }
-        return Chunk.create(entries);
+        return Items.create(entries);
     }
 
 }

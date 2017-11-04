@@ -9,19 +9,19 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class Chunk implements Iterable<Item> {
+public abstract class Items implements Iterable<Item> {
 
-    public static Chunk create(List<Item> entries) {
-        return new AutoValue_Chunk(Collections.unmodifiableList(entries));
+    public static Items create(List<Item> entries) {
+        return new AutoValue_Items(Collections.unmodifiableList(entries));
     }
 
-    public static Chunk empty() {
+    public static Items empty() {
         return create(Collections.<Item>emptyList());
     }
 
     public abstract List<Item> entries();
 
-    protected Chunk() {
+    protected Items() {
         // use static factory
     }
 

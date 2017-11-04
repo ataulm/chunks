@@ -1,10 +1,10 @@
 package com.ataulm.chunks;
 
-class AndroidChunkItemUserInteractions implements ChunkItemUserInteractions {
+class AndroidItemUserInteractions implements ItemUserInteractions {
 
     private final ChunksService chunksService;
 
-    AndroidChunkItemUserInteractions(ChunksService chunksService) {
+    AndroidItemUserInteractions(ChunksService chunksService) {
         this.chunksService = chunksService;
     }
 

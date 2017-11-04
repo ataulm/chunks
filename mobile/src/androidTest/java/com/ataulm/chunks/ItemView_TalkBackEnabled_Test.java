@@ -13,25 +13,25 @@ import org.junit.runner.RunWith;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static com.ataulm.chunks.AccessibilityViewMatchers.withUsageHintOnClick;
-import static com.ataulm.chunks.ChunkFixtures.aChunk;
+import static com.ataulm.chunks.ItemsFixtures.items;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ChunkItemView_TalkBackEnabled_Test extends ChunkItemViewTest {
+public class ItemView_TalkBackEnabled_Test extends ItemViewTest {
 
     @Rule
-    public ViewTestRule<ChunkItemView> viewActivityRule = new TalkBackViewTestRule<>(R.layout.test_chunk_item_view);
+    public ViewTestRule<ItemView> viewActivityRule = new TalkBackViewTestRule<>(R.layout.test_chunk_item_view);
 
     @Override
-    protected ViewTestRule<ChunkItemView> getViewTestRule() {
+    protected ViewTestRule<ItemView> getViewTestRule() {
         return viewActivityRule;
     }
 
     @Test
     public void itemViewHasCustomUsageHint() {
         Item item = completeEntry();
-        Chunk chunk = aChunk().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        Items items = items().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onItemView().check(matches(withUsageHintOnClick("see all actions")));
@@ -40,8 +40,8 @@ public class ChunkItemView_TalkBackEnabled_Test extends ChunkItemViewTest {
     @Test
     public void givenCompleteEntryToday_click_showsMenu() {
         Item item = completeEntry();
-        Chunk chunk = aChunk().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        Items items = items().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onItemView().perform(click());

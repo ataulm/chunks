@@ -9,14 +9,14 @@
     tools:parentTag="LinearLayout">
 
     <CheckBox
-        android:id="@+id/entry_check_box"
+        android:id="@+id/item_check_box"
         style="@style/Chunks.Item.CheckBox"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_gravity="center_vertical" />
 
     <TextView
-        android:id="@+id/entry_text_view"
+        android:id="@+id/item_text_view"
         style="@style/Chunks.Item.Text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
         tools:text="Something to do" />
 
     <ImageView
-        android:id="@+id/entry_button_move_left"
+        android:id="@+id/item_button_move_left"
         style="@style/Chunks.Item.Icon.MoveLeft"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -33,7 +33,7 @@
         android:src="@drawable/chunk_item_move_left" />
 
     <ImageView
-        android:id="@+id/entry_button_move_right"
+        android:id="@+id/item_button_move_right"
         style="@style/Chunks.Item.Icon.MoveRight"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -42,7 +42,7 @@
         android:src="@drawable/chunk_item_move_right" />
 
     <ImageView
-        android:id="@+id/entry_button_menu"
+        android:id="@+id/item_button_menu"
         style="@style/Chunks.Item.Icon.Menu"
         android:layout_width="48dp"
         android:layout_height="48dp"

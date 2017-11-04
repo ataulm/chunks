@@ -9,14 +9,14 @@ import javax.annotation.Nullable;
 public abstract class Chunks {
 
     public static Chunks empty(ChunkDate todaysDate) {
-        return create(todaysDate, Chunk.empty(), Chunk.empty(), Chunk.empty());
+        return create(todaysDate, Items.empty(), Items.empty(), Items.empty());
     }
 
-    public static Chunks create(ChunkDate todaysDate, Chunk today, Chunk tomorrow, Chunk sometime) {
+    public static Chunks create(ChunkDate todaysDate, Items today, Items tomorrow, Items sometime) {
         return create(todaysDate, today, tomorrow, sometime, null);
     }
 
-    public static Chunks create(ChunkDate todaysDate, Chunk today, Chunk tomorrow, Chunk sometime, @Nullable String input) {
+    public static Chunks create(ChunkDate todaysDate, Items today, Items tomorrow, Items sometime, @Nullable String input) {
         return new AutoValue_Chunks(todaysDate, today, tomorrow, sometime, Optional.fromNullable(input));
     }
 
@@ -26,11 +26,11 @@ public abstract class Chunks {
 
     public abstract ChunkDate todaysDate();
 
-    public abstract Chunk today();
+    public abstract Items today();
 
-    public abstract Chunk tomorrow();
+    public abstract Items tomorrow();
 
-    public abstract Chunk sometime();
+    public abstract Items sometime();
 
     public abstract Optional<String> input();
 

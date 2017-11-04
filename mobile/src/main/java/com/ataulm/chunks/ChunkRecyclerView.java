@@ -38,13 +38,13 @@ public class ChunkRecyclerView extends RecyclerView {
         new ItemTouchHelper(new ItemDragCallback(itemMoveCallback)).attachToRecyclerView(this);
     }
 
-    public void update(Chunk chunk, ChunkItemUserInteractions userInteractions, Day day) {
+    public void update(Items items, ItemUserInteractions userInteractions, Day day) {
         ChunkRecyclerViewAdapter adapter = getAdapter();
         if (adapter == null) {
-            adapter = new ChunkRecyclerViewAdapter(userInteractions, day, chunk);
+            adapter = new ChunkRecyclerViewAdapter(userInteractions, day, items);
             setAdapter(adapter);
         } else {
-            boolean itemAdded = adapter.update(day, chunk);
+            boolean itemAdded = adapter.update(day, items);
             if (itemAdded) {
                 scrollToPosition(adapter.getItemCount() - 1);
             }

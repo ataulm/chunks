@@ -1,24 +1,24 @@
 package com.ataulm.chunks;
 
-import static com.ataulm.chunks.ChunkFixtures.aChunk;
+import static com.ataulm.chunks.ItemsFixtures.items;
 
 public final class ChunksFixtures {
 
     private ChunkDate todaysDate;
-    private Chunk today;
-    private Chunk tomorrow;
-    private Chunk sometime;
+    private Items today;
+    private Items tomorrow;
+    private Items sometime;
 
     public static ChunksFixtures aChunks() {
         return new ChunksFixtures(
                 ChunkDate.create(0),
-                aChunk().get(),
-                aChunk().get(),
-                aChunk().get()
+                items().get(),
+                items().get(),
+                items().get()
         );
     }
 
-    private ChunksFixtures(ChunkDate todaysDate, Chunk today, Chunk tomorrow, Chunk sometime) {
+    private ChunksFixtures(ChunkDate todaysDate, Items today, Items tomorrow, Items sometime) {
         this.todaysDate = todaysDate;
         this.today = today;
         this.tomorrow = tomorrow;
@@ -30,17 +30,17 @@ public final class ChunksFixtures {
         return this;
     }
 
-    public ChunksFixtures withToday(Chunk today) {
+    public ChunksFixtures withToday(Items today) {
         this.today = today;
         return this;
     }
 
-    public ChunksFixtures withTomorrow(Chunk tomorrow) {
+    public ChunksFixtures withTomorrow(Items tomorrow) {
         this.tomorrow = tomorrow;
         return this;
     }
 
-    public ChunksFixtures withSometime(Chunk sometime) {
+    public ChunksFixtures withSometime(Items sometime) {
         this.sometime = sometime;
         return this;
     }

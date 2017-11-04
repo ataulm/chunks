@@ -10,24 +10,24 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChunkItemView extends LinearLayout {
+public class ItemView extends LinearLayout {
 
-    @BindView(R.id.entry_check_box)
+    @BindView(R.id.item_check_box)
     CheckBox checkBox;
 
-    @BindView(R.id.entry_text_view)
-    TextView entryTextView;
+    @BindView(R.id.item_text_view)
+    TextView itemTextView;
 
-    @BindView(R.id.entry_button_move_left)
+    @BindView(R.id.item_button_move_left)
     View moveLeftButton;
 
-    @BindView(R.id.entry_button_move_right)
+    @BindView(R.id.item_button_move_right)
     View moveRightButton;
 
-    @BindView(R.id.entry_button_menu)
+    @BindView(R.id.item_button_menu)
     View menuButton;
 
-    public ChunkItemView(Context context, AttributeSet attrs) {
+    public ItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
     }
@@ -35,7 +35,7 @@ public class ChunkItemView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        View.inflate(getContext(), R.layout.merge_chunk_item, this);
+        View.inflate(getContext(), R.layout.merge_item, this);
         ButterKnife.bind(this);
     }
 
@@ -43,8 +43,8 @@ public class ChunkItemView extends LinearLayout {
         return checkBox;
     }
 
-    public TextView entryTextView() {
-        return entryTextView;
+    public TextView itemTextView() {
+        return itemTextView;
     }
 
     public View moveLeftButton() {

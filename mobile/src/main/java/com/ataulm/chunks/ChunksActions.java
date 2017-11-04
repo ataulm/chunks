@@ -11,22 +11,22 @@ import java.util.ArrayList;
 abstract class
 ChunksActions {
 
-    public static ChunksActions create(Chunk chunk, Day day, Item item, ChunkItemUserInteractions userInteractions) {
+    public static ChunksActions create(Items items, Day day, Item item, ItemUserInteractions userInteractions) {
         Optional<Action> markComplete = createMarkCompleteAction(item, userInteractions);
         Optional<Action> markNotComplete = createMarkNotCompleteAction(item, userInteractions);
         Action edit = createEditAction(item, userInteractions);
         Optional<Action> transitionToToday = createTransitionToTodayAction(day, item, userInteractions);
         Optional<Action> transitionToTomorrow = createTransitionToTomorrowAction(day, item, userInteractions);
         Optional<Action> transitionToLater = createTransitionToLaterAction(day, item, userInteractions);
-        Optional<Action> moveUp = createMoveUpAction(chunk, item, userInteractions);
-        Optional<Action> moveDown = createMoveDownAction(chunk, item, userInteractions);
+        Optional<Action> moveUp = createMoveUpAction(items, item, userInteractions);
+        Optional<Action> moveDown = createMoveDownAction(items, item, userInteractions);
         Action delete = createDeleteAction(item, userInteractions);
 
         Actions actions = collate(markComplete, markNotComplete, edit, transitionToToday, transitionToTomorrow, transitionToLater, moveUp, moveDown, delete);
         return new AutoValue_ChunksActions(actions, markComplete, markNotComplete, edit, transitionToToday, transitionToTomorrow, transitionToLater, moveUp, moveDown, delete, day);
     }
 
-    private static Optional<Action> createMarkCompleteAction(final Item item, final ChunkItemUserInteractions userInteractions) {
+    private static Optional<Action> createMarkCompleteAction(final Item item, final ItemUserInteractions userInteractions) {
         if (item.isCompleted()) {
             return Optional.absent();
         }
@@ -38,7 +38,7 @@ ChunksActions {
         }));
     }
 
-    private static Optional<Action> createMarkNotCompleteAction(final Item item, final ChunkItemUserInteractions userInteractions) {
+    private static Optional<Action> createMarkNotCompleteAction(final Item item, final ItemUserInteractions userInteractions) {
         if (!item.isCompleted()) {
             return Optional.absent();
         }
@@ -50,7 +50,7 @@ ChunksActions {
         }));
     }
 
-    private static Action createEditAction(final Item item, final ChunkItemUserInteractions userInteractions) {
+    private static Action createEditAction(final Item item, final ItemUserInteractions userInteractions) {
         return new Action(R.id.action_edit, R.string.action_edit, new Runnable() {
             @Override
             public void run() {
@@ -59,7 +59,7 @@ ChunksActions {
         });
     }
 
-    private static Optional<Action> createTransitionToTodayAction(Day day, final Item item, final ChunkItemUserInteractions userInteractions) {
+    private static Optional<Action> createTransitionToTodayAction(Day day, final Item item, final ItemUserInteractions userInteractions) {
         if (day == Day.TODAY) {
             return Optional.absent();
         }
@@ -71,7 +71,7 @@ ChunksActions {
         }));
     }
 
-    private static Optional<Action> createTransitionToTomorrowAction(Day day, final Item item, final ChunkItemUserInteractions userInteractions) {
+    private static Optional<Action> createTransitionToTomorrowAction(Day day, final Item item, final ItemUserInteractions userInteractions) {
         if (day == Day.TOMORROW) {
             return Optional.absent();
         }
@@ -83,7 +83,7 @@ ChunksActions {
         }));
     }
 
-    private static Optional<Action> createTransitionToLaterAction(Day day, final Item item, final ChunkItemUserInteractions userInteractions) {
+    private static Optional<Action> createTransitionToLaterAction(Day day, final Item item, final ItemUserInteractions userInteractions) {
         if (day == Day.SOMETIME) {
             return Optional.absent();
         }
@@ -95,8 +95,8 @@ ChunksActions {
         }));
     }
 
-    private static Optional<Action> createMoveUpAction(final Chunk chunk, final Item item, final ChunkItemUserInteractions userInteractions) {
-        final int originalEntryPosition = chunk.entries().indexOf(item);
+    private static Optional<Action> createMoveUpAction(final Items items, final Item item, final ItemUserInteractions userInteractions) {
+        final int originalEntryPosition = items.entries().indexOf(item);
         if (originalEntryPosition == 0) {
             return Optional.absent();
         }
@@ -108,9 +108,9 @@ ChunksActions {
         }));
     }
 
-    private static Optional<Action> createMoveDownAction(final Chunk chunk, final Item item, final ChunkItemUserInteractions userInteractions) {
-        final int originalEntryPosition = chunk.entries().indexOf(item);
-        if (originalEntryPosition == chunk.size() - 1) {
+    private static Optional<Action> createMoveDownAction(final Items items, final Item item, final ItemUserInteractions userInteractions) {
+        final int originalEntryPosition = items.entries().indexOf(item);
+        if (originalEntryPosition == items.size() - 1) {
             return Optional.absent();
         }
         return Optional.of(new Action(R.id.action_move_down, R.string.action_move_down, new Runnable() {
@@ -121,7 +121,7 @@ ChunksActions {
         }));
     }
 
-    private static Action createDeleteAction(final Item item, final ChunkItemUserInteractions userInteractions) {
+    private static Action createDeleteAction(final Item item, final ItemUserInteractions userInteractions) {
         return new Action(R.id.action_delete, R.string.action_delete, new Runnable() {
             @Override
             public void run() {

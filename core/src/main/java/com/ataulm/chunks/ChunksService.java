@@ -135,7 +135,7 @@ public class ChunksService {
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
-    private static Chunk findChunkWithEntry(Chunks chunks, Item item) {
+    private static Items findChunkWithEntry(Chunks chunks, Item item) {
         if (chunks.today().containsEntryWith(item.id())) {
             return chunks.today();
         }

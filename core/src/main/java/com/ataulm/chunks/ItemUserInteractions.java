@@ -1,6 +1,6 @@
 package com.ataulm.chunks;
 
-interface ChunkItemUserInteractions {
+interface ItemUserInteractions {
 
     void onUserMarkComplete(Item item);
 

@@ -7,32 +7,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder> {
+class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
-    private final ChunkItemUserInteractions userInteractions;
+    private final ItemUserInteractions userInteractions;
 
     private Day day;
-    private Chunk chunk;
+    private Items items;
 
-    ChunkRecyclerViewAdapter(ChunkItemUserInteractions userInteractions, Day day, Chunk chunk) {
+    ChunkRecyclerViewAdapter(ItemUserInteractions userInteractions, Day day, Items items) {
         this.userInteractions = userInteractions;
         this.day = day;
-        this.chunk = chunk;
+        this.items = items;
         super.setHasStableIds(true);
     }
 
-    boolean update(Day day, Chunk chunk) {
-        boolean addedItem = chunk.size() > this.chunk.size();
+    boolean update(Day day, Items items) {
+        boolean addedItem = items.size() > this.items.size();
 
         this.day = day;
-        this.chunk = chunk;
+        this.items = items;
         notifyDataSetChanged();
 
         return addedItem;
     }
 
     void onItemMoving(int source, int target) {
-        List<Item> entries = new ArrayList<>(chunk.entries());
+        List<Item> entries = new ArrayList<>(items.entries());
         if (source < target) {
             for (int i = source; i < target; i++) {
                 Collections.swap(entries, i, i + 1);
@@ -42,35 +42,35 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder>
                 Collections.swap(entries, i, i - 1);
             }
         }
-        this.chunk = Chunk.create(entries);
+        this.items = Items.create(entries);
         notifyItemMoved(source, target);
     }
 
     void onItemMoved(int endPosition) {
-        Item item = chunk.get(endPosition);
+        Item item = items.get(endPosition);
         userInteractions.onUserMove(item, endPosition);
     }
 
     @Override
-    public ChunkItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return ChunkItemViewHolder.inflate(parent);
+    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return ItemViewHolder.inflate(parent);
     }
 
     @Override
-    public void onBindViewHolder(ChunkItemViewHolder holder, int position) {
-        Item item = chunk.get(position);
-        ChunksActions chunksActions = ChunksActions.create(chunk, day, item, userInteractions);
+    public void onBindViewHolder(ItemViewHolder holder, int position) {
+        Item item = items.get(position);
+        ChunksActions chunksActions = ChunksActions.create(items, day, item, userInteractions);
         holder.bind(item, chunksActions);
     }
 
     @Override
     public int getItemCount() {
-        return chunk.size();
+        return items.size();
     }
 
     @Override
     public long getItemId(int position) {
-        Item item = chunk.get(position);
+        Item item = items.get(position);
         return item.id().value().hashCode();
     }
 

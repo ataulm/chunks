@@ -38,14 +38,14 @@ public class ChunksPage extends FrameLayout implements ViewPager.OnPageChangeLis
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    public void update(Chunk chunk, ChunkItemUserInteractions userInteractions, Day day) {
-        if (chunk.isEmpty()) {
+    public void update(Items items, ItemUserInteractions userInteractions, Day day) {
+        if (items.isEmpty()) {
             emptyTextView.setVisibility(VISIBLE);
         } else {
             emptyTextView.setVisibility(GONE);
         }
 
-        recyclerView.update(chunk, userInteractions, day);
+        recyclerView.update(items, userInteractions, day);
     }
 
     @Override

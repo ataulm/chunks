@@ -16,18 +16,18 @@ import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;
 
-abstract class ChunkItemViewTest {
+abstract class ItemViewTest {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
-    ChunkItemUserInteractions listener;
+    ItemUserInteractions listener;
 
-    abstract ViewTestRule<ChunkItemView> getViewTestRule();
+    abstract ViewTestRule<ItemView> getViewTestRule();
 
     ViewInteraction onItemView() {
-        return onView(withClassName(is(ChunkItemView.class.getName())));
+        return onView(withClassName(is(ItemView.class.getName())));
     }
 
     Item incompleteEntry() {
@@ -51,10 +51,10 @@ abstract class ChunkItemViewTest {
     }
 
     void bind(final Item item, final ChunksActions chunksActions) {
-        getViewTestRule().bindViewUsing(new ViewTestRule.Binder<ChunkItemView>() {
+        getViewTestRule().bindViewUsing(new ViewTestRule.Binder<ItemView>() {
             @Override
-            public void bind(ChunkItemView view) {
-                ChunkItemViewHolder viewHolder = new ChunkItemViewHolder(view);
+            public void bind(ItemView view) {
+                ItemViewHolder viewHolder = new ItemViewHolder(view);
                 viewHolder.bind(item, chunksActions);
             }
         });

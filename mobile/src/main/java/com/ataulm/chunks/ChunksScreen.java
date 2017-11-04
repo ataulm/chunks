@@ -34,7 +34,7 @@ public class ChunksScreen extends FrameLayout implements ChunksView {
     }
 
     @Override
-    public void display(Chunks chunks, ChunkItemUserInteractions chunkItemUserInteractions, final ItemInputUserInteractions itemInputUserInteractions) {
+    public void display(Chunks chunks, ItemUserInteractions itemUserInteractions, final ItemInputUserInteractions itemInputUserInteractions) {
         if (chunks.input().isPresent()) {
             itemInputWidget.setText(chunks.input().get());
         }
@@ -56,13 +56,13 @@ public class ChunksScreen extends FrameLayout implements ChunksView {
                 }
         );
 
-        updateViewPagerWith(chunks, chunkItemUserInteractions);
+        updateViewPagerWith(chunks, itemUserInteractions);
     }
 
-    private void updateViewPagerWith(Chunks chunks, ChunkItemUserInteractions chunkItemUserInteractions) {
+    private void updateViewPagerWith(Chunks chunks, ItemUserInteractions itemUserInteractions) {
         ChunksPagerAdapter chunksPagerAdapter;
         if (viewPager.getAdapter() == null) {
-            chunksPagerAdapter = new ChunksPagerAdapter(chunkItemUserInteractions, onPageChangeListenerDelegate, viewPager.getResources(), chunks);
+            chunksPagerAdapter = new ChunksPagerAdapter(itemUserInteractions, onPageChangeListenerDelegate, viewPager.getResources(), chunks);
             viewPager.setAdapter(chunksPagerAdapter);
             setViewPager(Day.TODAY); // TODO: this happens on rotate, but not necessarily what we want
         } else {

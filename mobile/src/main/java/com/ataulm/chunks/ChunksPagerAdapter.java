@@ -8,13 +8,13 @@ import com.novoda.viewpageradapter.ViewPagerAdapter;
 
 final class ChunksPagerAdapter extends ViewPagerAdapter<ChunksPage> {
 
-    private final ChunkItemUserInteractions userInteractions;
+    private final ItemUserInteractions userInteractions;
     private final OnPageChangeListenerDelegate onPageChangeListenerDelegate;
     private final Resources resources;
 
     private Chunks chunks;
 
-    ChunksPagerAdapter(ChunkItemUserInteractions userInteractions, OnPageChangeListenerDelegate onPageChangeListenerDelegate, Resources resources, Chunks chunks) {
+    ChunksPagerAdapter(ItemUserInteractions userInteractions, OnPageChangeListenerDelegate onPageChangeListenerDelegate, Resources resources, Chunks chunks) {
         this.userInteractions = userInteractions;
         this.resources = resources;
         this.onPageChangeListenerDelegate = onPageChangeListenerDelegate;
@@ -42,9 +42,9 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<ChunksPage> {
     @Override
     protected void bindView(ChunksPage view, int position) {
         Day day = getDayFor(position);
-        Chunk chunk = getChunkFor(day);
+        Items items = getChunkFor(day);
 
-        view.update(chunk, userInteractions, day);
+        view.update(items, userInteractions, day);
     }
 
     @Override
@@ -54,7 +54,7 @@ final class ChunksPagerAdapter extends ViewPagerAdapter<ChunksPage> {
         onPageChangeListenerDelegate.deregister(view);
     }
 
-    private Chunk getChunkFor(Day day) {
+    private Items getChunkFor(Day day) {
         switch (day) {
             case TODAY:
                 return chunks.today();
