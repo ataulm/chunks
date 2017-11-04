@@ -27,15 +27,15 @@ class AndroidChunksPresenter implements ChunksPresenter {
                 .subscribe(
                         new ChunksObserver(
                                 new AndroidLog(),
-                                new AndroidChunkEntryUserInteractions(chunksService),
-                                new AndroidEntryInputUserInteractions(chunksService)
+                                new AndroidChunkItemUserInteractions(chunksService),
+                                new AndroidItemInputUserInteractions(chunksService)
                         )
                 );
     }
 
     @Override
     public void onExternalShareText(String text) {
-        chunksService.createEntry(Entry.createNew(text.trim()), Day.TODAY);
+        chunksService.createEntry(Item.createNew(text.trim()), Day.TODAY);
     }
 
     @Override
@@ -52,17 +52,17 @@ class AndroidChunksPresenter implements ChunksPresenter {
 
     private class ChunksObserver extends LoggingObserver<Event<Chunks>> {
 
-        private final ChunkEntryUserInteractions entryViewUserInteractions;
-        private final EntryInputUserInteractions entryInputUserInteractions;
+        private final ChunkItemUserInteractions entryViewUserInteractions;
+        private final ItemInputUserInteractions itemInputUserInteractions;
 
         public ChunksObserver(
                 Log log,
-                ChunkEntryUserInteractions entryViewUserInteractions,
-                EntryInputUserInteractions entryInputUserInteractions
+                ChunkItemUserInteractions entryViewUserInteractions,
+                ItemInputUserInteractions itemInputUserInteractions
         ) {
             super(log);
             this.entryViewUserInteractions = entryViewUserInteractions;
-            this.entryInputUserInteractions = entryInputUserInteractions;
+            this.itemInputUserInteractions = itemInputUserInteractions;
         }
 
         @Override
@@ -70,7 +70,7 @@ class AndroidChunksPresenter implements ChunksPresenter {
             Optional<Chunks> data = event.getData();
             if (data.isPresent()) {
                 Chunks chunks = data.get();
-                chunksView.display(chunks, entryViewUserInteractions, entryInputUserInteractions);
+                chunksView.display(chunks, entryViewUserInteractions, itemInputUserInteractions);
             } else {
                 // TODO other cases like loading (empty, not empty), empty state, error (empty, not empty)
             }

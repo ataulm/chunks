@@ -1,42 +1,42 @@
 package com.ataulm.chunks;
 
-public final class EntryFixtures {
+public final class ItemFixtures {
 
     private Id id;
     private String value;
     private String completedTimestamp;
 
-    public static EntryFixtures anEntry() {
-        return new EntryFixtures(
+    public static ItemFixtures anItem() {
+        return new ItemFixtures(
                 Id.create(),
                 "todo item",
                 null
         );
     }
 
-    private EntryFixtures(Id id, String value, String completedTimestamp) {
+    private ItemFixtures(Id id, String value, String completedTimestamp) {
         this.id = id;
         this.value = value;
         this.completedTimestamp = completedTimestamp;
     }
 
-    public EntryFixtures withId(Id id) {
+    public ItemFixtures withId(Id id) {
         this.id = id;
         return this;
     }
 
-    public EntryFixtures withValue(String value) {
+    public ItemFixtures withValue(String value) {
         this.value = value;
         return this;
     }
 
-    public EntryFixtures withCompletedTimestamp(String completedTimestamp) {
+    public ItemFixtures withCompletedTimestamp(String completedTimestamp) {
         this.completedTimestamp = completedTimestamp;
         return this;
     }
 
-    public Entry get() {
-        return Entry.createFrom(id, value, completedTimestamp);
+    public Item get() {
+        return Item.createFrom(id, value, completedTimestamp);
     }
 
 }

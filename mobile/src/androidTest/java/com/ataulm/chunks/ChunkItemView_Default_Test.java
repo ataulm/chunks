@@ -36,109 +36,109 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenEntryForToday_moveRightDisplayed() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(isDisplayed()));
     }
 
     @Test
     public void givenEntryForToday_moveLeftNotDisplayed() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(not(isDisplayed())));
     }
 
     @Test
     public void givenEntryForTomorrow_moveLeftDisplayed() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, entry, listener);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(isDisplayed()));
     }
 
     @Test
     public void givenEntryForTomorrow_moveRightNotDisplayed() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, entry, listener);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(not(isDisplayed())));
     }
 
     @Test
     public void givenEntryForSometime_moveLeftDisplayed() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, entry, listener);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_move_left)).check(matches(isDisplayed()));
     }
 
     @Test
     public void givenEntryForSometime_moveRightNotDisplayed() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, entry, listener);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_move_right)).check(matches(not(isDisplayed())));
     }
 
     @Test
     public void givenEntry_correctTextDisplayed() {
-        Entry entry = completeEntry("test");
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        Item item = completeEntry("test");
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(allOf(withId(R.id.entry_text_view), withText("test"))).check(matches(isDisplayed()));
     }
 
     @Test
     public void givenCompleteEntry_checkBoxChecked() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_check_box)).check(matches(isChecked()));
     }
 
     @Test
     public void givenIncompleteEntry_checkBoxNotChecked() {
-        Entry entry = incompleteEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
+        Item item = incompleteEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
 
-        bind(entry, chunksActions);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_check_box)).check(matches(isNotChecked()));
     }
 
     @Test
     public void givenCompleteEntry_clickingMenu_opensMenuWithMarkNotComplete() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -147,10 +147,10 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenIncompleteEntry_clickingMenu_opensMenuWithMarkComplete() {
-        Entry entry = incompleteEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = incompleteEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -159,10 +159,10 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenEntryForToday_clickingMenu_opensMenuWithMoveToTomorrowAndMoveToLater() {
-        Entry entry = incompleteEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = incompleteEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -174,10 +174,10 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenEntryForTomorrow_clickingMenu_opensMenuWithMoveToTodayAndMoveToLater() {
-        Entry entry = incompleteEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, entry, listener);
-        bind(entry, chunksActions);
+        Item item = incompleteEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TOMORROW, item, listener);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -189,10 +189,10 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenEntryForLater_clickingMenu_opensMenuWithMoveToTodayAndMoveToTomorrow() {
-        Entry entry = incompleteEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, entry, listener);
-        bind(entry, chunksActions);
+        Item item = incompleteEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.SOMETIME, item, listener);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_button_menu)).perform(click());
 
@@ -204,50 +204,50 @@ public class ChunkItemView_Default_Test extends ChunkItemViewTest {
 
     @Test
     public void givenIncompleteEntry_clickingCheckBox_callsOnUserMarkComplete() {
-        Entry entry = incompleteEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = incompleteEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
-        verify(listener).onUserMarkComplete(entry);
+        verify(listener).onUserMarkComplete(item);
     }
 
     @Test
     public void givenIncompleteEntry_clickingItemView_callsOnUserMarkComplete() {
-        Entry entry = incompleteEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = incompleteEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onItemView().perform(click());
 
-        verify(listener).onUserMarkComplete(entry);
+        verify(listener).onUserMarkComplete(item);
     }
 
     @Test
     public void givenCompletedEntry_clickingCheckBox_callsOnUserMarkNotComplete() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onView(withId(R.id.entry_check_box)).perform(click());
 
-        verify(listener).onUserMarkNotComplete(entry);
+        verify(listener).onUserMarkNotComplete(item);
     }
 
     @Test
     public void givenCompletedEntry_clickingItemView_callsOnUserMarkNotComplete() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onItemView().perform(click());
 
-        verify(listener).onUserMarkNotComplete(entry);
+        verify(listener).onUserMarkNotComplete(item);
     }
 
 }

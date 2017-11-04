@@ -6,25 +6,25 @@ import java.util.List;
 
 public final class ChunkFixtures {
 
-    private List<Entry> entries;
+    private List<Item> entries;
 
     public static ChunkFixtures aChunk() {
         return new ChunkFixtures(
-                Collections.<Entry>emptyList()
+                Collections.<Item>emptyList()
         );
     }
 
-    private ChunkFixtures(List<Entry> entries) {
+    private ChunkFixtures(List<Item> entries) {
         this.entries = entries;
     }
 
-    public ChunkFixtures with(Entry entry) {
+    public ChunkFixtures with(Item item) {
         entries = new ArrayList<>();
-        entries.add(entry);
+        entries.add(item);
         return this;
     }
 
-    public ChunkFixtures with(List<Entry> entries) {
+    public ChunkFixtures with(List<Item> entries) {
         this.entries = entries;
         return this;
     }

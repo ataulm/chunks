@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="56sp" />
 
-    <com.ataulm.chunks.EntryInputWidget
+    <com.ataulm.chunks.ItemInputWidget
         android:id="@+id/chunks_screen_empty_input_widget"
         style="@style/Chunks.EntryInputWidget.View"
         android:layout_width="match_parent"

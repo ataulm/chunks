@@ -9,17 +9,17 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class Chunk implements Iterable<Entry> {
+public abstract class Chunk implements Iterable<Item> {
 
-    public static Chunk create(List<Entry> entries) {
+    public static Chunk create(List<Item> entries) {
         return new AutoValue_Chunk(Collections.unmodifiableList(entries));
     }
 
     public static Chunk empty() {
-        return create(Collections.<Entry>emptyList());
+        return create(Collections.<Item>emptyList());
     }
 
-    public abstract List<Entry> entries();
+    public abstract List<Item> entries();
 
     protected Chunk() {
         // use static factory
@@ -29,7 +29,7 @@ public abstract class Chunk implements Iterable<Entry> {
         return entries().isEmpty();
     }
 
-    public Entry get(int position) {
+    public Item get(int position) {
         return entries().get(position);
     }
 
@@ -38,10 +38,10 @@ public abstract class Chunk implements Iterable<Entry> {
     }
 
     @Nullable
-    public Entry findEntryWith(Id id) {
-        for (Entry entry : entries()) {
-            if (entry.id().equals(id)) {
-                return entry;
+    public Item findEntryWith(Id id) {
+        for (Item item : entries()) {
+            if (item.id().equals(id)) {
+                return item;
             }
         }
         return null;
@@ -52,7 +52,7 @@ public abstract class Chunk implements Iterable<Entry> {
     }
 
     @Override
-    public Iterator<Entry> iterator() {
+    public Iterator<Item> iterator() {
         return entries().iterator();
     }
 

@@ -6,26 +6,26 @@ import com.google.auto.value.AutoValue;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class Entry {
+public abstract class Item {
 
-    public static Entry createNew(String value) {
+    public static Item createNew(String value) {
         return createFrom(Id.create(), value);
     }
 
-    public static Entry createFrom(Id id, String value) {
+    public static Item createFrom(Id id, String value) {
         return createFrom(id, value, null);
     }
 
-    public static Entry createFrom(Id id, String value, @Nullable String completedTimestamp) {
-        return new AutoValue_Entry(id, value, Optional.fromNullable(completedTimestamp));
+    public static Item createFrom(Id id, String value, @Nullable String completedTimestamp) {
+        return new AutoValue_Item(id, value, Optional.fromNullable(completedTimestamp));
     }
 
-    public Entry markCompleted() {
+    public Item markCompleted() {
         String completedTimestamp = String.valueOf(System.currentTimeMillis());
         return createFrom(id(), value(), completedTimestamp);
     }
 
-    public Entry markNotComplete() {
+    public Item markNotComplete() {
         return createFrom(id(), value());
     }
 
@@ -38,6 +38,5 @@ public abstract class Entry {
     public boolean isCompleted() {
         return completedTimestamp().isPresent();
     }
-
 }
 

@@ -12,19 +12,19 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EntryInputWidget extends FrameLayout {
+public class ItemInputWidget extends FrameLayout {
 
-    @BindView(R.id.entry_input_edit_text)
+    @BindView(R.id.item_input_edit_text)
     EditText inputEditText;
 
-    public EntryInputWidget(Context context, AttributeSet attrs) {
+    public ItemInputWidget(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        View.inflate(getContext(), R.layout.merge_entry_input, this);
+        View.inflate(getContext(), R.layout.merge_item_input, this);
         ButterKnife.bind(this);
     }
 
@@ -32,11 +32,11 @@ public class EntryInputWidget extends FrameLayout {
         inputEditText.append(text);
     }
 
-    public void update(final EntryInputUserInteractions userInteractions, final Day day) {
-        setEnterKeyListenerToAddEntryAndPreventMultilineInput(userInteractions, day);
+    public void update(ItemInputUserInteractions userInteractions, Day day) {
+        setEnterKeyListenerToAddItemAndPreventMultilineInput(userInteractions, day);
     }
 
-    private void setEnterKeyListenerToAddEntryAndPreventMultilineInput(final EntryInputUserInteractions userInteractions, final Day day) {
+    private void setEnterKeyListenerToAddItemAndPreventMultilineInput(final ItemInputUserInteractions userInteractions, final Day day) {
         inputEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -67,10 +67,10 @@ public class EntryInputWidget extends FrameLayout {
         });
     }
 
-    private void addStack(EntryInputUserInteractions userInteractions, Day day) {
-        String entry = inputEditText.getText().toString();
-        if (entry.length() > 0) {
-            userInteractions.onUserAddEntry(entry, day);
+    private void addStack(ItemInputUserInteractions userInteractions, Day day) {
+        String item = inputEditText.getText().toString();
+        if (item.length() > 0) {
+            userInteractions.onUserAddItem(item, day);
             inputEditText.setText(null);
         }
     }

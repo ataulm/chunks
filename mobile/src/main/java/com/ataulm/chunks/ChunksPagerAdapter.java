@@ -1,8 +1,6 @@
 package com.ataulm.chunks;
 
 import android.content.res.Resources;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,13 +8,13 @@ import com.novoda.viewpageradapter.ViewPagerAdapter;
 
 final class ChunksPagerAdapter extends ViewPagerAdapter<ChunksPage> {
 
-    private final ChunkEntryUserInteractions userInteractions;
+    private final ChunkItemUserInteractions userInteractions;
     private final OnPageChangeListenerDelegate onPageChangeListenerDelegate;
     private final Resources resources;
 
     private Chunks chunks;
 
-    ChunksPagerAdapter(ChunkEntryUserInteractions userInteractions, OnPageChangeListenerDelegate onPageChangeListenerDelegate, Resources resources, Chunks chunks) {
+    ChunksPagerAdapter(ChunkItemUserInteractions userInteractions, OnPageChangeListenerDelegate onPageChangeListenerDelegate, Resources resources, Chunks chunks) {
         this.userInteractions = userInteractions;
         this.resources = resources;
         this.onPageChangeListenerDelegate = onPageChangeListenerDelegate;

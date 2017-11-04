@@ -29,20 +29,20 @@ public class ChunkItemView_TalkBackEnabled_Test extends ChunkItemViewTest {
 
     @Test
     public void itemViewHasCustomUsageHint() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onItemView().check(matches(withUsageHintOnClick("see all actions")));
     }
 
     @Test
     public void givenCompleteEntryToday_click_showsMenu() {
-        Entry entry = completeEntry();
-        Chunk chunk = aChunk().with(entry).get();
-        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, entry, listener);
-        bind(entry, chunksActions);
+        Item item = completeEntry();
+        Chunk chunk = aChunk().with(item).get();
+        ChunksActions chunksActions = ChunksActions.create(chunk, Day.TODAY, item, listener);
+        bind(item, chunksActions);
 
         onItemView().perform(click());
 

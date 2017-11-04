@@ -37,11 +37,11 @@ final class ChunkItemViewHolder extends RecyclerView.ViewHolder {
         this.actionsAlertDialogCreator = new ActionsAlertDialogCreator(itemView.getContext());
     }
 
-    public void bind(Entry entry, final ChunksActions chunksActions) {
+    public void bind(Item item, final ChunksActions chunksActions) {
         final AlertDialog alertDialog = actionsAlertDialogCreator.create(chunksActions.actions());
 
         itemView.checkBox().setOnCheckedChangeListener(null);
-        itemView.checkBox().setChecked(entry.isCompleted());
+        itemView.checkBox().setChecked(item.isCompleted());
         itemView.checkBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -56,7 +56,7 @@ final class ChunkItemViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        itemView.entryTextView().setText(entry.value());
+        itemView.entryTextView().setText(item.value());
 
         final Optional<Action> transitionNextDay = chunksActions.transitionToNextDay();
         if (transitionNextDay.isPresent()) {

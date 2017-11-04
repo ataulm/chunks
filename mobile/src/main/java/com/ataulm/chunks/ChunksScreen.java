@@ -18,7 +18,7 @@ public class ChunksScreen extends FrameLayout implements ChunksView {
     ViewPager viewPager;
 
     @BindView(R.id.chunks_screen_empty_input_widget)
-    EntryInputWidget entryInputWidget;
+    ItemInputWidget itemInputWidget;
 
     private final OnPageChangeListenerDelegate onPageChangeListenerDelegate = new OnPageChangeListenerDelegate();
 
@@ -34,9 +34,9 @@ public class ChunksScreen extends FrameLayout implements ChunksView {
     }
 
     @Override
-    public void display(Chunks chunks, ChunkEntryUserInteractions chunkEntryUserInteractions, final EntryInputUserInteractions entryInputUserInteractions) {
+    public void display(Chunks chunks, ChunkItemUserInteractions chunkItemUserInteractions, final ItemInputUserInteractions itemInputUserInteractions) {
         if (chunks.input().isPresent()) {
-            entryInputWidget.setText(chunks.input().get());
+            itemInputWidget.setText(chunks.input().get());
         }
 
         viewPager.clearOnPageChangeListeners();
@@ -51,18 +51,18 @@ public class ChunksScreen extends FrameLayout implements ChunksView {
                         }
 
                         Day day = DayToPagePositionMapper.getDayFor(position);
-                        entryInputWidget.update(entryInputUserInteractions, day);
+                        itemInputWidget.update(itemInputUserInteractions, day);
                     }
                 }
         );
 
-        updateViewPagerWith(chunks, chunkEntryUserInteractions);
+        updateViewPagerWith(chunks, chunkItemUserInteractions);
     }
 
-    private void updateViewPagerWith(Chunks chunks, ChunkEntryUserInteractions chunkEntryUserInteractions) {
+    private void updateViewPagerWith(Chunks chunks, ChunkItemUserInteractions chunkItemUserInteractions) {
         ChunksPagerAdapter chunksPagerAdapter;
         if (viewPager.getAdapter() == null) {
-            chunksPagerAdapter = new ChunksPagerAdapter(chunkEntryUserInteractions, onPageChangeListenerDelegate, viewPager.getResources(), chunks);
+            chunksPagerAdapter = new ChunksPagerAdapter(chunkItemUserInteractions, onPageChangeListenerDelegate, viewPager.getResources(), chunks);
             viewPager.setAdapter(chunksPagerAdapter);
             setViewPager(Day.TODAY); // TODO: this happens on rotate, but not necessarily what we want
         } else {

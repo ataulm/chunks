@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.ataulm.chunks.ChunkFixtures.aChunk;
 import static com.ataulm.chunks.ChunksFixtures.aChunks;
-import static com.ataulm.chunks.EntryFixtures.anEntry;
+import static com.ataulm.chunks.ItemFixtures.anItem;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ChunksEditorTest {
@@ -23,18 +23,18 @@ public class ChunksEditorTest {
     @Test
     public void addingAnEntry() {
         Chunk chunk = aChunk().get();
-        Entry entry = anEntry().get();
+        Item item = anItem().get();
 
-        Chunk updatedChunk = chunksEditor.add(chunk, entry);
+        Chunk updatedChunk = chunksEditor.add(chunk, item);
 
-        assertThat(updatedChunk.entries()).containsExactly(entry);
+        assertThat(updatedChunk.entries()).containsExactly(item);
     }
 
     @Test
     public void addingMultipleEntries() {
         Chunk chunk = aChunk().get();
-        Entry one = anEntry().get();
-        Entry two = anEntry().get();
+        Item one = anItem().get();
+        Item two = anItem().get();
 
         Chunk updatedChunk = chunksEditor.add(chunk, Arrays.asList(one, two));
 
@@ -43,43 +43,43 @@ public class ChunksEditorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void addingEntriesWithSameIdThrowsError() {
-        Entry entry = anEntry().get();
-        Entry entryWithSameId = anEntry().withId(entry.id()).get();
-        Chunk chunk = aChunk().with(entry).get();
+        Item item = anItem().get();
+        Item itemWithSameId = anItem().withId(item.id()).get();
+        Chunk chunk = aChunk().with(item).get();
 
         try {
-            chunksEditor.add(chunk, entryWithSameId);
+            chunksEditor.add(chunk, itemWithSameId);
         } catch (IllegalArgumentException e) {
-            assertThat(e).hasMessageContaining(String.valueOf(entry.id()));
+            assertThat(e).hasMessageContaining(String.valueOf(item.id()));
             throw e;
         }
     }
 
     @Test
     public void removingAnEntry() {
-        Entry entry = anEntry().get();
-        Chunk chunk = aChunk().with(entry).get();
+        Item item = anItem().get();
+        Chunk chunk = aChunk().with(item).get();
 
-        Chunk updatedChunk = chunksEditor.remove(chunk, entry.id());
+        Chunk updatedChunk = chunksEditor.remove(chunk, item.id());
 
-        assertThat(updatedChunk.containsEntryWith(entry.id())).isFalse();
+        assertThat(updatedChunk.containsEntryWith(item.id())).isFalse();
     }
 
     @Test
     public void removingNonExistentEntryDoesNothing() {
-        Entry entry = anEntry().get();
+        Item item = anItem().get();
         Chunk chunk = aChunk().get();
 
-        Chunk updatedChunk = chunksEditor.remove(chunk, entry.id());
+        Chunk updatedChunk = chunksEditor.remove(chunk, item.id());
 
-        assertThat(updatedChunk.containsEntryWith(entry.id())).isFalse();
+        assertThat(updatedChunk.containsEntryWith(item.id())).isFalse();
     }
 
     @Test
     public void removingMultipleEntries() {
-        Entry one = anEntry().get();
-        Entry two = anEntry().get();
-        Entry three = anEntry().get();
+        Item one = anItem().get();
+        Item two = anItem().get();
+        Item three = anItem().get();
         Chunk chunk = aChunk().with(Arrays.asList(one, two, three)).get();
 
         Chunk updatedChunk = chunksEditor.remove(chunk, Arrays.asList(two, three));
@@ -89,11 +89,11 @@ public class ChunksEditorTest {
 
     @Test
     public void removingMultipleEntriesWithNonExistingEntriesDoesNothing() {
-        Entry one = anEntry().get();
-        Entry two = anEntry().get();
-        Entry three = anEntry().get();
-        Entry four = anEntry().get();
-        Entry five = anEntry().get();
+        Item one = anItem().get();
+        Item two = anItem().get();
+        Item three = anItem().get();
+        Item four = anItem().get();
+        Item five = anItem().get();
         Chunk chunk = aChunk().with(Arrays.asList(one, two, three)).get();
 
         Chunk updatedChunk = chunksEditor.remove(chunk, Arrays.asList(four, five));
@@ -103,10 +103,10 @@ public class ChunksEditorTest {
 
     @Test
     public void removingMultipleEntriesWithSomeNonExistingEntriesRemovesTheExistingOnes() {
-        Entry one = anEntry().get();
-        Entry two = anEntry().get();
-        Entry three = anEntry().get();
-        Entry four = anEntry().get();
+        Item one = anItem().get();
+        Item two = anItem().get();
+        Item three = anItem().get();
+        Item four = anItem().get();
         Chunk chunk = aChunk().with(Arrays.asList(one, two, three)).get();
 
         Chunk updatedChunk = chunksEditor.remove(chunk, Arrays.asList(two, three, four));
@@ -116,9 +116,9 @@ public class ChunksEditorTest {
 
     @Test
     public void updatingAnEntry() {
-        Entry initial = anEntry().withValue("initial").get();
+        Item initial = anItem().withValue("initial").get();
         Chunk chunk = aChunk().with(initial).get();
-        Entry updated = anEntry().withId(initial.id()).withValue("updated").get();
+        Item updated = anItem().withId(initial.id()).withValue("updated").get();
 
         Chunk updatedChunk = chunksEditor.update(chunk, updated);
 
@@ -128,7 +128,7 @@ public class ChunksEditorTest {
     @Test
     public void updatingNonExistentEntryDoesNothing() {
         Chunk chunk = aChunk().get();
-        Entry updated = anEntry().get();
+        Item updated = anItem().get();
 
         chunksEditor.update(chunk, updated);
 
@@ -137,18 +137,18 @@ public class ChunksEditorTest {
 
     @Test
     public void addingAnEntryToDay() {
-        Entry entry = anEntry().get();
+        Item item = anItem().get();
         Chunks chunks = aChunks().get();
 
-        Chunks updatedChunks = chunksEditor.add(chunks, Day.TOMORROW, entry);
+        Chunks updatedChunks = chunksEditor.add(chunks, Day.TOMORROW, item);
 
-        assertThat(updatedChunks.tomorrow().entries()).containsExactly(entry);
+        assertThat(updatedChunks.tomorrow().entries()).containsExactly(item);
     }
 
     @Test
     public void addingMultipleEntriesToDay() {
-        Entry one = anEntry().get();
-        Entry two = anEntry().get();
+        Item one = anItem().get();
+        Item two = anItem().get();
         Chunks chunks = aChunks().get();
 
         Chunks updatedChunks = chunksEditor.add(chunks, Day.TOMORROW, Arrays.asList(one, two));
@@ -158,52 +158,52 @@ public class ChunksEditorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void addingEntriesWithSameIdToDayThrowsError() {
-        Entry entry = anEntry().get();
-        Entry entryWithSameId = anEntry().withId(entry.id()).get();
-        Chunk today = aChunk().with(entry).get();
+        Item item = anItem().get();
+        Item itemWithSameId = anItem().withId(item.id()).get();
+        Chunk today = aChunk().with(item).get();
         Chunks chunks = aChunks().withToday(today).get();
 
         try {
-            chunksEditor.add(chunks, Day.TODAY, entryWithSameId);
+            chunksEditor.add(chunks, Day.TODAY, itemWithSameId);
         } catch (IllegalArgumentException e) {
-            assertThat(e).hasMessageContaining(String.valueOf(entry.id()));
+            assertThat(e).hasMessageContaining(String.valueOf(item.id()));
             throw e;
         }
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void addingEntriesWithSameIdAcrossDaysThrowsError() {
-        Entry entry = anEntry().get();
-        Entry entryWithSameId = anEntry().withId(entry.id()).get();
-        Chunk today = aChunk().with(entry).get();
+        Item item = anItem().get();
+        Item itemWithSameId = anItem().withId(item.id()).get();
+        Chunk today = aChunk().with(item).get();
         Chunks chunks = aChunks().withToday(today).get();
 
         try {
-            chunksEditor.add(chunks, Day.TOMORROW, entryWithSameId);
+            chunksEditor.add(chunks, Day.TOMORROW, itemWithSameId);
         } catch (IllegalArgumentException e) {
-            assertThat(e).hasMessageContaining(String.valueOf(entry.id()));
+            assertThat(e).hasMessageContaining(String.valueOf(item.id()));
             throw e;
         }
     }
 
     @Test
     public void editingEntryRemovesItFromDayAndPassesTheValue() {
-        Entry entry = anEntry().get();
-        Chunk today = aChunk().with(entry).get();
+        Item item = anItem().get();
+        Chunk today = aChunk().with(item).get();
         Chunks chunks = aChunks().withToday(today).get();
 
-        Chunks updatedChunks = chunksEditor.edit(chunks, entry.id());
+        Chunks updatedChunks = chunksEditor.edit(chunks, item.id());
 
         assertThat(updatedChunks.today().entries()).isEmpty();
-        assertThat(updatedChunks.input().get()).isEqualTo(entry.value());
+        assertThat(updatedChunks.input().get()).isEqualTo(item.value());
     }
 
     @Test
     public void editingNonExistentEntryDoesNothing() {
-        Entry entry = anEntry().get();
+        Item item = anItem().get();
         Chunks chunks = aChunks().get();
 
-        Chunks updatedChunks = chunksEditor.edit(chunks, entry.id());
+        Chunks updatedChunks = chunksEditor.edit(chunks, item.id());
 
         assertThat(updatedChunks).isEqualTo(chunks);
         assertThat(updatedChunks.input().isPresent()).isFalse();
@@ -211,31 +211,31 @@ public class ChunksEditorTest {
 
     @Test
     public void removingAnEntryFromChunks() {
-        Entry entry = anEntry().get();
-        Chunk today = aChunk().with(entry).get();
+        Item item = anItem().get();
+        Chunk today = aChunk().with(item).get();
         Chunks chunks = aChunks().withToday(today).get();
 
-        Chunks updatedChunks = chunksEditor.remove(chunks, entry.id());
+        Chunks updatedChunks = chunksEditor.remove(chunks, item.id());
 
         assertThat(updatedChunks.today()).isEmpty();
     }
 
     @Test
     public void removingNonExistentEntryFromChunksDoesNothing() {
-        Entry entry = anEntry().get();
+        Item item = anItem().get();
         Chunks chunks = aChunks().get();
 
-        Chunks updatedChunks = chunksEditor.remove(chunks, entry.id());
+        Chunks updatedChunks = chunksEditor.remove(chunks, item.id());
 
         assertThat(updatedChunks).isEqualTo(chunks);
     }
 
     @Test
     public void updatingAnEntryToDay() {
-        Entry initial = anEntry().withValue("initial").get();
+        Item initial = anItem().withValue("initial").get();
         Chunk today = aChunk().with(initial).get();
         Chunks chunks = aChunks().withToday(today).get();
-        Entry updated = anEntry().withId(initial.id()).withValue("updated").get();
+        Item updated = anItem().withId(initial.id()).withValue("updated").get();
 
         Chunks updatedChunks = chunksEditor.update(chunks, updated);
 
@@ -245,21 +245,21 @@ public class ChunksEditorTest {
     @Test(expected = IllegalArgumentException.class)
     public void updatingNonExistentEntryThrowsError() {
         Chunks chunks = aChunks().get();
-        Entry entry = anEntry().get();
+        Item item = anItem().get();
 
         try {
-            chunksEditor.update(chunks, entry);
+            chunksEditor.update(chunks, item);
         } catch (IllegalArgumentException e) {
-            assertThat(e).hasMessageContaining(String.valueOf(entry.id()));
+            assertThat(e).hasMessageContaining(String.valueOf(item.id()));
             throw e;
         }
     }
 
     @Test
     public void movingAnEntry() {
-        Entry zero = anEntry().get();
-        Entry one = anEntry().get();
-        Entry two = anEntry().get();
+        Item zero = anItem().get();
+        Item one = anItem().get();
+        Item two = anItem().get();
         Chunk tomorrow = aChunk().with(Arrays.asList(zero, one, two)).get();
         Chunks chunks = aChunks().withTomorrow(tomorrow).get();
 
@@ -271,22 +271,22 @@ public class ChunksEditorTest {
     @Test(expected = IllegalArgumentException.class)
     public void movingNonExistentEntryThrowsError() {
         Chunks chunks = aChunks().get();
-        Entry entry = anEntry().get();
+        Item item = anItem().get();
 
         try {
-            chunksEditor.move(chunks, entry, 0);
+            chunksEditor.move(chunks, item, 0);
         } catch (IllegalArgumentException e) {
-            assertThat(e).hasMessageContaining(String.valueOf(entry.id()));
+            assertThat(e).hasMessageContaining(String.valueOf(item.id()));
             throw e;
         }
     }
 
     @Test
     public void moveEntryToEarlierPosition() {
-        Entry zero = anEntry().get();
-        Entry one = anEntry().get();
-        Entry two = anEntry().get();
-        Entry three = anEntry().get();
+        Item zero = anItem().get();
+        Item one = anItem().get();
+        Item two = anItem().get();
+        Item three = anItem().get();
         Chunk chunk = aChunk().with(Arrays.asList(zero, one, two, three)).get();
 
         Chunk updatedChunk = chunksEditor.move(chunk, three, 0);
@@ -296,10 +296,10 @@ public class ChunksEditorTest {
 
     @Test
     public void moveEntryToLaterPosition() {
-        Entry zero = anEntry().get();
-        Entry one = anEntry().get();
-        Entry two = anEntry().get();
-        Entry three = anEntry().get();
+        Item zero = anItem().get();
+        Item one = anItem().get();
+        Item two = anItem().get();
+        Item three = anItem().get();
         Chunk chunk = aChunk().with(Arrays.asList(zero, one, two, three)).get();
 
         Chunk updatedChunk = chunksEditor.move(chunk, zero, 3);
@@ -309,23 +309,23 @@ public class ChunksEditorTest {
 
     @Test
     public void moveEntryWithNonExistentEntryDoesNothing() {
-        Entry entry = anEntry().get();
-        Chunk chunk = aChunk().with(entry).get();
-        Entry nonExistentEntry = anEntry().get();
+        Item item = anItem().get();
+        Chunk chunk = aChunk().with(item).get();
+        Item nonExistentItem = anItem().get();
 
-        Chunk updatedEntries = chunksEditor.move(chunk, nonExistentEntry, 0);
+        Chunk updatedEntries = chunksEditor.move(chunk, nonExistentItem, 0);
 
         assertThat(updatedEntries).isEqualTo(chunk);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void moveEntryWithNewEntryPositionLowerThanZeroThrowsError() {
-        Entry entry = anEntry().get();
-        Chunk chunk = aChunk().with(entry).get();
+        Item item = anItem().get();
+        Chunk chunk = aChunk().with(item).get();
         int newEntryPosition = -1;
 
         try {
-            chunksEditor.move(chunk, entry, newEntryPosition);
+            chunksEditor.move(chunk, item, newEntryPosition);
         } catch (IllegalArgumentException e) {
             assertThat(e).hasMessageContaining(String.valueOf(newEntryPosition));
             throw e;
@@ -334,12 +334,12 @@ public class ChunksEditorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void moveEntryWithNewEntryPositionGreaterThanMaxIndexThrowsError() {
-        Entry entry = anEntry().get();
-        Chunk chunk = aChunk().with(entry).get();
+        Item item = anItem().get();
+        Chunk chunk = aChunk().with(item).get();
         int newEntryPosition = chunk.size();
 
         try {
-            chunksEditor.move(chunk, entry, newEntryPosition);
+            chunksEditor.move(chunk, item, newEntryPosition);
         } catch (IllegalArgumentException e) {
             assertThat(e).hasMessageContaining(String.valueOf(newEntryPosition));
             throw e;
@@ -348,8 +348,8 @@ public class ChunksEditorTest {
 
     @Test
     public void moveEntryWithSameOriginalAndNewEntryPositionsDoesNothing() {
-        Entry zero = anEntry().get();
-        Entry one = anEntry().get();
+        Item zero = anItem().get();
+        Item one = anItem().get();
         Chunk chunk = aChunk().with(Arrays.asList(zero, one)).get();
 
         Chunk updatedChunks = chunksEditor.move(chunk, zero, 0);
@@ -359,9 +359,9 @@ public class ChunksEditorTest {
 
     @Test
     public void shuffle_along_with_different_day_moves_all_completed_tasks() {
-        List<Entry> completeTasks = createNewListOfCompleteNewEntries();
-        List<Entry> incompleteTasks = createNewListOfIncompleteNewEntries();
-        List<Entry> todayTasks = new ArrayList<>();
+        List<Item> completeTasks = createNewListOfCompleteNewEntries();
+        List<Item> incompleteTasks = createNewListOfIncompleteNewEntries();
+        List<Item> todayTasks = new ArrayList<>();
         todayTasks.addAll(completeTasks);
         todayTasks.addAll(incompleteTasks);
         Chunk today = aChunk().with(todayTasks).get();
@@ -374,8 +374,8 @@ public class ChunksEditorTest {
 
     @Test
     public void shuffle_along_with_different_day_moves_all_incomplete_tasks_to_today() {
-        List<Entry> todayTasks = createNewListOfIncompleteNewEntries();
-        List<Entry> tomorrowTasks = createNewListOfIncompleteNewEntries();
+        List<Item> todayTasks = createNewListOfIncompleteNewEntries();
+        List<Item> tomorrowTasks = createNewListOfIncompleteNewEntries();
         Chunk today = aChunk().with(todayTasks).get();
         Chunk tomorrow = aChunk().with(tomorrowTasks).get();
         Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow, Chunk.empty());
@@ -387,9 +387,9 @@ public class ChunksEditorTest {
 
     @Test
     public void shuffle_along_with_different_day_removes_all_completed_tasks_from_tomorrow() {
-        List<Entry> todayTasks = createNewListOfIncompleteNewEntries();
-        Entry completed = anEntry().withCompletedTimestamp("0").get();
-        List<Entry> tomorrowTasks = createNewListOfIncompleteNewEntriesAnd(completed);
+        List<Item> todayTasks = createNewListOfIncompleteNewEntries();
+        Item completed = anItem().withCompletedTimestamp("0").get();
+        List<Item> tomorrowTasks = createNewListOfIncompleteNewEntriesAnd(completed);
         Chunk today = aChunk().with(todayTasks).get();
         Chunk tomorrow = aChunk().with(tomorrowTasks).get();
         Chunks chunks = Chunks.create(AUGUST_02_2016, today, tomorrow, Chunk.empty());
@@ -401,10 +401,10 @@ public class ChunksEditorTest {
 
     @Test
     public void shuffle_along_with_different_day_removes_all_completed_tasks_from_sometime() {
-        List<Entry> todayTasks = createNewListOfIncompleteNewEntries();
-        List<Entry> tomorrowTasks = createNewListOfIncompleteNewEntries();
-        Entry completed = anEntry().withCompletedTimestamp("0").get();
-        List<Entry> sometimeTasks = createNewListOfIncompleteNewEntriesAnd(completed);
+        List<Item> todayTasks = createNewListOfIncompleteNewEntries();
+        List<Item> tomorrowTasks = createNewListOfIncompleteNewEntries();
+        Item completed = anItem().withCompletedTimestamp("0").get();
+        List<Item> sometimeTasks = createNewListOfIncompleteNewEntriesAnd(completed);
         Chunk today = aChunk().with(todayTasks).get();
         Chunk tomorrow = aChunk().with(tomorrowTasks).get();
         Chunk sometime = aChunk().with(sometimeTasks).get();
@@ -415,19 +415,19 @@ public class ChunksEditorTest {
         assertThat(updatedChunks).is(without(completed));
     }
 
-    private static Condition<Chunks> without(final Entry entry) {
+    private static Condition<Chunks> without(final Item item) {
         return new Condition<Chunks>() {
             @Override
             public boolean matches(Chunks chunks) {
-                boolean chunksContainsEntry = chunks.today().containsEntryWith(entry.id())
-                        || chunks.tomorrow().containsEntryWith(entry.id())
-                        || chunks.sometime().containsEntryWith(entry.id());
+                boolean chunksContainsEntry = chunks.today().containsEntryWith(item.id())
+                        || chunks.tomorrow().containsEntryWith(item.id())
+                        || chunks.sometime().containsEntryWith(item.id());
                 return !chunksContainsEntry;
             }
         };
     }
 
-    private static Condition<Chunks> withNoTasksInTomorrowAndTodayContains(final List<Entry> tomorrowTasks) {
+    private static Condition<Chunks> withNoTasksInTomorrowAndTodayContains(final List<Item> tomorrowTasks) {
         return new Condition<Chunks>() {
             @Override
             public boolean matches(Chunks value) {
@@ -437,26 +437,26 @@ public class ChunksEditorTest {
         };
     }
 
-    private static List<Entry> createNewListOfCompleteNewEntries() {
+    private static List<Item> createNewListOfCompleteNewEntries() {
         String timestamp_1970 = "0";
-        Entry oneComplete = anEntry().withCompletedTimestamp(timestamp_1970).get();
-        Entry twoComplete = anEntry().withCompletedTimestamp(timestamp_1970).get();
-        Entry threeComplete = anEntry().withCompletedTimestamp(timestamp_1970).get();
-        Entry fourComplete = anEntry().withCompletedTimestamp(timestamp_1970).get();
+        Item oneComplete = anItem().withCompletedTimestamp(timestamp_1970).get();
+        Item twoComplete = anItem().withCompletedTimestamp(timestamp_1970).get();
+        Item threeComplete = anItem().withCompletedTimestamp(timestamp_1970).get();
+        Item fourComplete = anItem().withCompletedTimestamp(timestamp_1970).get();
         return Arrays.asList(oneComplete, twoComplete, threeComplete, fourComplete);
     }
 
-    private static List<Entry> createNewListOfIncompleteNewEntries() {
+    private static List<Item> createNewListOfIncompleteNewEntries() {
         return createNewListOfIncompleteNewEntriesAnd();
     }
 
-    private static List<Entry> createNewListOfIncompleteNewEntriesAnd(Entry... entries) {
-        List<Entry> all = new ArrayList<>(Arrays.asList(entries));
+    private static List<Item> createNewListOfIncompleteNewEntriesAnd(Item... entries) {
+        List<Item> all = new ArrayList<>(Arrays.asList(entries));
 
-        Entry oneIncomplete = anEntry().get();
-        Entry twoIncomplete = anEntry().get();
-        Entry threeIncomplete = anEntry().get();
-        Entry fourIncomplete = anEntry().get();
+        Item oneIncomplete = anItem().get();
+        Item twoIncomplete = anItem().get();
+        Item threeIncomplete = anItem().get();
+        Item fourIncomplete = anItem().get();
 
         Collections.addAll(all, oneIncomplete, twoIncomplete, threeIncomplete, fourIncomplete);
         return all;

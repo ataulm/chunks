@@ -2,7 +2,7 @@ package com.ataulm.chunks.repository;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GsonEntry {
+public class GsonItem {
 
     @SerializedName("id")
     public String id;

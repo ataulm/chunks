@@ -24,7 +24,7 @@ public class ChunkRecyclerView extends RecyclerView {
     }
 
     private void attachDragAndDropItemTouchHelper() {
-        EntryDragCallback.ItemMoveCallback itemMoveCallback = new EntryDragCallback.ItemMoveCallback() {
+        ItemDragCallback.ItemMoveCallback itemMoveCallback = new ItemDragCallback.ItemMoveCallback() {
             @Override
             public void onItemMoving(int startPosition, int endPosition) {
                 getAdapter().onItemMoving(startPosition, endPosition);
@@ -35,10 +35,10 @@ public class ChunkRecyclerView extends RecyclerView {
                 getAdapter().onItemMoved(endPosition);
             }
         };
-        new ItemTouchHelper(new EntryDragCallback(itemMoveCallback)).attachToRecyclerView(this);
+        new ItemTouchHelper(new ItemDragCallback(itemMoveCallback)).attachToRecyclerView(this);
     }
 
-    public void update(Chunk chunk, ChunkEntryUserInteractions userInteractions, Day day) {
+    public void update(Chunk chunk, ChunkItemUserInteractions userInteractions, Day day) {
         ChunkRecyclerViewAdapter adapter = getAdapter();
         if (adapter == null) {
             adapter = new ChunkRecyclerViewAdapter(userInteractions, day, chunk);
@@ -63,11 +63,11 @@ public class ChunkRecyclerView extends RecyclerView {
         }
     }
 
-    private static class EntryDragCallback extends ItemTouchHelper.Callback {
+    private static class ItemDragCallback extends ItemTouchHelper.Callback {
 
         private final ItemMoveCallback itemMoveCallback;
 
-        EntryDragCallback(ItemMoveCallback itemMoveCallback) {
+        ItemDragCallback(ItemMoveCallback itemMoveCallback) {
             this.itemMoveCallback = itemMoveCallback;
         }
 

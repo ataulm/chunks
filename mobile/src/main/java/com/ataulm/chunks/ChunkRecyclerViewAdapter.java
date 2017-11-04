@@ -9,12 +9,12 @@ import java.util.List;
 
 class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder> {
 
-    private final ChunkEntryUserInteractions userInteractions;
+    private final ChunkItemUserInteractions userInteractions;
 
     private Day day;
     private Chunk chunk;
 
-    ChunkRecyclerViewAdapter(ChunkEntryUserInteractions userInteractions, Day day, Chunk chunk) {
+    ChunkRecyclerViewAdapter(ChunkItemUserInteractions userInteractions, Day day, Chunk chunk) {
         this.userInteractions = userInteractions;
         this.day = day;
         this.chunk = chunk;
@@ -32,7 +32,7 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder>
     }
 
     void onItemMoving(int source, int target) {
-        List<Entry> entries = new ArrayList<>(chunk.entries());
+        List<Item> entries = new ArrayList<>(chunk.entries());
         if (source < target) {
             for (int i = source; i < target; i++) {
                 Collections.swap(entries, i, i + 1);
@@ -47,8 +47,8 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder>
     }
 
     void onItemMoved(int endPosition) {
-        Entry entry = chunk.get(endPosition);
-        userInteractions.onUserMove(entry, endPosition);
+        Item item = chunk.get(endPosition);
+        userInteractions.onUserMove(item, endPosition);
     }
 
     @Override
@@ -58,9 +58,9 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder>
 
     @Override
     public void onBindViewHolder(ChunkItemViewHolder holder, int position) {
-        Entry entry = chunk.get(position);
-        ChunksActions chunksActions = ChunksActions.create(chunk, day, entry, userInteractions);
-        holder.bind(entry, chunksActions);
+        Item item = chunk.get(position);
+        ChunksActions chunksActions = ChunksActions.create(chunk, day, item, userInteractions);
+        holder.bind(item, chunksActions);
     }
 
     @Override
@@ -70,8 +70,8 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ChunkItemViewHolder>
 
     @Override
     public long getItemId(int position) {
-        Entry entry = chunk.get(position);
-        return entry.id().value().hashCode();
+        Item item = chunk.get(position);
+        return item.id().value().hashCode();
     }
 
 }

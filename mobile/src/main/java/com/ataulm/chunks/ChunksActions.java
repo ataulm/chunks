@@ -8,123 +8,124 @@ import com.novoda.accessibility.Actions;
 import java.util.ArrayList;
 
 @AutoValue
-abstract class ChunksActions {
+abstract class
+ChunksActions {
 
-    public static ChunksActions create(Chunk chunk, Day day, Entry entry, ChunkEntryUserInteractions userInteractions) {
-        Optional<Action> markComplete = createMarkCompleteAction(entry, userInteractions);
-        Optional<Action> markNotComplete = createMarkNotCompleteAction(entry, userInteractions);
-        Action edit = createEditAction(entry, userInteractions);
-        Optional<Action> transitionToToday = createTransitionToTodayAction(day, entry, userInteractions);
-        Optional<Action> transitionToTomorrow = createTransitionToTomorrowAction(day, entry, userInteractions);
-        Optional<Action> transitionToLater = createTransitionToLaterAction(day, entry, userInteractions);
-        Optional<Action> moveUp = createMoveUpAction(chunk, entry, userInteractions);
-        Optional<Action> moveDown = createMoveDownAction(chunk, entry, userInteractions);
-        Action delete = createDeleteAction(entry, userInteractions);
+    public static ChunksActions create(Chunk chunk, Day day, Item item, ChunkItemUserInteractions userInteractions) {
+        Optional<Action> markComplete = createMarkCompleteAction(item, userInteractions);
+        Optional<Action> markNotComplete = createMarkNotCompleteAction(item, userInteractions);
+        Action edit = createEditAction(item, userInteractions);
+        Optional<Action> transitionToToday = createTransitionToTodayAction(day, item, userInteractions);
+        Optional<Action> transitionToTomorrow = createTransitionToTomorrowAction(day, item, userInteractions);
+        Optional<Action> transitionToLater = createTransitionToLaterAction(day, item, userInteractions);
+        Optional<Action> moveUp = createMoveUpAction(chunk, item, userInteractions);
+        Optional<Action> moveDown = createMoveDownAction(chunk, item, userInteractions);
+        Action delete = createDeleteAction(item, userInteractions);
 
         Actions actions = collate(markComplete, markNotComplete, edit, transitionToToday, transitionToTomorrow, transitionToLater, moveUp, moveDown, delete);
         return new AutoValue_ChunksActions(actions, markComplete, markNotComplete, edit, transitionToToday, transitionToTomorrow, transitionToLater, moveUp, moveDown, delete, day);
     }
 
-    private static Optional<Action> createMarkCompleteAction(final Entry entry, final ChunkEntryUserInteractions userInteractions) {
-        if (entry.isCompleted()) {
+    private static Optional<Action> createMarkCompleteAction(final Item item, final ChunkItemUserInteractions userInteractions) {
+        if (item.isCompleted()) {
             return Optional.absent();
         }
         return Optional.of(new Action(R.id.action_mark_complete, R.string.action_mark_complete, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserMarkComplete(entry);
+                userInteractions.onUserMarkComplete(item);
             }
         }));
     }
 
-    private static Optional<Action> createMarkNotCompleteAction(final Entry entry, final ChunkEntryUserInteractions userInteractions) {
-        if (!entry.isCompleted()) {
+    private static Optional<Action> createMarkNotCompleteAction(final Item item, final ChunkItemUserInteractions userInteractions) {
+        if (!item.isCompleted()) {
             return Optional.absent();
         }
         return Optional.of(new Action(R.id.action_mark_not_complete, R.string.action_mark_not_complete, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserMarkNotComplete(entry);
+                userInteractions.onUserMarkNotComplete(item);
             }
         }));
     }
 
-    private static Action createEditAction(final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+    private static Action createEditAction(final Item item, final ChunkItemUserInteractions userInteractions) {
         return new Action(R.id.action_edit, R.string.action_edit, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserEdit(entry);
+                userInteractions.onUserEdit(item);
             }
         });
     }
 
-    private static Optional<Action> createTransitionToTodayAction(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+    private static Optional<Action> createTransitionToTodayAction(Day day, final Item item, final ChunkItemUserInteractions userInteractions) {
         if (day == Day.TODAY) {
             return Optional.absent();
         }
         return Optional.of(new Action(R.id.action_move_to_today, R.string.action_move_to_today, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserTransitionEntry(entry, Day.TODAY);
+                userInteractions.onUserTransitionItem(item, Day.TODAY);
             }
         }));
     }
 
-    private static Optional<Action> createTransitionToTomorrowAction(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+    private static Optional<Action> createTransitionToTomorrowAction(Day day, final Item item, final ChunkItemUserInteractions userInteractions) {
         if (day == Day.TOMORROW) {
             return Optional.absent();
         }
         return Optional.of(new Action(R.id.action_move_to_tomorrow, R.string.action_move_to_tomorrow, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserTransitionEntry(entry, Day.TOMORROW);
+                userInteractions.onUserTransitionItem(item, Day.TOMORROW);
             }
         }));
     }
 
-    private static Optional<Action> createTransitionToLaterAction(Day day, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+    private static Optional<Action> createTransitionToLaterAction(Day day, final Item item, final ChunkItemUserInteractions userInteractions) {
         if (day == Day.SOMETIME) {
             return Optional.absent();
         }
         return Optional.of(new Action(R.id.action_move_to_later, R.string.action_move_to_later, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserTransitionEntry(entry, Day.SOMETIME);
+                userInteractions.onUserTransitionItem(item, Day.SOMETIME);
             }
         }));
     }
 
-    private static Optional<Action> createMoveUpAction(final Chunk chunk, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
-        final int originalEntryPosition = chunk.entries().indexOf(entry);
+    private static Optional<Action> createMoveUpAction(final Chunk chunk, final Item item, final ChunkItemUserInteractions userInteractions) {
+        final int originalEntryPosition = chunk.entries().indexOf(item);
         if (originalEntryPosition == 0) {
             return Optional.absent();
         }
         return Optional.of(new Action(R.id.action_move_up, R.string.action_move_up, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserMove(entry, originalEntryPosition - 1);
+                userInteractions.onUserMove(item, originalEntryPosition - 1);
             }
         }));
     }
 
-    private static Optional<Action> createMoveDownAction(final Chunk chunk, final Entry entry, final ChunkEntryUserInteractions userInteractions) {
-        final int originalEntryPosition = chunk.entries().indexOf(entry);
+    private static Optional<Action> createMoveDownAction(final Chunk chunk, final Item item, final ChunkItemUserInteractions userInteractions) {
+        final int originalEntryPosition = chunk.entries().indexOf(item);
         if (originalEntryPosition == chunk.size() - 1) {
             return Optional.absent();
         }
         return Optional.of(new Action(R.id.action_move_down, R.string.action_move_down, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserMove(entry, originalEntryPosition + 1);
+                userInteractions.onUserMove(item, originalEntryPosition + 1);
             }
         }));
     }
 
-    private static Action createDeleteAction(final Entry entry, final ChunkEntryUserInteractions userInteractions) {
+    private static Action createDeleteAction(final Item item, final ChunkItemUserInteractions userInteractions) {
         return new Action(R.id.action_delete, R.string.action_delete, new Runnable() {
             @Override
             public void run() {
-                userInteractions.onUserRemove(entry);
+                userInteractions.onUserRemove(item);
             }
         });
     }

@@ -105,50 +105,50 @@ public class ChunksService {
         };
     }
 
-    public void createEntry(Entry entry, Day day) {
+    public void createEntry(Item item, Day day) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunksEditor.add(chunks, day, entry);
+        Chunks updatedChunks = chunksEditor.add(chunks, day, item);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
-    public void updateEntry(Entry entry) {
+    public void updateEntry(Item item) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunksEditor.update(chunks, entry);
+        Chunks updatedChunks = chunksEditor.update(chunks, item);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
-    public void editEntry(Entry entry) {
+    public void editEntry(Item item) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunksEditor.edit(chunks, entry.id());
+        Chunks updatedChunks = chunksEditor.edit(chunks, item.id());
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
-    public void removeEntry(Entry entry) {
+    public void removeEntry(Item item) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunksEditor.remove(chunks, entry.id());
+        Chunks updatedChunks = chunksEditor.remove(chunks, item.id());
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
-    public void moveEntry(Entry entry, int newPosition) {
+    public void moveEntry(Item item, int newPosition) {
         Chunks chunks = getInMemoryChunksOrEmpty();
-        Chunks updatedChunks = chunksEditor.move(chunks, entry, newPosition);
+        Chunks updatedChunks = chunksEditor.move(chunks, item, newPosition);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
 
-    private static Chunk findChunkWithEntry(Chunks chunks, Entry entry) {
-        if (chunks.today().containsEntryWith(entry.id())) {
+    private static Chunk findChunkWithEntry(Chunks chunks, Item item) {
+        if (chunks.today().containsEntryWith(item.id())) {
             return chunks.today();
         }
 
-        if (chunks.tomorrow().containsEntryWith(entry.id())) {
+        if (chunks.tomorrow().containsEntryWith(item.id())) {
             return chunks.tomorrow();
         }
 
-        if (chunks.sometime().containsEntryWith(entry.id())) {
+        if (chunks.sometime().containsEntryWith(item.id())) {
             return chunks.sometime();
         }
 
-        throw new IllegalArgumentException("Entry not found in chunks: " + entry + ", " + chunks);
+        throw new IllegalArgumentException("Item not found in chunks: " + item + ", " + chunks);
     }
 
     private Chunks getInMemoryChunksOrEmpty() {

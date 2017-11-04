@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
   <EditText
-    android:id="@+id/entry_input_edit_text"
+    android:id="@+id/item_input_edit_text"
     style="@style/Chunks.EntryInputWidget.EditText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

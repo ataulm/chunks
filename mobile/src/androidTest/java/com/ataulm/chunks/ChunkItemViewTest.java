@@ -22,7 +22,7 @@ abstract class ChunkItemViewTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
-    ChunkEntryUserInteractions listener;
+    ChunkItemUserInteractions listener;
 
     abstract ViewTestRule<ChunkItemView> getViewTestRule();
 
@@ -30,18 +30,18 @@ abstract class ChunkItemViewTest {
         return onView(withClassName(is(ChunkItemView.class.getName())));
     }
 
-    Entry incompleteEntry() {
-        return Entry.createNew("anything");
+    Item incompleteEntry() {
+        return Item.createNew("anything");
     }
 
-    Entry completeEntry() {
+    Item completeEntry() {
         // TODO: empty string shouldn't be valid timestamp (but it is)
         return completeEntry("anything");
     }
 
-    Entry completeEntry(String value) {
+    Item completeEntry(String value) {
         // TODO: empty string shouldn't be valid timestamp (but it is)
-        return Entry.createFrom(Id.create(), value, "");
+        return Item.createFrom(Id.create(), value, "");
     }
 
     void assertDisplayingViewsWithText(int... ids) {
@@ -50,12 +50,12 @@ abstract class ChunkItemViewTest {
         }
     }
 
-    void bind(final Entry entry, final ChunksActions chunksActions) {
+    void bind(final Item item, final ChunksActions chunksActions) {
         getViewTestRule().bindViewUsing(new ViewTestRule.Binder<ChunkItemView>() {
             @Override
             public void bind(ChunkItemView view) {
                 ChunkItemViewHolder viewHolder = new ChunkItemViewHolder(view);
-                viewHolder.bind(entry, chunksActions);
+                viewHolder.bind(item, chunksActions);
             }
         });
     }

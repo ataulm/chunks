@@ -6,5 +6,5 @@ import java.util.List;
 
 public class GsonChunk {
     @SerializedName("entries")
-    List<GsonEntry> entries;
+    List<GsonItem> entries;
 }
