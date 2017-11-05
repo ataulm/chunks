@@ -221,18 +221,6 @@ public class ItemView_Default_Test extends ItemViewTest {
     }
 
     @Test
-    public void givenIncompleteEntry_clickingItemView_callsOnUserMarkComplete() {
-        Item item = incompleteEntry();
-        Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
-        bind(item, chunksActions);
-
-        onItemView().perform(click());
-
-        verify(listener).onUserMarkComplete(item);
-    }
-
-    @Test
     public void givenCompletedEntry_clickingCheckBox_callsOnUserMarkNotComplete() {
         Item item = completeEntry();
         Items items = items().with(item).get();
@@ -243,17 +231,4 @@ public class ItemView_Default_Test extends ItemViewTest {
 
         verify(listener).onUserMarkNotComplete(item);
     }
-
-    @Test
-    public void givenCompletedEntry_clickingItemView_callsOnUserMarkNotComplete() {
-        Item item = completeEntry();
-        Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
-        bind(item, chunksActions);
-
-        onItemView().perform(click());
-
-        verify(listener).onUserMarkNotComplete(item);
-    }
-
 }

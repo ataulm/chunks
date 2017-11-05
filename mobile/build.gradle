@@ -82,6 +82,7 @@ dependencies {
     androidTestCompile(libraries.espressoSupport) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+
     androidTestCompile libraries.mockitoCore
     androidTestCompile libraries.dexmaker
     androidTestCompile libraries.dexmakerMockito
