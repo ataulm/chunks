@@ -41,15 +41,20 @@ final class ItemViewHolder extends RecyclerView.ViewHolder {
     public void bind(Item item, final ChunksActions chunksActions, final DragStartListener dragStartListener) {
         final AlertDialog alertDialog = actionsAlertDialogCreator.create(chunksActions.actions());
 
-        itemView.dragHandle().setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    dragStartListener.onStartDrag(ItemViewHolder.this);
+        if (accessibilityServices.isSpokenFeedbackEnabled()) {
+            itemView.dragHandle().setVisibility(GONE);
+        } else {
+            itemView.dragHandle().setVisibility(VISIBLE);
+            itemView.dragHandle().setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        dragStartListener.onStartDrag(ItemViewHolder.this);
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
+        }
 
         itemView.checkBox().setOnCheckedChangeListener(null);
         itemView.checkBox().setChecked(item.isCompleted());
