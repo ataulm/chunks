@@ -1,8 +1,10 @@
 package com.ataulm.chunks;
 
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -37,8 +39,18 @@ final class ItemViewHolder extends RecyclerView.ViewHolder {
         this.actionsAlertDialogCreator = new ActionsAlertDialogCreator(itemView.getContext());
     }
 
-    public void bind(Item item, final ChunksActions chunksActions) {
+    public void bind(Item item, final ChunksActions chunksActions, final DragStartListener dragStartListener) {
         final AlertDialog alertDialog = actionsAlertDialogCreator.create(chunksActions.actions());
+
+        itemView.dragHandle().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    dragStartListener.onStartDrag(ItemViewHolder.this);
+                }
+                return false;
+            }
+        });
 
         itemView.checkBox().setOnCheckedChangeListener(null);
         itemView.checkBox().setChecked(item.isCompleted());
@@ -107,4 +119,8 @@ final class ItemViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    interface DragStartListener {
+
+        void onStartDrag(RecyclerView.ViewHolder viewHolder);
+    }
 }

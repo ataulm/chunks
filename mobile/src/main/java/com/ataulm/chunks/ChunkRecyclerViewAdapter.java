@@ -10,14 +10,20 @@ import java.util.List;
 class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
 
     private final ItemUserInteractions userInteractions;
+    private final ItemViewHolder.DragStartListener dragStartListener;
 
     private Day day;
     private Items items;
 
-    ChunkRecyclerViewAdapter(ItemUserInteractions userInteractions, Day day, Items items) {
+    ChunkRecyclerViewAdapter(ItemUserInteractions userInteractions,
+                             ItemViewHolder.DragStartListener dragStartListener,
+                             Day day,
+                             Items items) {
         this.userInteractions = userInteractions;
+        this.dragStartListener = dragStartListener;
         this.day = day;
         this.items = items;
+
         super.setHasStableIds(true);
     }
 
@@ -60,7 +66,7 @@ class ChunkRecyclerViewAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Item item = items.get(position);
         ChunksActions chunksActions = ChunksActions.create(items, day, item, userInteractions);
-        holder.bind(item, chunksActions);
+        holder.bind(item, chunksActions, dragStartListener);
     }
 
     @Override

@@ -10,6 +10,9 @@ import com.novoda.accessibility.AccessibilityServices;
 
 public class ChunkRecyclerView extends RecyclerView {
 
+    private ItemTouchHelper itemTouchHelper;
+    private ItemViewHolder.DragStartListener dragStartListener;
+
     public ChunkRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -19,11 +22,19 @@ public class ChunkRecyclerView extends RecyclerView {
         super.onFinishInflate();
         boolean spokenFeedbackEnabled = AccessibilityServices.newInstance(getContext()).isSpokenFeedbackEnabled();
         if (!spokenFeedbackEnabled) {
-            attachDragAndDropItemTouchHelper();
+            itemTouchHelper = attachDragAndDropItemTouchHelper();
+            itemTouchHelper.attachToRecyclerView(this);
+
+            dragStartListener = new ItemViewHolder.DragStartListener() {
+                @Override
+                public void onStartDrag(ViewHolder viewHolder) {
+                    itemTouchHelper.startDrag(viewHolder);
+                }
+            };
         }
     }
 
-    private void attachDragAndDropItemTouchHelper() {
+    private ItemTouchHelper attachDragAndDropItemTouchHelper() {
         ItemDragCallback.ItemMoveCallback itemMoveCallback = new ItemDragCallback.ItemMoveCallback() {
             @Override
             public void onItemMoving(int startPosition, int endPosition) {
@@ -35,13 +46,13 @@ public class ChunkRecyclerView extends RecyclerView {
                 getAdapter().onItemMoved(endPosition);
             }
         };
-        new ItemTouchHelper(new ItemDragCallback(itemMoveCallback)).attachToRecyclerView(this);
+        return new ItemTouchHelper(new ItemDragCallback(itemMoveCallback));
     }
 
     public void update(Items items, ItemUserInteractions userInteractions, Day day) {
         ChunkRecyclerViewAdapter adapter = getAdapter();
         if (adapter == null) {
-            adapter = new ChunkRecyclerViewAdapter(userInteractions, day, items);
+            adapter = new ChunkRecyclerViewAdapter(userInteractions, dragStartListener, day, items);
             setAdapter(adapter);
         } else {
             boolean itemAdded = adapter.update(day, items);

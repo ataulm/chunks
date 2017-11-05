@@ -12,6 +12,9 @@ import butterknife.ButterKnife;
 
 public class ItemView extends LinearLayout {
 
+    @BindView(R.id.item_drag_handle)
+    View dragHandle;
+
     @BindView(R.id.item_check_box)
     CheckBox checkBox;
 
@@ -37,6 +40,10 @@ public class ItemView extends LinearLayout {
         super.onFinishInflate();
         View.inflate(getContext(), R.layout.merge_item, this);
         ButterKnife.bind(this);
+    }
+
+    public View dragHandle() {
+        return dragHandle;
     }
 
     public CheckBox checkBox() {
