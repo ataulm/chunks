@@ -5,6 +5,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.novoda.espresso.ViewTestRule;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +33,11 @@ public class ItemView_Default_Test extends ItemViewTest {
     @Override
     protected ViewTestRule<ItemView> getViewTestRule() {
         return viewActivityRule;
+    }
+
+    @Before
+    public void setup() {
+        System.out.println("");
     }
 
     @Test

@@ -24,6 +24,9 @@ abstract class ItemViewTest {
     @Mock
     ItemUserInteractions listener;
 
+    @Mock
+    ItemViewHolder.DragStartListener dragStartListener;
+
     abstract ViewTestRule<ItemView> getViewTestRule();
 
     ViewInteraction onItemView() {
@@ -55,7 +58,7 @@ abstract class ItemViewTest {
             @Override
             public void bind(ItemView view) {
                 ItemViewHolder viewHolder = new ItemViewHolder(view);
-                viewHolder.bind(item, chunksActions);
+                viewHolder.bind(item, chunksActions, dragStartListener);
             }
         });
     }

@@ -1,6 +1,5 @@
 package com.ataulm.chunks;
 
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -57,13 +56,6 @@ final class ItemViewHolder extends RecyclerView.ViewHolder {
         itemView.checkBox().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                toggleCompleted(chunksActions);
-            }
-        });
-
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 toggleCompleted(chunksActions);
             }
         });
