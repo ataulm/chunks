@@ -54,9 +54,9 @@ abstract class ItemViewTest {
     }
 
     void bind(final Item item, final ChunksActions chunksActions) {
-        getViewTestRule().bindViewUsing(new ViewTestRule.Binder<ItemView>() {
+        getViewTestRule().runOnMainSynchronously(new ViewTestRule.Runner<ItemView>() {
             @Override
-            public void bind(ItemView view) {
+            public void run(ItemView view) {
                 ItemViewHolder viewHolder = new ItemViewHolder(view);
                 viewHolder.bind(item, chunksActions, dragStartListener);
             }
