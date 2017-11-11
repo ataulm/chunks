@@ -1,12 +1,19 @@
-package com.ataulm.chunks.repository;
+package com.ataulm.chunks;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.ataulm.Optional;
-import com.ataulm.chunks.Chunks;
+import com.ataulm.chunks.repository.ChunksRepository;
+import com.ataulm.chunks.repository.GsonChunks;
+import com.ataulm.chunks.repository.GsonChunksConverter;
+import com.ataulm.chunks.repository.JsonChunksConverter;
 
-public final class SharedPreferencesChunksRepository implements ChunksRepository {
+/**
+ * @deprecated use {@link com.ataulm.chunks.room.RoomChunksRepository}
+ */
+@Deprecated
+final class SharedPreferencesChunksRepository implements ChunksRepository {
 
     private static final String PREFS_NAME = "db";
     private static final String ALL_ENTRIES = "all_entries";
@@ -15,7 +22,7 @@ public final class SharedPreferencesChunksRepository implements ChunksRepository
     private final GsonChunksConverter gsonChunksConverter;
     private final JsonChunksConverter jsonChunksConverter;
 
-    public static SharedPreferencesChunksRepository create(Context context, GsonChunksConverter gsonChunksConverter, JsonChunksConverter jsonChunksConverter) {
+    static SharedPreferencesChunksRepository create(Context context, GsonChunksConverter gsonChunksConverter, JsonChunksConverter jsonChunksConverter) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return new SharedPreferencesChunksRepository(sharedPreferences, gsonChunksConverter, jsonChunksConverter);
     }
@@ -43,11 +50,10 @@ public final class SharedPreferencesChunksRepository implements ChunksRepository
 
     @Override
     public void persist(Chunks chunks) {
-        GsonChunks gsonChunks = gsonChunksConverter.convert(chunks);
-        String json = jsonChunksConverter.convert(gsonChunks);
+        throw new IllegalStateException("This class is deprecated, use RoomChunksRepository to persist new data.");
+    }
 
-        sharedPreferences.edit()
-                .putString(ALL_ENTRIES, json)
-                .apply();
+    void clearRepository() {
+        sharedPreferences.edit().clear().apply();
     }
 }

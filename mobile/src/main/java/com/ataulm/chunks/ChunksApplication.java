@@ -3,12 +3,13 @@ package com.ataulm.chunks;
 import android.app.Application;
 
 import com.ataulm.AndroidLog;
+import com.ataulm.Optional;
 import com.ataulm.chunks.repository.ChunksRepository;
 import com.ataulm.chunks.repository.GsonChunkConverter;
 import com.ataulm.chunks.repository.GsonChunksConverter;
 import com.ataulm.chunks.repository.GsonItemConverter;
 import com.ataulm.chunks.repository.JsonChunksConverter;
-import com.ataulm.chunks.repository.SharedPreferencesChunksRepository;
+import com.ataulm.chunks.room.RoomChunksRepository;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.Gson;
@@ -29,14 +30,19 @@ public class ChunksApplication extends Application {
         GsonChunksConverter gsonChunksConverter = new GsonChunksConverter(new GsonChunkConverter(new GsonItemConverter()));
         JsonChunksConverter jsonChunksConverter = new JsonChunksConverter(new Gson());
 
-        // TODO: migrate data from SharedPrefs to SQLite
-        //
-        // 1. pull data from SharedPrefs
-        // 2. if empty, do nowt, return Room version
-        // 3. else, persist chunks using Room version, clear SharedPrefs and return Room version
-
-        ChunksRepository chunksRepository = SharedPreferencesChunksRepository.create(this, gsonChunksConverter, jsonChunksConverter);
+        ChunksRepository chunksRepository = RoomChunksRepository.create(this, gsonChunksConverter, jsonChunksConverter);
+        migrateDataFromSharedPrefsToNewRepository(gsonChunksConverter, jsonChunksConverter, chunksRepository);
         chunksService = new ChunksService(chunksRepository, new ChunksEditor(), new SystemClock(), new AndroidLog());
+    }
+
+    @SuppressWarnings("deprecation") // SharedPrefRepo deprecated but we gotta migrate data
+    private void migrateDataFromSharedPrefsToNewRepository(GsonChunksConverter gsonChunksConverter, JsonChunksConverter jsonChunksConverter, ChunksRepository repository) {
+        SharedPreferencesChunksRepository sharedPrefsRepo = SharedPreferencesChunksRepository.create(this, gsonChunksConverter, jsonChunksConverter);
+        Optional<Chunks> chunks = sharedPrefsRepo.getChunks();
+        if (chunks.isPresent()) {
+            repository.persist(chunks.get()); // TODO: this should be off the main thread
+            sharedPrefsRepo.clearRepository();
+        }
     }
 
     private void initializeFabric() {
