@@ -9,7 +9,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.RoomDatabase;
 import android.support.annotation.Nullable;
 
-class ChunksRoom {
+public class ChunksRoom {
 
     private static final String TABLE_NAME = "chunks";
     private static final String COLUMN_NAME_PRIMARY_KEY = "primary_key";
@@ -18,7 +18,7 @@ class ChunksRoom {
     private static final int PRIMARY_KEY = 1;
 
     @android.arch.persistence.room.Database(entities = {Entity.class}, version = 1)
-    static abstract class Database extends RoomDatabase {
+    public static abstract class Database extends RoomDatabase {
 
         abstract Dao dataAccessObject();
     }
@@ -35,7 +35,7 @@ class ChunksRoom {
     }
 
     @android.arch.persistence.room.Entity(tableName = TABLE_NAME)
-    static class Entity {
+    public static class Entity {
 
         @PrimaryKey
         @ColumnInfo(name = COLUMN_NAME_PRIMARY_KEY)
@@ -44,7 +44,8 @@ class ChunksRoom {
         @ColumnInfo(name = COLUMN_NAME_JSON)
         private final String json;
 
-        @Ignore // Room will use the other ctor when unmarshalling from the database
+        @Ignore
+            // Room will use the other ctor when unmarshalling from the database
         Entity(String json) {
             this(PRIMARY_KEY, json);
         }
