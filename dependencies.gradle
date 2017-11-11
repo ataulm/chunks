@@ -10,7 +10,7 @@ ext {
             butterknife    : '8.0.1',
             dexmaker       : '1.2',
             espressoSupport: '0.2.1',
-            room           : '1.0.0-rc1',
+            room           : '1.0.0',
             rxJava         : '27.0.0'
     ]
 
