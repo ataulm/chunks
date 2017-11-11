@@ -3,10 +3,9 @@ package com.ataulm.chunks.room;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import com.ataulm.Optional;
 import com.ataulm.chunks.BuildConfig;
-import com.ataulm.chunks.ChunkDate;
 import com.ataulm.chunks.Chunks;
-import com.ataulm.chunks.SystemClock;
 import com.ataulm.chunks.repository.ChunksRepository;
 import com.ataulm.chunks.repository.GsonChunks;
 import com.ataulm.chunks.repository.GsonChunksConverter;
@@ -36,13 +35,13 @@ public class RoomChunksRepository implements ChunksRepository {
     }
 
     @Override
-    public Chunks getChunks() {
+    public Optional<Chunks> getChunks() {
         ChunksRoom.Entity chunks = dataAccessObject.readChunks();
         if (chunks == null) {
-            return Chunks.empty(ChunkDate.create(new SystemClock()));
+            return Optional.absent();
         } else {
             GsonChunks gsonChunks = jsonChunksConverter.convert(chunks.json());
-            return gsonChunksConverter.convert(gsonChunks);
+            return Optional.of(gsonChunksConverter.convert(gsonChunks));
         }
     }
 

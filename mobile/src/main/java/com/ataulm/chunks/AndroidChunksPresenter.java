@@ -55,7 +55,7 @@ class AndroidChunksPresenter implements ChunksPresenter {
         private final ItemUserInteractions entryViewUserInteractions;
         private final ItemInputUserInteractions itemInputUserInteractions;
 
-        public ChunksObserver(
+        ChunksObserver(
                 Log log,
                 ItemUserInteractions entryViewUserInteractions,
                 ItemInputUserInteractions itemInputUserInteractions
@@ -70,12 +70,15 @@ class AndroidChunksPresenter implements ChunksPresenter {
             Optional<Chunks> data = event.getData();
             if (data.isPresent()) {
                 Chunks chunks = data.get();
-                chunksView.display(chunks, entryViewUserInteractions, itemInputUserInteractions);
+                display(chunks);
             } else {
                 // TODO other cases like loading (empty, not empty), empty state, error (empty, not empty)
+                display(Chunks.empty(ChunkDate.create(new SystemClock())));
             }
         }
 
+        private void display(Chunks chunks) {
+            chunksView.display(chunks, entryViewUserInteractions, itemInputUserInteractions);
+        }
     }
-
 }

@@ -30,8 +30,6 @@ public class ChunksApplication extends Application {
         JsonChunksConverter jsonChunksConverter = new JsonChunksConverter(new Gson());
 
         // TODO: migrate data from SharedPrefs to SQLite
-        // probably involved modifying the repository so it's easier to understand when it's empty
-        // by returning Optional<Chunks> vs Chunks.empty
         //
         // 1. pull data from SharedPrefs
         // 2. if empty, do nowt, return Room version
