@@ -72,6 +72,8 @@ dependencies {
     compile(libraries.crashlytics) { transitive = true }
     compile libraries.landingStrip
     compile libraries.rxAndroid
+    compile libraries.roomRuntime
+    annotationProcessor libraries.roomCompiler
     compile libraries.supportAppCompatV7
     compile libraries.supportV13
     compile libraries.supportRecyclerview

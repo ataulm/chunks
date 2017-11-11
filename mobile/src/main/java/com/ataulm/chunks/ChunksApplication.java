@@ -28,6 +28,15 @@ public class ChunksApplication extends Application {
 
         GsonChunksConverter gsonChunksConverter = new GsonChunksConverter(new GsonChunkConverter(new GsonItemConverter()));
         JsonChunksConverter jsonChunksConverter = new JsonChunksConverter(new Gson());
+
+        // TODO: migrate data from SharedPrefs to SQLite
+        // probably involved modifying the repository so it's easier to understand when it's empty
+        // by returning Optional<Chunks> vs Chunks.empty
+        //
+        // 1. pull data from SharedPrefs
+        // 2. if empty, do nowt, return Room version
+        // 3. else, persist chunks using Room version, clear SharedPrefs and return Room version
+
         ChunksRepository chunksRepository = SharedPreferencesChunksRepository.create(this, gsonChunksConverter, jsonChunksConverter);
         chunksService = new ChunksService(chunksRepository, new ChunksEditor(), new SystemClock(), new AndroidLog());
     }
@@ -44,5 +53,4 @@ public class ChunksApplication extends Application {
     public ChunksService getChunksService() {
         return chunksService;
     }
-
 }

@@ -51,5 +51,4 @@ public final class SharedPreferencesChunksRepository implements ChunksRepository
                 .putString(ALL_ENTRIES, json)
                 .apply();
     }
-
 }
