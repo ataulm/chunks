@@ -13,10 +13,10 @@ Add a signing config properties if you want to make release builds:
 ```
 # <project_root>/signing.properties
 
-signingStoreFile=/path/to/the/keystore
-signingStorePassword=password
-signingKeyAlias=keyAlias
-signingKeyPassword=password
+storeFile=/path/to/the/keystore
+storePassword=password
+keyAlias=keyAlias
+keyPassword=password
 ```
 
 # Releasing
