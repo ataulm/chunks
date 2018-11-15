@@ -1,11 +1,11 @@
 ext {
     versions = [
             androidSdk     : [
-                    compile   : 27,
+                    compile   : 28,
                     min       : 21,
-                    target    : 27,
+                    target    : 28,
             ],
-            androidSupport : '27.0.0',
+            androidSupport : '28.0.0',
             butterknife    : '8.0.1',
             dexmaker       : '1.2',
             espressoSupport: '0.2.1',
