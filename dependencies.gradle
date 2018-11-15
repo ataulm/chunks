@@ -1,15 +1,15 @@
 ext {
     versions = [
             androidSdk     : [
-                    compile   : 28,
-                    min       : 21,
-                    target    : 28,
+                    compile: 28,
+                    min    : 21,
+                    target : 28,
             ],
             androidSupport : '28.0.0',
             butterknife    : '8.0.1',
             dexmaker       : '1.2',
             espressoSupport: '0.2.1',
-            room           : '1.0.0',
+            room           : '2.1.0-alpha02',
             rxJava         : '27.0.0'
     ]
 
@@ -21,8 +21,8 @@ ext {
             ],
             accessibilitools     : 'com.novoda:accessibilitools:1.4.1',
             autoValue            : 'com.google.auto.value:auto-value:1.4',
-            androidTestRunner    : 'com.android.support.test:runner:1.0.1',
-            androidEspressoCore  : 'com.android.support.test.espresso:espresso-core:3.0.1',
+            androidTestRunner    : 'androidx.test:runner:1.1.0',
+            androidEspressoCore  : 'androidx.test.espresso:espresso-core:3.1.0',
             butterknife          : "com.jakewharton:butterknife:${versions.butterknife}",
             butterknifeCompiler  : "com.jakewharton:butterknife-compiler:${versions.butterknife}",
             crashlytics          : 'com.crashlytics.sdk.android:crashlytics:2.6.8@aar',
@@ -36,15 +36,15 @@ ext {
             jUnit                : 'junit:junit:4.12',
             landingStrip         : 'com.novoda:landing-strip:1.0.1',
             mockitoCore          : 'org.mockito:mockito-core:1.10.19',
-            roomRuntime          : "android.arch.persistence.room:runtime:${versions.room}",
-            roomCompiler         : "android.arch.persistence.room:compiler:${versions.room}",
+            roomRuntime          : "androidx.room:room-runtime:${versions.room}",
+            roomCompiler         : "androidx.room:room-compiler:${versions.room}",
             rxAndroid            : 'io.reactivex:rxandroid:1.2.1',
             rxJava               : 'io.reactivex:rxjava:1.1.1',
             supportAnnotations   : "com.android.support:support-annotations:${versions.androidSupport}",
-            supportAppCompatV7   : "com.android.support:appcompat-v7:${versions.androidSupport}",
-            supportDesign        : "com.android.support:design:${versions.androidSupport}",
-            supportRecyclerview  : "com.android.support:recyclerview-v7:${versions.androidSupport}",
-            supportV13           : "com.android.support:support-v13:${versions.androidSupport}",
+            appcompat            : "androidx.appcompat:appcompat:1.0.2",
+            androidMaterial      : "com.google.android.material:material:1.1.0-alpha01",
+            recyclerview         : "androidx.recyclerview:recyclerview:1.0.0",
+            legacySupportV13     : "androidx.legacy:legacy-support-v13:1.0.0",
             viewPagerAdapter     : 'com.novoda:view-pager-adapter:0.9.1',
     ]
 }

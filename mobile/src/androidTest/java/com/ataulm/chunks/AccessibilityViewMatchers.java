@@ -1,7 +1,7 @@
 package com.ataulm.chunks;
 
 import android.content.res.Resources;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
 

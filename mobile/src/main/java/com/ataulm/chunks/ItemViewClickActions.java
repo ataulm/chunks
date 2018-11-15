@@ -1,8 +1,8 @@
 package com.ataulm.chunks;
 
 import android.app.Dialog;
-import android.support.annotation.Nullable;
-import android.support.v13.view.ViewCompat;
+import androidx.annotation.Nullable;
+import androidx.legacy.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
