@@ -4,7 +4,6 @@ ext {
                     compile   : 27,
                     min       : 21,
                     target    : 27,
-                    buildTools: '26.0.2'
             ],
             androidSupport : '27.0.0',
             butterknife    : '8.0.1',
@@ -16,9 +15,9 @@ ext {
 
     libraries = [
             build                : [
-                    androidGradle  : 'com.android.tools.build:gradle:3.0.0',
+                    androidGradle  : 'com.android.tools.build:gradle:3.2.1',
                     buildProperties: 'com.novoda:gradle-build-properties-plugin:0.3',
-                    fabric         : 'io.fabric.tools:gradle:1.22.1'
+                    fabric         : 'io.fabric.tools:gradle:1.25.4'
             ],
             accessibilitools     : 'com.novoda:accessibilitools:1.4.1',
             autoValue            : 'com.google.auto.value:auto-value:1.4',

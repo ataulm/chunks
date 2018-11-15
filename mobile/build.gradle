@@ -19,7 +19,6 @@ if (shouldEnableFabric) {
 
 android {
     compileSdkVersion versions.androidSdk.compile
-    buildToolsVersion versions.androidSdk.buildTools
 
     defaultConfig {
         applicationId 'com.ataulm.chunks'
