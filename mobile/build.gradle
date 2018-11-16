@@ -61,40 +61,32 @@ android {
 }
 
 dependencies {
-    compile project(":core")
+    compile project(':core')
 
     compile libraries.accessibilitools
-    annotationProcessor libraries.autoValue
-    provided libraries.autoValue
+    compile libraries.androidxAppCompat
+    compile libraries.androidxLegacySupportV13
+    compile libraries.androidxMaterial
+    compile libraries.androidxRecyclerView
+    compile libraries.androidxRoomRuntime
     compile libraries.butterknife
-    annotationProcessor libraries.butterknifeCompiler
     compile(libraries.crashlytics) { transitive = true }
     compile libraries.landingStrip
     compile libraries.rxAndroid
-    compile libraries.roomRuntime
-    annotationProcessor libraries.roomCompiler
-    compile libraries.appcompat
-    compile libraries.legacySupportV13
-    compile libraries.recyclerview
-    compile libraries.androidMaterial
     compile libraries.viewPagerAdapter
 
-    debugCompile libraries.espressoSupportExtras
-    androidTestCompile(libraries.espressoSupport) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+    provided libraries.autoValue
+    annotationProcessor libraries.androidxRoomCompiler
+    annotationProcessor libraries.autoValue
+    annotationProcessor libraries.butterknifeCompiler
 
-    androidTestCompile libraries.mockitoCore
+    androidTestCompile project(path: ':core', configuration: 'coreTestFixtures')
     androidTestCompile libraries.dexmaker
     androidTestCompile libraries.dexmakerMockito
-    androidTestCompile project(path: ':core', configuration: 'coreTestFixtures')
-
-    // Android runner and rules support
-    androidTestCompile(libraries.androidTestRunner) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    // Espresso support
-    androidTestCompile(libraries.androidEspressoCore) {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+    androidTestCompile libraries.espressoSupport
+    debugCompile libraries.espressoSupportExtras
+    androidTestCompile libraries.mockitoCore
+    androidTestCompile libraries.androidxEspressoCore
+    androidTestCompile libraries.androidxTestExtJunit
+    androidTestCompile libraries.androidxTestRules
 }

@@ -1,14 +1,14 @@
 package com.ataulm.chunks;
 
-import androidx.test.filters.LargeTest;
-import androidx.test.runner.AndroidJUnit4;
-
 import com.novoda.espresso.TalkBackViewTestRule;
 import com.novoda.espresso.ViewTestRule;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
 
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
