@@ -1,6 +1,6 @@
 package com.ataulm.chunks;
 
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;

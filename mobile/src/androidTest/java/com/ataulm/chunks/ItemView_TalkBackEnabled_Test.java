@@ -1,8 +1,5 @@
 package com.ataulm.chunks;
 
-import android.support.test.filters.LargeTest;
-import android.support.test.runner.AndroidJUnit4;
-
 import com.novoda.espresso.TalkBackViewTestRule;
 import com.novoda.espresso.ViewTestRule;
 
@@ -10,8 +7,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static com.ataulm.chunks.AccessibilityViewMatchers.withUsageHintOnClick;
 import static com.ataulm.chunks.ItemsFixtures.items;
 

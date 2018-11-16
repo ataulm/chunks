@@ -1,6 +1,6 @@
 package com.ataulm.chunks.room;
 
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.content.Context;
 
 import com.ataulm.Optional;

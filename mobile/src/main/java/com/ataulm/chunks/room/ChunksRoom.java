@@ -1,13 +1,13 @@
 package com.ataulm.chunks.room;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.RoomDatabase;
-import android.support.annotation.Nullable;
+import androidx.room.ColumnInfo;
+import androidx.room.Ignore;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.PrimaryKey;
+import androidx.room.Query;
+import androidx.room.RoomDatabase;
+import androidx.annotation.Nullable;
 
 public class ChunksRoom {
 
@@ -17,13 +17,13 @@ public class ChunksRoom {
     // since we want to overwrite the same record each time, we'll hard-code the primary key
     private static final int PRIMARY_KEY = 1;
 
-    @android.arch.persistence.room.Database(entities = {Entity.class}, version = 1)
+    @androidx.room.Database(entities = {Entity.class}, version = 1)
     public static abstract class Database extends RoomDatabase {
 
         abstract Dao dataAccessObject();
     }
 
-    @android.arch.persistence.room.Dao
+    @androidx.room.Dao
     public interface Dao {
 
         @Nullable
@@ -34,7 +34,7 @@ public class ChunksRoom {
         void insertChunks(Entity chunksRecord);
     }
 
-    @android.arch.persistence.room.Entity(tableName = TABLE_NAME)
+    @androidx.room.Entity(tableName = TABLE_NAME)
     public static class Entity {
 
         @PrimaryKey
