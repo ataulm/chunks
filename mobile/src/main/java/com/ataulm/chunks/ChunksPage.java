@@ -1,23 +1,17 @@
 package com.ataulm.chunks;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.ataulm.AndroidLog;
-import com.ataulm.Log;
-
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChunksPage extends FrameLayout implements ViewPager.OnPageChangeListener {
-
-    private final Log log = new AndroidLog();
+public class ChunksPage extends FrameLayout {
 
     @BindView(R.id.chunks_page_recycler_view)
     ChunkRecyclerView recyclerView;
@@ -48,18 +42,4 @@ public class ChunksPage extends FrameLayout implements ViewPager.OnPageChangeLis
         recyclerView.update(items, userInteractions, day);
     }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        // TODO: update alpha for the empty view
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        // no op
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        // no op
-    }
 }

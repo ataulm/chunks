@@ -1,11 +1,14 @@
 package com.ataulm.chunks;
 
 import android.content.Context;
-import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import java.util.Arrays;
+import java.util.List;
+
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -61,13 +64,14 @@ public class ChunksScreen extends FrameLayout implements ChunksView {
 
     private void updateViewPagerWith(Chunks chunks, ItemUserInteractions itemUserInteractions) {
         ChunksPagerAdapter chunksPagerAdapter;
+        List<DayUiModel> dayUiModels = createDayUiModelFrom(chunks);
         if (viewPager.getAdapter() == null) {
-            chunksPagerAdapter = new ChunksPagerAdapter(itemUserInteractions, onPageChangeListenerDelegate, viewPager.getResources(), chunks);
+            chunksPagerAdapter = new ChunksPagerAdapter(itemUserInteractions, viewPager.getResources(), dayUiModels);
             viewPager.setAdapter(chunksPagerAdapter);
             setViewPager(Day.TODAY); // TODO: this happens on rotate, but not necessarily what we want
         } else {
             chunksPagerAdapter = (ChunksPagerAdapter) viewPager.getAdapter();
-            chunksPagerAdapter.update(chunks);
+            chunksPagerAdapter.update(dayUiModels);
         }
         tabsPagerNavigationWidget.bind(viewPager);
     }
@@ -75,6 +79,14 @@ public class ChunksScreen extends FrameLayout implements ChunksView {
     private void setViewPager(Day day) {
         int page = DayToPagePositionMapper.getPageFor(day);
         viewPager.setCurrentItem(page);
+    }
+
+    private static List<DayUiModel> createDayUiModelFrom(Chunks chunks) {
+        return Arrays.asList(
+                new DayUiModel(R.string.days_tabs_today, Day.TODAY, chunks.today()),
+                new DayUiModel(R.string.days_tabs_tomorrow, Day.TOMORROW, chunks.tomorrow()),
+                new DayUiModel(R.string.days_tabs_sometime, Day.SOMETIME, chunks.sometime())
+        );
     }
 
 }
