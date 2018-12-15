@@ -44,7 +44,7 @@ abstract class ItemViewTest {
 
     Item completeEntry(String value) {
         // TODO: empty string shouldn't be valid timestamp (but it is)
-        return Item.createFrom(Id.create(), value, "");
+        return Item.createFrom(Id.Companion.create(), value, "");
     }
 
     void assertDisplayingViewsWithText(int... ids) {

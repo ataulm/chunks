@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 public abstract class Item {
 
     public static Item createNew(String value) {
-        return createFrom(Id.create(), value);
+        return createFrom(Id.Companion.create(), value);
     }
 
     public static Item createFrom(Id id, String value) {

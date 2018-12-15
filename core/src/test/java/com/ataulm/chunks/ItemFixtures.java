@@ -8,7 +8,7 @@ public final class ItemFixtures {
 
     public static ItemFixtures anItem() {
         return new ItemFixtures(
-                Id.create(),
+                Id.Companion.create(),
                 "todo item",
                 null
         );
