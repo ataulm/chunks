@@ -109,7 +109,7 @@ class ChunksService {
     }
 
     void createEntry(Item item, Day day) {
-        Chunks chunks = getInMemoryChunks().or(Chunks.empty(ChunkDate.create(clock)));
+        Chunks chunks = getInMemoryChunks().or(Chunks.Companion.empty(ChunkDate.create(clock)));
         Chunks updatedChunks = chunksEditor.add(chunks, day, item);
         eventsSubject.onNext(Event.idle(updatedChunks));
     }
