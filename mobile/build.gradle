@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.novoda.build-properties'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 buildProperties {
     fabric {
@@ -71,6 +73,7 @@ dependencies {
     compile libraries.androidxRoomRuntime
     compile libraries.butterknife
     compile(libraries.crashlytics) { transitive = true }
+    compile libraries.kotlinStdLib
     compile libraries.landingStrip
     compile libraries.rxAndroid
     compile libraries.viewPagerAdapter
