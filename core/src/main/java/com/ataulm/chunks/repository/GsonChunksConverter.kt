@@ -7,7 +7,7 @@ class GsonChunksConverter(private val chunkConverter: GsonChunkConverter) {
 
     fun convert(chunks: Chunks): GsonChunks {
         val gsonChunks = GsonChunks()
-        gsonChunks.todays_date = chunks.todaysDate.timestamp().toString()
+        gsonChunks.todays_date = chunks.todaysDate.timestamp.toString()
         gsonChunks.today = chunkConverter.convert(chunks.today)
         gsonChunks.tomorrow = chunkConverter.convert(chunks.tomorrow)
         gsonChunks.sometime = chunkConverter.convert(chunks.sometime)

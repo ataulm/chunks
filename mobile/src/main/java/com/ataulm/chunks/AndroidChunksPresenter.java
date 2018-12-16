@@ -73,7 +73,7 @@ class AndroidChunksPresenter implements ChunksPresenter {
                 display(chunks);
             } else {
                 // TODO other cases like loading (empty, not empty), empty state, error (empty, not empty)
-                display(Chunks.Companion.empty(ChunkDate.create(new SystemClock())));
+                display(Chunks.Companion.empty(ChunkDate.Companion.create(new SystemClock())));
             }
         }
 
