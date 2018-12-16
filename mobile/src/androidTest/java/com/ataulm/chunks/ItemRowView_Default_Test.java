@@ -25,13 +25,13 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ItemView_Default_Test extends ItemViewTest {
+public class ItemRowView_Default_Test extends ItemViewTest {
 
     @Rule
-    public ViewTestRule<ItemView> viewActivityRule = new ViewTestRule<>(R.layout.test_chunk_item_view);
+    public ViewTestRule<ItemRowView> viewActivityRule = new ViewTestRule<>(R.layout.test_chunk_item_view);
 
     @Override
-    protected ViewTestRule<ItemView> getViewTestRule() {
+    protected ViewTestRule<ItemRowView> getViewTestRule() {
         return viewActivityRule;
     }
 
@@ -44,7 +44,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForToday_moveRightDisplayed() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
 
         bind(item, chunksActions);
 
@@ -55,7 +55,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForToday_moveLeftNotDisplayed() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
 
         bind(item, chunksActions);
 
@@ -66,7 +66,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForTomorrow_moveLeftDisplayed() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TOMORROW, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TOMORROW, item, listener);
 
         bind(item, chunksActions);
 
@@ -77,7 +77,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForTomorrow_moveRightNotDisplayed() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TOMORROW, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TOMORROW, item, listener);
 
         bind(item, chunksActions);
 
@@ -88,7 +88,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForSometime_moveLeftDisplayed() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.SOMETIME, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.SOMETIME, item, listener);
 
         bind(item, chunksActions);
 
@@ -99,7 +99,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForSometime_moveRightNotDisplayed() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.SOMETIME, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.SOMETIME, item, listener);
 
         bind(item, chunksActions);
 
@@ -110,7 +110,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntry_correctTextDisplayed() {
         Item item = completeEntry("test");
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
 
         bind(item, chunksActions);
 
@@ -121,7 +121,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenCompleteEntry_checkBoxChecked() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
 
         bind(item, chunksActions);
 
@@ -132,7 +132,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenIncompleteEntry_checkBoxNotChecked() {
         Item item = incompleteEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
 
         bind(item, chunksActions);
 
@@ -143,7 +143,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenCompleteEntry_clickingMenu_opensMenuWithMarkNotComplete() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onView(withId(R.id.item_button_menu)).perform(click());
@@ -155,7 +155,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenIncompleteEntry_clickingMenu_opensMenuWithMarkComplete() {
         Item item = incompleteEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onView(withId(R.id.item_button_menu)).perform(click());
@@ -167,7 +167,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForToday_clickingMenu_opensMenuWithMoveToTomorrowAndMoveToLater() {
         Item item = incompleteEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onView(withId(R.id.item_button_menu)).perform(click());
@@ -182,7 +182,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForTomorrow_clickingMenu_opensMenuWithMoveToTodayAndMoveToLater() {
         Item item = incompleteEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TOMORROW, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TOMORROW, item, listener);
         bind(item, chunksActions);
 
         onView(withId(R.id.item_button_menu)).perform(click());
@@ -197,7 +197,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenEntryForLater_clickingMenu_opensMenuWithMoveToTodayAndMoveToTomorrow() {
         Item item = incompleteEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.SOMETIME, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.SOMETIME, item, listener);
         bind(item, chunksActions);
 
         onView(withId(R.id.item_button_menu)).perform(click());
@@ -212,7 +212,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenIncompleteEntry_clickingCheckBox_callsOnUserMarkComplete() {
         Item item = incompleteEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onView(withId(R.id.item_check_box)).perform(click());
@@ -224,7 +224,7 @@ public class ItemView_Default_Test extends ItemViewTest {
     public void givenCompletedEntry_clickingCheckBox_callsOnUserMarkNotComplete() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onView(withId(R.id.item_check_box)).perform(click());

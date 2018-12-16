@@ -1,10 +1,8 @@
 package com.ataulm.chunks
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-
-import java.util.ArrayList
-import java.util.Collections
+import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 
 internal class ChunkRecyclerViewAdapter(private val userInteractions: ItemUserInteractions,
                                         private val dragStartListener: ItemViewHolder.DragStartListener,
@@ -12,7 +10,6 @@ internal class ChunkRecyclerViewAdapter(private val userInteractions: ItemUserIn
                                         private var items: Items?) : RecyclerView.Adapter<ItemViewHolder>() {
 
     init {
-
         super.setHasStableIds(true)
     }
 
@@ -27,7 +24,7 @@ internal class ChunkRecyclerViewAdapter(private val userInteractions: ItemUserIn
     }
 
     fun onItemMoving(source: Int, target: Int) {
-        val entries = ArrayList(items!!.entries())
+        val entries = ArrayList(items!!.entries)
         if (source < target) {
             for (i in source until target) {
                 Collections.swap(entries, i, i + 1)
@@ -51,8 +48,8 @@ internal class ChunkRecyclerViewAdapter(private val userInteractions: ItemUserIn
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = items!!.get(position)
-        val chunksActions = ChunksActions.create(items, day, item, userInteractions)
+        val item = items!![position]
+        val chunksActions = ChunksActions.create(items!!, day!!, item, userInteractions)
         holder.bind(item, chunksActions, dragStartListener)
     }
 
@@ -61,8 +58,8 @@ internal class ChunkRecyclerViewAdapter(private val userInteractions: ItemUserIn
     }
 
     override fun getItemId(position: Int): Long {
-        val item = items!!.get(position)
-        return item.id().value.hashCode().toLong()
+        val item = items!![position]
+        return item.id.value.hashCode().toLong()
     }
 
 }

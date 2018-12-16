@@ -10,7 +10,7 @@ class AndroidItemInputUserInteractions implements ItemInputUserInteractions {
 
     @Override
     public void onUserAddItem(String value, Day day) {
-        Item item = Item.createNew(value);
+        Item item = Item.Companion.createNew(value);
         chunksService.createEntry(item, day);
     }
 

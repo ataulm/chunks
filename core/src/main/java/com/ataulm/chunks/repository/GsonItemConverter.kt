@@ -7,9 +7,9 @@ class GsonItemConverter {
 
     fun convert(item: Item): GsonItem {
         val gsonItem = GsonItem()
-        gsonItem.id = item.id().value.toString()
-        gsonItem.value = item.value()
-        gsonItem.completedTimestamp = if (item.completedTimestamp().isPresent) item.completedTimestamp().get() else null
+        gsonItem.id = item.id.value.toString()
+        gsonItem.value = item.value
+        gsonItem.completedTimestamp = item.completedTimestamp
         return gsonItem
     }
 

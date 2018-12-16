@@ -19,7 +19,7 @@ class ChunksEditorTest {
 
         val updatedItems = chunksEditor.add(items, item)
 
-        assertThat(updatedItems.entries()).containsExactly(item)
+        assertThat(updatedItems.entries).containsExactly(item)
     }
 
     @Test
@@ -30,19 +30,19 @@ class ChunksEditorTest {
 
         val updatedItems = chunksEditor.add(items, Arrays.asList(one, two))
 
-        assertThat(updatedItems.entries()).containsExactly(one, two)
+        assertThat(updatedItems.entries).containsExactly(one, two)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun addingEntriesWithSameIdThrowsError() {
         val item = anItem().get()
-        val itemWithSameId = anItem().withId(item.id()).get()
+        val itemWithSameId = anItem().withId(item.id).get()
         val items = items().with(item).get()
 
         try {
             chunksEditor.add(items, itemWithSameId)
         } catch (e: IllegalArgumentException) {
-            assertThat(e).hasMessageContaining(item.id().toString())
+            assertThat(e).hasMessageContaining(item.id.toString())
             throw e
         }
 
@@ -53,9 +53,9 @@ class ChunksEditorTest {
         val item = anItem().get()
         val items = items().with(item).get()
 
-        val updatedItems = chunksEditor.remove(items, item.id())
+        val updatedItems = chunksEditor.remove(items, item.id)
 
-        assertThat(updatedItems.containsEntryWith(item.id())).isFalse
+        assertThat(updatedItems.containsEntryWith(item.id)).isFalse
     }
 
     @Test
@@ -63,9 +63,9 @@ class ChunksEditorTest {
         val item = anItem().get()
         val items = items().get()
 
-        val updatedItems = chunksEditor.remove(items, item.id())
+        val updatedItems = chunksEditor.remove(items, item.id)
 
-        assertThat(updatedItems.containsEntryWith(item.id())).isFalse
+        assertThat(updatedItems.containsEntryWith(item.id)).isFalse
     }
 
     @Test
@@ -77,7 +77,7 @@ class ChunksEditorTest {
 
         val updatedItems = chunksEditor.remove(items, Arrays.asList(two, three))
 
-        assertThat(updatedItems.entries()).containsExactly(one)
+        assertThat(updatedItems.entries).containsExactly(one)
     }
 
     @Test
@@ -91,7 +91,7 @@ class ChunksEditorTest {
 
         val updatedItems = chunksEditor.remove(items, Arrays.asList(four, five))
 
-        assertThat(updatedItems.entries()).containsExactly(one, two, three)
+        assertThat(updatedItems.entries).containsExactly(one, two, three)
     }
 
     @Test
@@ -104,18 +104,18 @@ class ChunksEditorTest {
 
         val updatedItems = chunksEditor.remove(items, Arrays.asList(two, three, four))
 
-        assertThat(updatedItems.entries()).containsExactly(one)
+        assertThat(updatedItems.entries).containsExactly(one)
     }
 
     @Test
     fun updatingAnEntry() {
         val initial = anItem().withValue("initial").get()
         val items = items().with(initial).get()
-        val updated = anItem().withId(initial.id()).withValue("updated").get()
+        val updated = anItem().withId(initial.id).withValue("updated").get()
 
         val updatedItems = chunksEditor.update(items, updated)
 
-        assertThat(updatedItems.findEntryWith(initial.id())!!.value()).isEqualTo("updated")
+        assertThat(updatedItems.findEntryWith(initial.id)!!.value).isEqualTo("updated")
     }
 
     @Test
@@ -135,7 +135,7 @@ class ChunksEditorTest {
 
         val (_, _, tomorrow) = chunksEditor.add(chunks, Day.TOMORROW, item)
 
-        assertThat(tomorrow.entries()).containsExactly(item)
+        assertThat(tomorrow.entries).containsExactly(item)
     }
 
     @Test
@@ -146,20 +146,20 @@ class ChunksEditorTest {
 
         val (_, _, tomorrow) = chunksEditor.add(chunks, Day.TOMORROW, Arrays.asList(one, two))
 
-        assertThat(tomorrow.entries()).containsExactly(one, two)
+        assertThat(tomorrow.entries).containsExactly(one, two)
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun addingEntriesWithSameIdToDayThrowsError() {
         val item = anItem().get()
-        val itemWithSameId = anItem().withId(item.id()).get()
+        val itemWithSameId = anItem().withId(item.id).get()
         val today = items().with(item).get()
         val chunks = aChunks().withToday(today).get()
 
         try {
             chunksEditor.add(chunks, Day.TODAY, itemWithSameId)
         } catch (e: IllegalArgumentException) {
-            assertThat(e).hasMessageContaining(item.id().toString())
+            assertThat(e).hasMessageContaining(item.id.toString())
             throw e
         }
 
@@ -168,14 +168,14 @@ class ChunksEditorTest {
     @Test(expected = IllegalArgumentException::class)
     fun addingEntriesWithSameIdAcrossDaysThrowsError() {
         val item = anItem().get()
-        val itemWithSameId = anItem().withId(item.id()).get()
+        val itemWithSameId = anItem().withId(item.id).get()
         val today = items().with(item).get()
         val chunks = aChunks().withToday(today).get()
 
         try {
             chunksEditor.add(chunks, Day.TOMORROW, itemWithSameId)
         } catch (e: IllegalArgumentException) {
-            assertThat(e).hasMessageContaining(item.id().toString())
+            assertThat(e).hasMessageContaining(item.id.toString())
             throw e
         }
 
@@ -187,10 +187,10 @@ class ChunksEditorTest {
         val today = items().with(item).get()
         val chunks = aChunks().withToday(today).get()
 
-        val (_, today1, _, _, input) = chunksEditor.edit(chunks, item.id())
+        val (_, today1, _, _, input) = chunksEditor.edit(chunks, item.id)
 
-        assertThat(today1.entries()).isEmpty()
-        assertThat(input!!).isEqualTo(item.value())
+        assertThat(today1.entries).isEmpty()
+        assertThat(input!!).isEqualTo(item.value)
     }
 
     @Test
@@ -198,7 +198,7 @@ class ChunksEditorTest {
         val item = anItem().get()
         val chunks = aChunks().get()
 
-        val updatedChunks = chunksEditor.edit(chunks, item.id())
+        val updatedChunks = chunksEditor.edit(chunks, item.id)
 
         assertThat(updatedChunks).isEqualTo(chunks)
         assertThat(updatedChunks.input != null).isFalse()
@@ -210,7 +210,7 @@ class ChunksEditorTest {
         val today = items().with(item).get()
         val chunks = aChunks().withToday(today).get()
 
-        val (_, today1) = chunksEditor.remove(chunks, item.id())
+        val (_, today1) = chunksEditor.remove(chunks, item.id)
 
         assertThat(today1).isEmpty()
     }
@@ -220,7 +220,7 @@ class ChunksEditorTest {
         val item = anItem().get()
         val chunks = aChunks().get()
 
-        val updatedChunks = chunksEditor.remove(chunks, item.id())
+        val updatedChunks = chunksEditor.remove(chunks, item.id)
 
         assertThat(updatedChunks).isEqualTo(chunks)
     }
@@ -230,7 +230,7 @@ class ChunksEditorTest {
         val initial = anItem().withValue("initial").get()
         val today = items().with(initial).get()
         val chunks = aChunks().withToday(today).get()
-        val updated = anItem().withId(initial.id()).withValue("updated").get()
+        val updated = anItem().withId(initial.id).withValue("updated").get()
 
         val (_, today1) = chunksEditor.update(chunks, updated)
 
@@ -245,7 +245,7 @@ class ChunksEditorTest {
         try {
             chunksEditor.update(chunks, item)
         } catch (e: IllegalArgumentException) {
-            assertThat(e).hasMessageContaining(item.id().toString())
+            assertThat(e).hasMessageContaining(item.id.toString())
             throw e
         }
 
@@ -272,7 +272,7 @@ class ChunksEditorTest {
         try {
             chunksEditor.move(chunks, item, 0)
         } catch (e: IllegalArgumentException) {
-            assertThat(e).hasMessageContaining(item.id().toString())
+            assertThat(e).hasMessageContaining(item.id.toString())
             throw e
         }
 
@@ -288,7 +288,7 @@ class ChunksEditorTest {
 
         val updatedItems = chunksEditor.move(items, three, 0)
 
-        assertThat(updatedItems.entries()).containsExactly(three, zero, one, two)
+        assertThat(updatedItems.entries).containsExactly(three, zero, one, two)
     }
 
     @Test
@@ -301,7 +301,7 @@ class ChunksEditorTest {
 
         val updatedItems = chunksEditor.move(items, zero, 3)
 
-        assertThat(updatedItems.entries()).containsExactly(one, two, three, zero)
+        assertThat(updatedItems.entries).containsExactly(one, two, three, zero)
     }
 
     @Test
@@ -368,7 +368,7 @@ class ChunksEditorTest {
 
         val (_, today1) = chunksEditor.shuffleAlong(chunks, AUGUST_03_2016)
 
-        assertThat(today1.entries()).isEqualTo(incompleteTasks)
+        assertThat(today1.entries).isEqualTo(incompleteTasks)
     }
 
     init {
@@ -421,9 +421,9 @@ class ChunksEditorTest {
         private fun without(item: Item): Condition<Chunks> {
             return object : Condition<Chunks>() {
                 override fun matches(chunks: Chunks): Boolean {
-                    val chunksContainsEntry = (chunks.today.containsEntryWith(item.id())
-                            || chunks.tomorrow.containsEntryWith(item.id())
-                            || chunks.sometime.containsEntryWith(item.id()))
+                    val chunksContainsEntry = (chunks.today.containsEntryWith(item.id)
+                            || chunks.tomorrow.containsEntryWith(item.id)
+                            || chunks.sometime.containsEntryWith(item.id))
                     return !chunksContainsEntry
                 }
             }
@@ -432,7 +432,7 @@ class ChunksEditorTest {
         private fun withNoTasksInTomorrowAndTodayContains(tomorrowTasks: List<Item>): Condition<Chunks> {
             return object : Condition<Chunks>() {
                 override fun matches(value: Chunks): Boolean {
-                    return value.today.entries().containsAll(tomorrowTasks) && value.tomorrow.isEmpty()
+                    return value.today.entries.containsAll(tomorrowTasks) && value.tomorrow.isEmpty
                 }
             }
         }

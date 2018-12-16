@@ -35,7 +35,7 @@ class AndroidChunksPresenter implements ChunksPresenter {
 
     @Override
     public void onExternalShareText(String text) {
-        chunksService.createEntry(Item.createNew(text.trim()), Day.TODAY);
+        chunksService.createEntry(Item.Companion.createNew(text.trim()), Day.TODAY);
     }
 
     @Override

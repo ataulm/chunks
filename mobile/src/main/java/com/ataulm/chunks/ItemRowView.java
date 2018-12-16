@@ -10,7 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ItemView extends LinearLayout {
+public class ItemRowView extends LinearLayout {
 
     @BindView(R.id.item_drag_handle)
     View dragHandle;
@@ -30,7 +30,7 @@ public class ItemView extends LinearLayout {
     @BindView(R.id.item_button_menu)
     View menuButton;
 
-    public ItemView(Context context, AttributeSet attrs) {
+    public ItemRowView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
     }

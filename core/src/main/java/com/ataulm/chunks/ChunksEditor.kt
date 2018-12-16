@@ -8,7 +8,7 @@ class ChunksEditor {
         assertNoEntryWithSameId(items, item)
 
         val entries = ArrayList<Item>(items.size() + 1)
-        entries.addAll(items.entries())
+        entries.addAll(items.entries)
         entries.add(item)
         return Items.create(entries)
     }
@@ -19,15 +19,15 @@ class ChunksEditor {
         }
 
         val updatedEntries = ArrayList<Item>(items.size() + entries.size)
-        updatedEntries.addAll(items.entries())
+        updatedEntries.addAll(items.entries)
         updatedEntries.addAll(entries)
         return Items.create(updatedEntries)
     }
 
     fun remove(items: Items, id: Id): Items {
         val updatedEntries = ArrayList<Item>(items.size())
-        for (value in items.entries()) {
-            if (value.id() != id) {
+        for (value in items.entries) {
+            if (value.id != id) {
                 updatedEntries.add(value)
             }
         }
@@ -35,15 +35,15 @@ class ChunksEditor {
     }
 
     fun remove(items: Items, entries: List<Item>): Items {
-        val updatedEntries = ArrayList(items.entries())
+        val updatedEntries = ArrayList(items.entries)
         updatedEntries.removeAll(entries)
         return Items.create(updatedEntries)
     }
 
     fun update(items: Items, item: Item): Items {
         val updatedEntries = ArrayList<Item>(items.size())
-        for (existingValue in items.entries()) {
-            if (existingValue.id() == item.id()) {
+        for (existingValue in items.entries) {
+            if (existingValue.id == item.id) {
                 updatedEntries.add(item)
             } else {
                 updatedEntries.add(existingValue)
@@ -98,19 +98,19 @@ class ChunksEditor {
         if (chunks.today.containsEntryWith(id)) {
             val item = chunks.today.findEntryWith(id)
             val updatedToday = remove(chunks.today, id)
-            return Chunks.create(chunks.todaysDate, updatedToday, chunks.tomorrow, chunks.sometime, item?.value())
+            return Chunks.create(chunks.todaysDate, updatedToday, chunks.tomorrow, chunks.sometime, item?.value)
         }
 
         if (chunks.tomorrow.containsEntryWith(id)) {
             val item = chunks.tomorrow.findEntryWith(id)
             val updatedTomorrow = remove(chunks.tomorrow, id)
-            return Chunks.create(chunks.todaysDate, chunks.today, updatedTomorrow, chunks.sometime, item?.value())
+            return Chunks.create(chunks.todaysDate, chunks.today, updatedTomorrow, chunks.sometime, item?.value)
         }
 
         if (chunks.sometime.containsEntryWith(id)) {
             val item = chunks.sometime.findEntryWith(id)
             val updatedSometime = remove(chunks.sometime, id)
-            return Chunks.create(chunks.todaysDate, chunks.today, chunks.tomorrow, updatedSometime, item?.value())
+            return Chunks.create(chunks.todaysDate, chunks.today, chunks.tomorrow, updatedSometime, item?.value)
         }
 
         return chunks
@@ -136,41 +136,41 @@ class ChunksEditor {
     }
 
     fun update(chunks: Chunks, item: Item): Chunks {
-        if (chunks.today.containsEntryWith(item.id())) {
+        if (chunks.today.containsEntryWith(item.id)) {
             val updatedToday = update(chunks.today, item)
             return Chunks.create(chunks.todaysDate, updatedToday, chunks.tomorrow, chunks.sometime)
         }
 
-        if (chunks.tomorrow.containsEntryWith(item.id())) {
+        if (chunks.tomorrow.containsEntryWith(item.id)) {
             val updatedTomorrow = update(chunks.tomorrow, item)
             return Chunks.create(chunks.todaysDate, chunks.today, updatedTomorrow, chunks.sometime)
         }
 
-        if (chunks.sometime.containsEntryWith(item.id())) {
+        if (chunks.sometime.containsEntryWith(item.id)) {
             val updatedSometime = update(chunks.sometime, item)
             return Chunks.create(chunks.todaysDate, chunks.today, chunks.tomorrow, updatedSometime)
         }
 
-        throw IllegalArgumentException("no entries with id found: " + item.id())
+        throw IllegalArgumentException("no entries with id found: " + item.id)
     }
 
     fun move(chunks: Chunks, item: Item, newEntryPosition: Int): Chunks {
-        if (chunks.today.containsEntryWith(item.id())) {
+        if (chunks.today.containsEntryWith(item.id)) {
             val updatedToday = move(chunks.today, item, newEntryPosition)
             return Chunks.create(chunks.todaysDate, updatedToday, chunks.tomorrow, chunks.sometime)
         }
 
-        if (chunks.tomorrow.containsEntryWith(item.id())) {
+        if (chunks.tomorrow.containsEntryWith(item.id)) {
             val updatedTomorrow = move(chunks.tomorrow, item, newEntryPosition)
             return Chunks.create(chunks.todaysDate, chunks.today, updatedTomorrow, chunks.sometime)
         }
 
-        if (chunks.sometime.containsEntryWith(item.id())) {
+        if (chunks.sometime.containsEntryWith(item.id)) {
             val updatedSometime = move(chunks.sometime, item, newEntryPosition)
             return Chunks.create(chunks.todaysDate, chunks.today, chunks.tomorrow, updatedSometime)
         }
 
-        throw IllegalArgumentException("no entries with id found: " + item.id())
+        throw IllegalArgumentException("no entries with id found: " + item.id)
     }
 
     fun move(items: Items, item: Item, newEntryPosition: Int): Items {
@@ -178,12 +178,12 @@ class ChunksEditor {
             throw IllegalArgumentException("newEntryPosition is out of bounds: $newEntryPosition")
         }
 
-        val originalEntryPosition = items.entries().indexOf(item)
+        val originalEntryPosition = items.entries.indexOf(item)
         if (originalEntryPosition == -1 || originalEntryPosition == newEntryPosition) {
             return items
         }
 
-        val updatedEntries = ArrayList(items.entries())
+        val updatedEntries = ArrayList(items.entries)
         if (originalEntryPosition > newEntryPosition) {
             updatedEntries.add(newEntryPosition, item)
             updatedEntries.removeAt(originalEntryPosition + 1)
@@ -202,20 +202,20 @@ class ChunksEditor {
 
         val updatedTodayEntries = ArrayList<Item>()
         for (item in chunks.today) {
-            if (!item.isCompleted()) {
+            if (!item.isCompleted) {
                 updatedTodayEntries.add(item)
             }
         }
 
         for (item in chunks.tomorrow) {
-            if (!item.isCompleted()) {
+            if (!item.isCompleted) {
                 updatedTodayEntries.add(item)
             }
         }
 
         val updatedSometimeEntries = ArrayList<Item>()
         for (item in chunks.sometime) {
-            if (!item.isCompleted()) {
+            if (!item.isCompleted) {
                 updatedSometimeEntries.add(item)
             }
         }
@@ -234,8 +234,8 @@ class ChunksEditor {
     }
 
     private fun assertNoEntryWithSameId(items: Items, item: Item) {
-        if (items.containsEntryWith(item.id())) {
-            throw IllegalArgumentException("items already contains item with id: " + item.id())
+        if (items.containsEntryWith(item.id)) {
+            throw IllegalArgumentException("items already contains item with id: " + item.id)
         }
     }
 

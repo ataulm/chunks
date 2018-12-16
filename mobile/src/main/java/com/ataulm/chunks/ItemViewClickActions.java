@@ -1,10 +1,11 @@
 package com.ataulm.chunks;
 
 import android.app.Dialog;
-import androidx.annotation.Nullable;
-import androidx.legacy.view.ViewCompat;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 
 import com.novoda.accessibility.Action;
 import com.novoda.accessibility.Actions;

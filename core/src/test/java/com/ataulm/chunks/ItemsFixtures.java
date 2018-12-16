@@ -29,7 +29,7 @@ public final class ItemsFixtures {
     }
 
     public Items get() {
-        return Items.create(entries);
+        return Items.Companion.create(entries);
     }
 
 }

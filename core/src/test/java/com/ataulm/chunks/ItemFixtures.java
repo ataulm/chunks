@@ -36,7 +36,7 @@ public final class ItemFixtures {
     }
 
     public Item get() {
-        return Item.createFrom(id, value, completedTimestamp);
+        return Item.Companion.createFrom(id, value, completedTimestamp);
     }
 
 }
