@@ -31,7 +31,7 @@ public final class EventRxFunctions {
     }
 
     private static <T> Event<T> loadingEvent() {
-        return Event.loading();
+        return Event.Companion.loading();
     }
 
     private static <T> Func1<Throwable, Event<T>> errorEvent() {
@@ -39,7 +39,7 @@ public final class EventRxFunctions {
 
             @Override
             public Event<T> call(Throwable throwable) {
-                return Event.error(throwable);
+                return Event.Companion.error(throwable);
             }
 
         };
@@ -50,7 +50,7 @@ public final class EventRxFunctions {
 
             @Override
             public Event<T> call(T t) {
-                return Event.idle(t);
+                return Event.Companion.idle(t);
 
             }
 

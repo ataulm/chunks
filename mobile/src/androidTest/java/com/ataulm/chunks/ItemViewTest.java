@@ -27,14 +27,14 @@ abstract class ItemViewTest {
     @Mock
     ItemViewHolder.DragStartListener dragStartListener;
 
-    abstract ViewTestRule<ItemView> getViewTestRule();
+    abstract ViewTestRule<ItemRowView> getViewTestRule();
 
     ViewInteraction onItemView() {
-        return onView(withClassName(is(ItemView.class.getName())));
+        return onView(withClassName(is(ItemRowView.class.getName())));
     }
 
     Item incompleteEntry() {
-        return Item.createNew("anything");
+        return Item.Companion.createNew("anything");
     }
 
     Item completeEntry() {
@@ -44,7 +44,7 @@ abstract class ItemViewTest {
 
     Item completeEntry(String value) {
         // TODO: empty string shouldn't be valid timestamp (but it is)
-        return Item.createFrom(Id.create(), value, "");
+        return Item.Companion.createFrom(Id.Companion.create(), value, "");
     }
 
     void assertDisplayingViewsWithText(int... ids) {
@@ -54,9 +54,9 @@ abstract class ItemViewTest {
     }
 
     void bind(final Item item, final ChunksActions chunksActions) {
-        getViewTestRule().runOnMainSynchronously(new ViewTestRule.Runner<ItemView>() {
+        getViewTestRule().runOnMainSynchronously(new ViewTestRule.Runner<ItemRowView>() {
             @Override
-            public void run(ItemView view) {
+            public void run(ItemRowView view) {
                 ItemViewHolder viewHolder = new ItemViewHolder(view);
                 viewHolder.bind(item, chunksActions, dragStartListener);
             }

@@ -25,7 +25,7 @@ public class GsonChunkConverter {
 
     public Items convert(GsonChunk gsonChunk) {
         if (gsonChunk == null) {
-            return Items.empty();
+            return Items.Companion.empty();
         }
 
         List<Item> entries = new ArrayList<>(gsonChunk.entries.size());
@@ -33,7 +33,7 @@ public class GsonChunkConverter {
             Item item = entryConverter.convert(gsonItem);
             entries.add(item);
         }
-        return Items.create(entries);
+        return Items.Companion.create(entries);
     }
 
 }

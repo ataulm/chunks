@@ -17,13 +17,13 @@ import static com.ataulm.chunks.ItemsFixtures.items;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ItemView_TalkBackEnabled_Test extends ItemViewTest {
+public class ItemRowView_TalkBackEnabled_Test extends ItemViewTest {
 
     @Rule
-    public ViewTestRule<ItemView> viewActivityRule = new TalkBackViewTestRule<>(R.layout.test_chunk_item_view);
+    public ViewTestRule<ItemRowView> viewActivityRule = new TalkBackViewTestRule<>(R.layout.test_chunk_item_view);
 
     @Override
-    protected ViewTestRule<ItemView> getViewTestRule() {
+    protected ViewTestRule<ItemRowView> getViewTestRule() {
         return viewActivityRule;
     }
 
@@ -31,7 +31,7 @@ public class ItemView_TalkBackEnabled_Test extends ItemViewTest {
     public void itemViewHasCustomUsageHint() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onItemView().check(matches(withUsageHintOnClick("see all actions")));
@@ -41,7 +41,7 @@ public class ItemView_TalkBackEnabled_Test extends ItemViewTest {
     public void givenCompleteEntryToday_click_showsMenu() {
         Item item = completeEntry();
         Items items = items().with(item).get();
-        ChunksActions chunksActions = ChunksActions.create(items, Day.TODAY, item, listener);
+        ChunksActions chunksActions = ChunksActions.Companion.create(items, Day.TODAY, item, listener);
         bind(item, chunksActions);
 
         onItemView().perform(click());
