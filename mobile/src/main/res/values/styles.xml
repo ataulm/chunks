@@ -60,9 +60,7 @@
 
     <style name="Chunks.Item.View">
         <item name="android:background">@drawable/chunks_entrywidget_background</item>
-        <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingRight">0dp</item>
         <item name="android:paddingBottom">4dp</item>
     </style>
 

@@ -2,60 +2,57 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:background="@color/white"
+    tools:baselineAligned="false"
     tools:layout_height="wrap_content"
     tools:layout_width="match_parent"
-    tools:paddingLeft="8dp"
-    tools:paddingRight="0dp"
     tools:parentTag="android.widget.LinearLayout">
-
 
     <ImageView
         android:id="@+id/item_drag_handle"
         style="@style/Chunks.Item.Icon.DragHandle"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="48sp"
+        android:paddingStart="20sp"
+        android:paddingEnd="12sp"
         android:src="@drawable/chunks_item_drag_handle" />
 
     <CheckBox
         android:id="@+id/item_check_box"
         style="@style/Chunks.Item.CheckBox"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical" />
+        android:layout_width="wrap_content"
+        android:layout_height="48sp" />
 
     <TextView
         android:id="@+id/item_text_view"
         style="@style/Chunks.Item.Text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8sp"
+        android:layout_marginTop="13sp"
+        android:layout_marginBottom="4sp"
         android:layout_weight="100"
         tools:text="Something to do" />
 
     <ImageView
         android:id="@+id/item_button_move_left"
         style="@style/Chunks.Item.Icon.MoveLeft"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
         android:src="@drawable/chunk_item_move_left" />
 
     <ImageView
         android:id="@+id/item_button_move_right"
         style="@style/Chunks.Item.Icon.MoveRight"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical"
-        android:visibility="gone"
-        android:src="@drawable/chunk_item_move_right" />
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:src="@drawable/chunk_item_move_right"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/item_button_menu"
         style="@style/Chunks.Item.Icon.Menu"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_vertical"
+        android:layout_width="48sp"
+        android:layout_height="48sp"
         android:src="@drawable/chunk_item_menu" />
 
 </merge>
