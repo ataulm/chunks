@@ -33,6 +33,7 @@ public class ItemRowView extends LinearLayout {
     public ItemRowView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
+        super.setBaselineAligned(false);
     }
 
     @Override
