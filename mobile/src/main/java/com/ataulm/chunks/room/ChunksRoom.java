@@ -17,12 +17,6 @@ public class ChunksRoom {
     // since we want to overwrite the same record each time, we'll hard-code the primary key
     private static final int PRIMARY_KEY = 1;
 
-    @androidx.room.Database(entities = {Entity.class}, version = 1)
-    public static abstract class Database extends RoomDatabase {
-
-        abstract Dao dataAccessObject();
-    }
-
     @androidx.room.Dao
     public interface Dao {
 

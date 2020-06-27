@@ -16,7 +16,7 @@ public class RoomChunksRepository implements ChunksRepository {
     private static final String DATABASE_NAME = BuildConfig.APPLICATION_ID + ".db";
 
     public static RoomChunksRepository create(Context context, GsonChunksConverter gsonChunksConverter, JsonChunksConverter jsonChunksConverter) {
-        ChunksRoom.Database database = Room.databaseBuilder(context, ChunksRoom.Database.class, DATABASE_NAME)
+        ChunksRoomDatabase database = Room.databaseBuilder(context, ChunksRoomDatabase.class, DATABASE_NAME)
                 .allowMainThreadQueries() // :ok_hand:
                 .build();
         return new RoomChunksRepository(database.dataAccessObject(), gsonChunksConverter, jsonChunksConverter);
