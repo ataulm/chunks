@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <!--All colors in the app are defined here-->
-  <color name="azure">#03A9F4</color>
-  <color name="cerulean">#039BE5</color>
-  <color name="lochmara">#0287C3</color>
-  <color name="azure_two">#00A5F7</color>
-  <color name="white_54_on_deep_sky_blue">#76C2E4</color>
-  <color name="black_38">#61000000</color>
-  <color name="black_54">#8A000000</color>
-  <color name="white">#FFFFFF</color>
-  <color name="gray">#9E9E9E</color>
-  <color name="black">#000000</color>
+    <color name="azure">#03A9F4</color>
+    <color name="lochmara">#0287C3</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="madison">#072759</color>
+    <color name="regal_blue">#034376</color>
+    <color name="cornflower">#80B6E1</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="cod_gray">#0F0F0F</color>
 
 </resources>
