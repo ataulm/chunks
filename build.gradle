@@ -2,13 +2,11 @@ buildscript {
     apply from: 'dependencies.gradle'
     repositories {
         google()
-        maven { url 'https://maven.fabric.io/public' }
         jcenter()
     }
     dependencies {
         classpath libraries.build.androidGradle
         classpath libraries.build.buildProperties
-        classpath libraries.build.fabric
         classpath libraries.build.kotlinGradle
     }
 }
@@ -16,7 +14,6 @@ buildscript {
 allprojects {
     repositories {
         google()
-        maven { url 'https://maven.fabric.io/public' }
         jcenter()
     }
 }

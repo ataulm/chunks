@@ -10,11 +10,7 @@ import com.ataulm.chunks.repository.GsonChunksConverter;
 import com.ataulm.chunks.repository.GsonItemConverter;
 import com.ataulm.chunks.repository.JsonChunksConverter;
 import com.ataulm.chunks.room.RoomChunksRepository;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.Gson;
-
-import io.fabric.sdk.android.Fabric;
 
 public class ChunksApplication extends Application {
 
@@ -23,7 +19,6 @@ public class ChunksApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initializeFabric();
 
         Toaster.init(this);
 
@@ -43,15 +38,6 @@ public class ChunksApplication extends Application {
             repository.persist(chunks.get()); // TODO: this should be off the main thread
             sharedPrefsRepo.clearRepository();
         }
-    }
-
-    private void initializeFabric() {
-        if (!BuildConfig.SHOULD_ENABLE_FABRIC) {
-            return;
-        }
-        CrashlyticsCore core = new CrashlyticsCore.Builder().build();
-        Crashlytics crashlytics = new Crashlytics.Builder().core(core).build();
-        Fabric.with(this, crashlytics);
     }
 
     public ChunksService getChunksService() {

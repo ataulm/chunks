@@ -30,11 +30,6 @@ android {
         versionName '1.2.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigBoolean 'SHOULD_ENABLE_FABRIC', shouldEnableFabric
-        manifestPlaceholders = [
-                fabricApiKey: fabricApiKey
-        ]
     }
 
     signingConfigs {
@@ -72,7 +67,6 @@ dependencies {
     compile libraries.androidxRecyclerView
     compile libraries.androidxRoomRuntime
     compile libraries.butterknife
-    compile(libraries.crashlytics) { transitive = true }
     compile libraries.kotlinStdLib
     compile libraries.landingStrip
     compile libraries.rxAndroid
