@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="Theme.Chunks" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimaryDark">@color/madison</item>
+        <item name="colorPrimary">@color/regal_blue</item>
+        <item name="colorOnPrimary">@color/cornflower</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorOnSecondary">?attr/colorOnPrimary</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="colorOnBackground">@color/silver</item>
+        <item name="colorSurface">@color/cod_gray</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+</resources>
