@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 internal class ChunkRecyclerViewAdapter(private val userInteractions: ItemUserInteractions,
-                                        private val dragStartListener: ItemViewHolder.DragStartListener,
                                         private var day: Day?,
                                         private var items: Items?) : RecyclerView.Adapter<ItemViewHolder>() {
 
@@ -50,7 +49,7 @@ internal class ChunkRecyclerViewAdapter(private val userInteractions: ItemUserIn
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = items!![position]
         val chunksActions = ChunksActions.create(items!!, day!!, item, userInteractions)
-        holder.bind(item, chunksActions, dragStartListener)
+        holder.bind(item, chunksActions)
     }
 
     override fun getItemCount(): Int {

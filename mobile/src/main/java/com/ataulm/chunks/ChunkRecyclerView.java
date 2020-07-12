@@ -1,17 +1,17 @@
 package com.ataulm.chunks;
 
 import android.content.Context;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.AttributeSet;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.novoda.accessibility.AccessibilityServices;
 
 public class ChunkRecyclerView extends RecyclerView {
 
     private ItemTouchHelper itemTouchHelper;
-    private ItemViewHolder.DragStartListener dragStartListener;
 
     public ChunkRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -24,13 +24,6 @@ public class ChunkRecyclerView extends RecyclerView {
         if (!spokenFeedbackEnabled) {
             itemTouchHelper = attachDragAndDropItemTouchHelper();
             itemTouchHelper.attachToRecyclerView(this);
-
-            dragStartListener = new ItemViewHolder.DragStartListener() {
-                @Override
-                public void onStartDrag(ViewHolder viewHolder) {
-                    itemTouchHelper.startDrag(viewHolder);
-                }
-            };
         }
     }
 
@@ -52,7 +45,7 @@ public class ChunkRecyclerView extends RecyclerView {
     public void update(Items items, ItemUserInteractions userInteractions, Day day) {
         ChunkRecyclerViewAdapter adapter = getAdapter();
         if (adapter == null) {
-            adapter = new ChunkRecyclerViewAdapter(userInteractions, dragStartListener, day, items);
+            adapter = new ChunkRecyclerViewAdapter(userInteractions, day, items);
             setAdapter(adapter);
         } else {
             boolean itemAdded = adapter.update(day, items);

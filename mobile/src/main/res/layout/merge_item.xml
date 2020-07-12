@@ -7,19 +7,11 @@
     tools:layout_width="match_parent"
     tools:parentTag="android.widget.LinearLayout">
 
-    <ImageView
-        android:id="@+id/item_drag_handle"
-        style="@style/Chunks.Item.Icon.DragHandle"
-        android:layout_width="wrap_content"
-        android:layout_height="48sp"
-        android:paddingStart="20sp"
-        android:paddingEnd="12sp"
-        android:src="@drawable/chunks_item_drag_handle" />
-
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/item_check_box"
         android:layout_width="wrap_content"
-        android:layout_height="48sp" />
+        android:layout_height="48sp"
+        android:layout_marginStart="12sp" />
 
     <TextView
         android:id="@+id/item_text_view"
