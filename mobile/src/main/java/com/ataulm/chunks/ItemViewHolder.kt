@@ -35,13 +35,11 @@ internal class ItemViewHolder(private val itemRowView: ItemRowView) : RecyclerVi
             itemRowView.moveLeftButton.setOnClickListener { action.run() }
         }
 
-        itemRowView.menuButton().setOnClickListener { alertDialog.show() }
-
+        itemRowView.setOnClickListener { alertDialog.show() }
         if (accessibilityServices.isSpokenFeedbackEnabled) {
             itemViewClickActions.setClickListeners(chunksActions.actions)
             itemRowView.moveLeftButton().visibility = GONE
             itemRowView.moveRightButton().visibility = GONE
-            itemRowView.menuButton().visibility = GONE
         }
     }
 

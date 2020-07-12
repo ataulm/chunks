@@ -24,9 +24,6 @@ public class ItemRowView extends LinearLayout {
     @BindView(R.id.item_button_move_right)
     View moveRightButton;
 
-    @BindView(R.id.item_button_menu)
-    View menuButton;
-
     public ItemRowView(Context context, AttributeSet attrs) {
         super(context, attrs);
         super.setOrientation(HORIZONTAL);
@@ -54,10 +51,6 @@ public class ItemRowView extends LinearLayout {
 
     public View moveRightButton() {
         return moveRightButton;
-    }
-
-    public View menuButton() {
-        return menuButton;
     }
 
 }

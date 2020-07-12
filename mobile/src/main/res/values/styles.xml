@@ -69,6 +69,4 @@
 
     <style name="Chunks.Item.Icon.MoveRight" parent="Chunks.Item.Icon" />
 
-    <style name="Chunks.Item.Icon.Menu" parent="Chunks.Item.Icon" />
-
 </resources>

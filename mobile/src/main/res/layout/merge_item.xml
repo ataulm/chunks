@@ -39,11 +39,8 @@
         android:src="@drawable/chunk_item_move_right"
         android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/item_button_menu"
-        style="@style/Chunks.Item.Icon.Menu"
-        android:layout_width="48sp"
-        android:layout_height="48sp"
-        android:src="@drawable/chunk_item_menu" />
+    <Space
+        android:layout_width="8sp"
+        android:layout_height="match_parent" />
 
 </merge>
